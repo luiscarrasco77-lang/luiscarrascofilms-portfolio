@@ -33,16 +33,8 @@ function GalleryItem({
   };
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-      className={`group relative overflow-hidden cursor-pointer ${
-        project.type === "video" ? "cursor-pointer" : ""
-      }`}
-      style={{ alignSelf: "start" }}
+    <div
+      className="group relative overflow-hidden cursor-pointer"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
@@ -58,7 +50,6 @@ function GalleryItem({
           />
         ) : (
           <>
-            {/* Poster thumbnail — always visible, no interaction needed */}
             {project.poster && !hovered && (
               <img
                 src={project.poster}
@@ -82,13 +73,11 @@ function GalleryItem({
           </>
         )}
 
-        {/* Hover overlay */}
         <div
           className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           style={{ zIndex: 3 }}
         />
 
-        {/* Info */}
         <div
           className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
           style={{ zIndex: 4 }}
@@ -97,7 +86,6 @@ function GalleryItem({
           <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 mt-0.5">{project.category}</p>
         </div>
 
-        {/* Video play badge — visible always on video items */}
         {project.type === "video" && (
           <div
             className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300"
@@ -113,7 +101,7 @@ function GalleryItem({
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -134,14 +122,12 @@ export default function Gallery() {
 
   return (
     <>
-      {/* Modal */}
       {modal && (
         <VideoModal src={modal.src} title={modal.title} onClose={closeModal} />
       )}
 
       <section className="pt-28 pb-24 md:pt-32 md:pb-32 px-5 md:px-10">
         <div className="max-w-[1400px] mx-auto">
-          {/* Page title */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -156,7 +142,6 @@ export default function Gallery() {
             </p>
           </motion.div>
 
-          {/* Category filters */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -178,18 +163,26 @@ export default function Gallery() {
             ))}
           </motion.div>
 
-          {/* Grid — each item self-aligns to avoid height mismatch black gaps */}
-          <AnimatePresence mode="popLayout">
+          {/*
+            CSS columns masonry: items flow top→bottom per column independently.
+            No rows = no black gaps when portrait and landscape items mix.
+          */}
+          <AnimatePresence mode="wait">
             <motion.div
-              layout
-              className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 items-start"
+              key={selectedCategory}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="columns-2 md:columns-3 gap-2 md:gap-3"
             >
-              {filtered.map((project, i) => (
-                <GalleryItem
-                  key={project.id}
-                  project={project}
-                  onVideoClick={handleVideoClick}
-                />
+              {filtered.map((project) => (
+                <div key={project.id} className="break-inside-avoid mb-2 md:mb-3">
+                  <GalleryItem
+                    project={project}
+                    onVideoClick={handleVideoClick}
+                  />
+                </div>
               ))}
             </motion.div>
           </AnimatePresence>

@@ -27,7 +27,7 @@ function FeaturedCard({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: Math.min(index * 0.1, 0.4) }}
       viewport={{ once: true, margin: "-40px" }}
-      className={`group relative overflow-hidden cursor-pointer ${isFullWidth ? "col-span-2" : ""}`}
+      className="group relative overflow-hidden cursor-pointer"
       onMouseEnter={() => {
         setHovered(true);
         videoRef.current?.play().catch(() => {});
@@ -48,7 +48,6 @@ function FeaturedCard({
               : "aspect-[16/10]"
         }`}
       >
-        {/* Poster: always visible until hover plays video */}
         {!hovered && (
           <img
             src={project.poster}
@@ -71,13 +70,11 @@ function FeaturedCard({
           <source src={project.src} type="video/mp4" />
         </video>
 
-        {/* Gradient */}
         <div
           className={`absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-50"}`}
           style={{ zIndex: 3 }}
         />
 
-        {/* Info */}
         <div
           className="absolute inset-0 flex flex-col justify-end p-5 md:p-7"
           style={{ zIndex: 4 }}
@@ -96,7 +93,6 @@ function FeaturedCard({
           </motion.div>
         </div>
 
-        {/* Play icon */}
         <div
           className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${hovered ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
           style={{ zIndex: 4 }}
@@ -114,7 +110,8 @@ function FeaturedCard({
 
 function PhotoStrip() {
   return (
-    <div className="col-span-2 grid grid-cols-4 gap-2 md:gap-3">
+    /* All 4 photos forced to portrait aspect — same height, zero black gaps */
+    <div className="grid grid-cols-4 gap-2 md:gap-3">
       {photoHighlights.map((photo, i) => (
         <motion.div
           key={i}
@@ -122,7 +119,7 @@ function PhotoStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: i * 0.08 }}
           viewport={{ once: true }}
-          className={`overflow-hidden ${photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"}`}
+          className="overflow-hidden aspect-[3/4]"
         >
           <img
             src={photo.src}
@@ -176,23 +173,37 @@ export default function FeaturedWork() {
             </motion.div>
           </div>
 
-          {/* Grid: full-width item → photo strip → pairs with items-start (no height mismatch) */}
-          <div className="grid grid-cols-2 gap-2 md:gap-3 items-start">
-            {/* Row 1: full-width */}
-            <FeaturedCard project={featuredProjects[0]} isFullWidth index={0} onVideoClick={handleVideoClick} />
+          {/*
+            Layout strategy: flex-col stack, no CSS grid rows.
+            Each section stacks independently — zero row-height mismatch.
+            The 4 remaining featured cards use two independent flex columns (masonry):
+            each column grows to its own natural height, no black gaps possible.
+          */}
+          <div className="flex flex-col gap-2 md:gap-3">
+            {/* Full-width hero video */}
+            <FeaturedCard
+              project={featuredProjects[0]}
+              isFullWidth
+              index={0}
+              onVideoClick={handleVideoClick}
+            />
 
-            {/* Photo strip */}
+            {/* Photo strip — all portrait, uniform height */}
             <PhotoStrip />
 
-            {/* Row 2: pair */}
-            {featuredProjects.slice(1, 3).map((p, i) => (
-              <FeaturedCard key={p.id} project={p} index={i + 1} onVideoClick={handleVideoClick} />
-            ))}
-
-            {/* Row 3: pair */}
-            {featuredProjects.slice(3, 5).map((p, i) => (
-              <FeaturedCard key={p.id} project={p} index={i + 3} onVideoClick={handleVideoClick} />
-            ))}
+            {/* Two independent flex columns — masonry, no row alignment */}
+            <div className="flex gap-2 md:gap-3">
+              {/* Left column: two landscape videos */}
+              <div className="flex-1 flex flex-col gap-2 md:gap-3">
+                <FeaturedCard project={featuredProjects[1]} index={1} onVideoClick={handleVideoClick} />
+                <FeaturedCard project={featuredProjects[3]} index={3} onVideoClick={handleVideoClick} />
+              </div>
+              {/* Right column: portrait + landscape */}
+              <div className="flex-1 flex flex-col gap-2 md:gap-3">
+                <FeaturedCard project={featuredProjects[2]} index={2} onVideoClick={handleVideoClick} />
+                <FeaturedCard project={featuredProjects[4]} index={4} onVideoClick={handleVideoClick} />
+              </div>
+            </div>
           </div>
         </div>
       </section>
