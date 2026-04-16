@@ -15,26 +15,32 @@ export default function VisionContent() {
   return (
     <div className="w-full overflow-x-hidden">
 
-      {/* ── 1. HERO TITLE ─────────────────────────────────────────────────── */}
-      <div className="pt-32 md:pt-40 pb-16 md:pb-20 px-5 md:px-10 max-w-[1400px] mx-auto">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-[11px] uppercase tracking-[0.35em] text-muted mb-8 md:mb-10"
-        >
-          The Vision
-        </motion.p>
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-5xl md:text-7xl lg:text-[88px] font-extralight leading-[1.05] tracking-tight"
-        >
-          A kid with a camera
-          <br />
-          <span className="text-white/35">full of dreams.</span>
-        </motion.h1>
+      {/* ── 1. HERO TITLE — tall section so title never touches the header ── */}
+      {/* Fixed header = 64px. Section min-height + flex-end pushes title down. */}
+      <div
+        className="flex flex-col justify-end px-5 md:px-10 pb-16 md:pb-24"
+        style={{ minHeight: "55vh", paddingTop: "100px" }}
+      >
+        <div className="max-w-[1400px] mx-auto w-full">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-[11px] uppercase tracking-[0.35em] text-muted mb-8 md:mb-10"
+          >
+            The Vision
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-5xl md:text-7xl lg:text-[88px] font-extralight leading-[1.05] tracking-tight"
+          >
+            A kid with a camera
+            <br />
+            <span className="text-white/35">full of dreams.</span>
+          </motion.h1>
+        </div>
       </div>
 
       {/* ── 2. THREE-COLUMN ROW: photo | copy | photo ─────────────────────── */}
