@@ -3,6 +3,15 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
+const bottomPhotos = [
+  { src: "/projects/fotosnaturaleza/DJI_20251026164651_0595_D.jpg", alt: "Aerial coast", aspect: "landscape" },
+  { src: "/projects/fotosnaturaleza/DSC09119-2 3.jpg", alt: "Deadvlei", aspect: "portrait" },
+  { src: "/projects/fotosnaturaleza/DJI_20251124173736_0783_D.jpg", alt: "Sunset aerial", aspect: "landscape" },
+  { src: "/projects/fotosnaturaleza/DJI_20260308151022_0052_D.jpg", alt: "Alpine slope", aspect: "landscape" },
+  { src: "/projects/fotosnaturaleza/DJI_20251021182436_0464_D 2.jpg", alt: "Ocean aerial", aspect: "landscape" },
+  { src: "/projects/fotosnaturaleza/DSC07810.jpg", alt: "Waterfall", aspect: "portrait" },
+];
+
 export default function VisionContent() {
   const parallaxRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -12,7 +21,7 @@ export default function VisionContent() {
   const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
-    <article className="pt-28 pb-24 md:pt-32 md:pb-32">
+    <article className="pt-28 pb-24 md:pt-32 md:pb-32 w-full">
 
       {/* ─── Opening statement ─────────────────────────────────────────── */}
       <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-20 md:mb-28">
@@ -28,7 +37,7 @@ export default function VisionContent() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-extralight leading-[1.1] tracking-tight max-w-3xl"
+          className="text-4xl md:text-6xl lg:text-7xl font-extralight leading-[1.1] tracking-tight max-w-4xl"
         >
           A kid with a camera
           <br />
@@ -36,11 +45,11 @@ export default function VisionContent() {
         </motion.h1>
       </div>
 
-      {/* ─── Kid + Africa photos — full editorial row (no black gaps) ──── */}
+      {/* ─── Kid + Africa photos + copy ─────────────────────────────────── */}
       <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-20 md:mb-28">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-start">
 
-          {/* Left: the two photos side by side */}
+          {/* Photos */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -68,30 +77,32 @@ export default function VisionContent() {
             </p>
           </motion.div>
 
-          {/* Right: context copy */}
+          {/* Copy */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             viewport={{ once: true }}
-            className="flex flex-col gap-5 text-muted font-light text-base md:text-lg leading-relaxed md:pt-4"
+            className="flex flex-col gap-6 text-muted font-light text-base md:text-lg leading-relaxed md:pt-6"
           >
             <p>
-              From a toy camera in my childhood hands to a cinema rig on five continents —
-              the obsession never changed. Only the tools did.
+              From a toy camera in my childhood hands to a cinema rig
+              across five continents — the obsession never changed.
+              Only the tools did.
             </p>
             <p>
               Every frame is a decision. Every cut is an argument.
               Every story is a reason to keep moving.
             </p>
             <p className="text-foreground">
-              What started as curiosity became craft. What became craft became a career.
+              What started as curiosity became craft.
+              What became craft became a career.
             </p>
           </motion.div>
         </div>
       </div>
 
-      {/* ─── Editorial block: image + text ───────────────────────────────── */}
+      {/* ─── Editorial block: parallax portrait + copy ───────────────────── */}
       <div
         ref={parallaxRef}
         className="max-w-[1400px] mx-auto px-5 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center mb-20 md:mb-28"
@@ -155,21 +166,49 @@ export default function VisionContent() {
         </motion.blockquote>
       </div>
 
-      {/* ─── Full-width landscape image break ────────────────────────────── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.9 }}
-        viewport={{ once: true }}
-        className="w-full h-[45vh] md:h-[65vh] relative overflow-hidden mb-20 md:mb-28"
-      >
-        <img
-          src="/projects/fotosnaturaleza/1 3.jpg"
-          alt="Desert landscape"
-          className="w-full h-full object-cover scale-105"
-        />
-        <div className="absolute inset-0 bg-black/25" />
-      </motion.div>
+      {/* ─── Photo grid — multiple images (replaces single full-width) ───── */}
+      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-20 md:mb-28">
+        {/* Row 1: 3 columns */}
+        <div className="grid grid-cols-3 gap-2 md:gap-3 mb-2 md:mb-3">
+          {bottomPhotos.slice(0, 3).map((photo, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className={`overflow-hidden ${photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"}`}
+            >
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                loading="lazy"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </motion.div>
+          ))}
+        </div>
+        {/* Row 2: 3 columns */}
+        <div className="grid grid-cols-3 gap-2 md:gap-3">
+          {bottomPhotos.slice(3).map((photo, i) => (
+            <motion.div
+              key={i + 3}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className={`overflow-hidden ${photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"}`}
+            >
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                loading="lazy"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
       {/* ─── Services grid ────────────────────────────────────────────────── */}
       <div className="max-w-[1400px] mx-auto px-5 md:px-10">
