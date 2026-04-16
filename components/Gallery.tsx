@@ -1,9 +1,21 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { allProjects, categories, type ProjectMedia } from "@/data/projects";
 import VideoModal from "@/components/VideoModal";
+
+// Returns 2 on mobile, 3 on desktop — updates on resize
+function useCols() {
+  const [cols, setCols] = useState(2);
+  useEffect(() => {
+    const update = () => setCols(window.innerWidth >= 768 ? 3 : 2);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return cols;
+}
 
 function GalleryItem({
   project,
@@ -28,16 +40,12 @@ function GalleryItem({
     }
   };
 
-  const handleClick = () => {
-    if (project.type === "video") onVideoClick(project.src, project.title);
-  };
-
   return (
     <div
-      className="group relative overflow-hidden cursor-pointer"
+      className={`group relative overflow-hidden ${project.type === "video" ? "cursor-pointer" : ""}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
+      onClick={() => project.type === "video" && onVideoClick(project.src, project.title)}
     >
       <div className={`relative w-full ${isPortrait ? "aspect-[9/16]" : "aspect-[16/10]"}`}>
         {project.type === "image" ? (
@@ -77,7 +85,6 @@ function GalleryItem({
           className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           style={{ zIndex: 3 }}
         />
-
         <div
           className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
           style={{ zIndex: 4 }}
@@ -91,11 +98,7 @@ function GalleryItem({
             className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300"
             style={{ zIndex: 4 }}
           >
-            <svg
-              className="w-3 h-3 text-white ml-0.5 group-hover:text-black transition-colors"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-3 h-3 text-white ml-0.5 group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
           </div>
@@ -108,23 +111,26 @@ function GalleryItem({
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [modal, setModal] = useState<{ src: string; title: string } | null>(null);
+  const numCols = useCols();
 
-  const handleVideoClick = useCallback((src: string, title: string) => {
-    setModal({ src, title });
-  }, []);
-
+  const handleVideoClick = useCallback((src: string, title: string) => setModal({ src, title }), []);
   const closeModal = useCallback(() => setModal(null), []);
 
-  const filtered =
-    selectedCategory === "all"
-      ? allProjects
-      : allProjects.filter((p) => p.category === selectedCategory);
+  const filtered = useMemo(
+    () => selectedCategory === "all" ? allProjects : allProjects.filter((p) => p.category === selectedCategory),
+    [selectedCategory]
+  );
+
+  // Distribute items across columns for masonry — each column is an independent flex stack
+  const columns = useMemo(() => {
+    const cols: ProjectMedia[][] = Array.from({ length: numCols }, () => []);
+    filtered.forEach((item, i) => cols[i % numCols].push(item));
+    return cols;
+  }, [filtered, numCols]);
 
   return (
     <>
-      {modal && (
-        <VideoModal src={modal.src} title={modal.title} onClose={closeModal} />
-      )}
+      {modal && <VideoModal src={modal.src} title={modal.title} onClose={closeModal} />}
 
       <section className="pt-28 pb-24 md:pt-32 md:pb-32 px-5 md:px-10">
         <div className="max-w-[1400px] mx-auto">
@@ -134,12 +140,8 @@ export default function Gallery() {
             transition={{ duration: 0.5 }}
             className="mb-10 md:mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-extralight tracking-tight">
-              Portfolio
-            </h1>
-            <p className="text-sm text-muted mt-2">
-              Click any video to watch with sound
-            </p>
+            <h1 className="text-4xl md:text-5xl font-extralight tracking-tight">Portfolio</h1>
+            <p className="text-sm text-muted mt-2">Click any video to watch with sound</p>
           </motion.div>
 
           <motion.div
@@ -164,24 +166,23 @@ export default function Gallery() {
           </motion.div>
 
           {/*
-            CSS columns masonry: items flow top→bottom per column independently.
-            No rows = no black gaps when portrait and landscape items mix.
+            Flex-column masonry: items distributed across N independent flex columns.
+            Each column grows to its own height → zero black gaps regardless of aspect ratio mix.
           */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={selectedCategory}
+              key={`${selectedCategory}-${numCols}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="columns-2 md:columns-3 gap-2 md:gap-3"
+              className="flex gap-2 md:gap-3 w-full"
             >
-              {filtered.map((project) => (
-                <div key={project.id} className="break-inside-avoid mb-2 md:mb-3">
-                  <GalleryItem
-                    project={project}
-                    onVideoClick={handleVideoClick}
-                  />
+              {columns.map((col, ci) => (
+                <div key={ci} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">
+                  {col.map((project) => (
+                    <GalleryItem key={project.id} project={project} onVideoClick={handleVideoClick} />
+                  ))}
                 </div>
               ))}
             </motion.div>

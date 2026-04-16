@@ -36,48 +36,62 @@ export default function VisionContent() {
         </motion.h1>
       </div>
 
-      {/* ─── Kid + Africa photos (the "proof") ──────────────────────────── */}
+      {/* ─── Kid + Africa photos — full editorial row (no black gaps) ──── */}
       <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-20 md:mb-28">
-        <div className="grid grid-cols-2 gap-3 md:gap-4 items-start max-w-2xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+
+          {/* Left: the two photos side by side */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="overflow-hidden aspect-[3/4]"
           >
-            <img
-              src="/projects/KidCamera.png"
-              alt="Luis as a kid with a camera"
-              className="w-full h-full object-cover"
-            />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="overflow-hidden aspect-[3/4]">
+                <img
+                  src="/projects/KidCamera.png"
+                  alt="Luis as a kid with a camera"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="overflow-hidden aspect-[3/4]">
+                <img
+                  src="/projects/CameraAfrica.JPG"
+                  alt="Luis filming in Africa"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <p className="text-xs text-muted mt-4 tracking-wider">
+              Then &amp; now — always behind the lens
+            </p>
           </motion.div>
+
+          {/* Right: context copy */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
             viewport={{ once: true }}
-            className="overflow-hidden aspect-[3/4]"
+            className="flex flex-col gap-5 text-muted font-light text-base md:text-lg leading-relaxed md:pt-4"
           >
-            <img
-              src="/projects/CameraAfrica.JPG"
-              alt="Luis filming in Africa"
-              className="w-full h-full object-cover"
-            />
+            <p>
+              From a toy camera in my childhood hands to a cinema rig on five continents —
+              the obsession never changed. Only the tools did.
+            </p>
+            <p>
+              Every frame is a decision. Every cut is an argument.
+              Every story is a reason to keep moving.
+            </p>
+            <p className="text-foreground">
+              What started as curiosity became craft. What became craft became a career.
+            </p>
           </motion.div>
         </div>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-xs text-muted mt-4 tracking-wider"
-        >
-          Then & now — always behind the lens
-        </motion.p>
       </div>
 
-      {/* ─── Editorial block 1: image + text ─────────────────────────────── */}
+      {/* ─── Editorial block: image + text ───────────────────────────────── */}
       <div
         ref={parallaxRef}
         className="max-w-[1400px] mx-auto px-5 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center mb-20 md:mb-28"
