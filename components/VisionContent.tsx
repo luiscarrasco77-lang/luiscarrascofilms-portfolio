@@ -13,35 +13,39 @@ const photoGrid = [
 
 export default function VisionContent() {
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full">
 
-      {/* ── 1. HERO TITLE — tall section so title never touches the header ── */}
-      {/* Fixed header = 64px. Section min-height + flex-end pushes title down. */}
-      <div
-        className="flex flex-col justify-end px-5 md:px-10 pb-16 md:pb-24"
-        style={{ minHeight: "55vh", paddingTop: "100px" }}
-      >
-        <div className="max-w-[1400px] mx-auto w-full">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-[11px] uppercase tracking-[0.35em] text-muted mb-8 md:mb-10"
-          >
-            The Vision
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-[88px] font-extralight leading-[1.05] tracking-tight"
-          >
-            A kid with a camera
-            <br />
-            <span className="text-white/35">full of dreams.</span>
-          </motion.h1>
-        </div>
-      </div>
+      {/* ── 1. FULL-SCREEN HERO — title absolutely at bottom, header can never reach it ── */}
+      <section style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
+        {/* Background photo */}
+        <img
+          src="/projects/fotosnaturaleza/DJI_20260308151945_0076_D.jpg"
+          alt=""
+          aria-hidden="true"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }}
+        />
+        {/* Gradient: transparent → page background */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(5,5,5,0.3) 0%, transparent 30%, rgba(5,5,5,0.7) 70%, #050505 100%)" }} />
+
+        {/* Title pinned to bottom — NEVER behind the fixed header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 40px 80px" }}
+        >
+          <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.35em", color: "#666", marginBottom: "24px" }}>
+              The Vision
+            </p>
+            <h1 style={{ fontSize: "clamp(40px, 7vw, 88px)", fontWeight: 200, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+              A kid with a camera
+              <br />
+              <span style={{ color: "rgba(255,255,255,0.35)" }}>full of dreams.</span>
+            </h1>
+          </div>
+        </motion.div>
+      </section>
 
       {/* ── 2. THREE-COLUMN ROW: photo | copy | photo ─────────────────────── */}
       {/*    All three columns same height — flex items-stretch eliminates gaps */}
