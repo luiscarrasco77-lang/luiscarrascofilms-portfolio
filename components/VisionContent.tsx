@@ -1,10 +1,8 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 
-// 6 photos distributed across 3 flex columns (2 per column) — no CSS grid rows → no black gaps
-const bottomPhotos = [
+const photoGrid = [
   { src: "/projects/fotosnaturaleza/DJI_20251026164651_0595_D.jpg", alt: "Aerial coast", aspect: "landscape" },
   { src: "/projects/fotosnaturaleza/DSC09119-2 3.jpg", alt: "Deadvlei", aspect: "portrait" },
   { src: "/projects/fotosnaturaleza/DJI_20251124173736_0783_D.jpg", alt: "Sunset aerial", aspect: "landscape" },
@@ -14,23 +12,16 @@ const bottomPhotos = [
 ];
 
 export default function VisionContent() {
-  const parallaxRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: parallaxRef,
-    offset: ["start end", "end start"],
-  });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-
   return (
-    <article className="pt-32 pb-24 md:pt-44 md:pb-32 w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden">
 
-      {/* ─── Opening statement ─────────────────────────────────────────── */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-24 md:mb-32">
+      {/* ── 1. HERO TITLE ─────────────────────────────────────────────────── */}
+      <div className="pt-32 md:pt-40 pb-16 md:pb-20 px-5 md:px-10 max-w-[1400px] mx-auto">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-[11px] uppercase tracking-[0.3em] text-muted mb-10"
+          className="text-[11px] uppercase tracking-[0.35em] text-muted mb-8 md:mb-10"
         >
           The Vision
         </motion.p>
@@ -38,53 +29,41 @@ export default function VisionContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-extralight leading-[1.05] tracking-tight max-w-4xl"
+          className="text-5xl md:text-7xl lg:text-[88px] font-extralight leading-[1.05] tracking-tight"
         >
           A kid with a camera
           <br />
-          <span className="text-muted">full of dreams.</span>
+          <span className="text-white/35">full of dreams.</span>
         </motion.h1>
       </div>
 
-      {/* ─── Kid + Africa photos + copy ─────────────────────────────────── */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-24 md:mb-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-24 items-center">
+      {/* ── 2. THREE-COLUMN ROW: photo | copy | photo ─────────────────────── */}
+      {/*    All three columns same height — flex items-stretch eliminates gaps */}
+      <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
+        <div className="flex flex-col md:flex-row gap-3">
 
-          {/* Photos */}
+          {/* Left photo: KidCamera */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
+            className="md:w-[28%] overflow-hidden aspect-[3/4]"
           >
-            <div className="grid grid-cols-2 gap-3">
-              <div className="overflow-hidden aspect-[3/4]">
-                <img
-                  src="/projects/KidCamera.png"
-                  alt="Luis as a kid with a camera"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="overflow-hidden aspect-[3/4]">
-                <img
-                  src="/projects/CameraAfrica.JPG"
-                  alt="Luis filming in Africa"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <p className="text-xs text-muted mt-4 tracking-wider">
-              Then &amp; now — always behind the lens
-            </p>
+            <img
+              src="/projects/KidCamera.png"
+              alt="Luis as a kid with a camera"
+              className="w-full h-full object-cover"
+            />
           </motion.div>
 
-          {/* Copy */}
+          {/* Center copy */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
-            className="flex flex-col gap-6 text-muted font-light text-base md:text-lg leading-relaxed"
+            className="md:flex-1 flex flex-col justify-center gap-6 text-muted font-light text-base md:text-lg leading-relaxed px-0 md:px-10"
           >
             <p>
               From a toy camera in my childhood hands to a cinema rig
@@ -99,57 +78,75 @@ export default function VisionContent() {
               What started as curiosity became craft.
               What became craft became a career.
             </p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-white/25 mt-4">
+              Then &amp; now — always behind the lens
+            </p>
+          </motion.div>
+
+          {/* Right photo: Africa */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="md:w-[28%] overflow-hidden aspect-[3/4]"
+          >
+            <img
+              src="/projects/CameraAfrica.JPG"
+              alt="Luis filming in Africa"
+              className="w-full h-full object-cover"
+            />
           </motion.div>
         </div>
       </div>
 
-      {/* ─── Editorial block: parallax portrait + copy ───────────────────── */}
-      <div
-        ref={parallaxRef}
-        className="max-w-[1400px] mx-auto px-5 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center mb-24 md:mb-32"
-      >
-        <motion.div
-          initial={{ opacity: 0, x: -24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="relative overflow-hidden aspect-[3/4]"
-        >
-          <motion.img
-            src="/projects/fotosnaturaleza/miniormond3 2.jpg"
-            alt="Luis Carrasco"
-            className="w-full h-full object-cover"
-            style={{ y: imageY }}
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          viewport={{ once: true }}
-          className="flex flex-col gap-6 text-base md:text-lg text-muted font-light leading-relaxed"
-        >
-          <p>
+      {/* ── 3. EDITORIAL COPY ─────────────────────────────────────────────── */}
+      <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
+        <div className="max-w-2xl">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="text-base md:text-xl text-muted font-light leading-relaxed mb-6"
+          >
             It started with a camera and the open road. What began as a personal
             obsession with capturing movement and light became a career spanning
             five continents, global brands, and millions of views.
-          </p>
-          <p>
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="text-base md:text-xl font-light leading-relaxed text-foreground"
+          >
             From the snow-covered peaks of the French Alps to the electric energy
-            of underground music festivals, from luxury hotels in Courchevel to
-            the raw coastlines of Costa Rica — every frame tells a story
+            of underground music festivals — every frame tells a story
             engineered for impact.
-          </p>
-          <p className="text-foreground">
-            In a world full of AI and noise, companies and creators look for
-            craftsmen, not machines. Storytelling isn&apos;t just art — it&apos;s the
-            engine behind growth.
-          </p>
+          </motion.p>
+        </div>
+      </div>
+
+      {/* ── 4. FULL-WIDTH PORTRAIT PHOTO ──────────────────────────────────── */}
+      <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.9 }}
+          viewport={{ once: true }}
+          className="overflow-hidden aspect-[21/9]"
+        >
+          <img
+            src="/projects/fotosnaturaleza/miniormond3 2.jpg"
+            alt="Luis Carrasco"
+            className="w-full h-full object-cover object-center"
+          />
         </motion.div>
       </div>
 
-      {/* ─── Pull quote ───────────────────────────────────────────────────── */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-24 md:mb-32">
+      {/* ── 5. PULL QUOTE ─────────────────────────────────────────────────── */}
+      <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
         <motion.blockquote
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -158,8 +155,8 @@ export default function VisionContent() {
           className="border-l border-white/20 pl-6 md:pl-10"
         >
           <p className="text-xl md:text-3xl lg:text-4xl font-extralight leading-tight tracking-tight text-white/80 max-w-3xl">
-            &ldquo;We don&apos;t just make films. We build visual ecosystems that
-            drive real growth.&rdquo;
+            &ldquo;In a world full of AI and noise, companies look for
+            craftsmen — not machines. Storytelling is the engine behind growth.&rdquo;
           </p>
           <cite className="text-[11px] uppercase tracking-[0.3em] text-muted mt-5 block not-italic">
             Luis Carrasco
@@ -167,24 +164,23 @@ export default function VisionContent() {
         </motion.blockquote>
       </div>
 
-      {/* ─── Photo grid — 3 independent flex columns (no CSS grid rows → no black gaps) */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-24 md:mb-32">
+      {/* ── 6. PHOTO GRID — 3 flex columns, no CSS grid rows, no black gaps ── */}
+      <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
         <div className="flex gap-2 md:gap-3">
-          {/* col 0: photos[0] + photos[3] */}
-          {/* col 1: photos[1] + photos[4] */}
-          {/* col 2: photos[2] + photos[5] */}
-          {[0, 1, 2].map((colIdx) => (
-            <div key={colIdx} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">
-              {bottomPhotos
-                .filter((_, i) => i % 3 === colIdx)
+          {[0, 1, 2].map((col) => (
+            <div key={col} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">
+              {photoGrid
+                .filter((_, i) => i % 3 === col)
                 .map((photo, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 14 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: (colIdx * 0.08) + (i * 0.12) }}
+                    transition={{ duration: 0.6, delay: col * 0.07 + i * 0.1 }}
                     viewport={{ once: true }}
-                    className={`overflow-hidden ${photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"}`}
+                    className={`overflow-hidden ${
+                      photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"
+                    }`}
                   >
                     <img
                       src={photo.src}
@@ -199,8 +195,8 @@ export default function VisionContent() {
         </div>
       </div>
 
-      {/* ─── Services grid ────────────────────────────────────────────────── */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10">
+      {/* ── 7. SERVICES ───────────────────────────────────────────────────── */}
+      <div className="px-5 md:px-10 max-w-[1400px] mx-auto pb-24 md:pb-32">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -239,6 +235,7 @@ export default function VisionContent() {
           ))}
         </div>
       </div>
-    </article>
+
+    </div>
   );
 }
