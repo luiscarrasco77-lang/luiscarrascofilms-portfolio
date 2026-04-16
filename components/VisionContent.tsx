@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
+// 6 photos distributed across 3 flex columns (2 per column) — no CSS grid rows → no black gaps
 const bottomPhotos = [
   { src: "/projects/fotosnaturaleza/DJI_20251026164651_0595_D.jpg", alt: "Aerial coast", aspect: "landscape" },
   { src: "/projects/fotosnaturaleza/DSC09119-2 3.jpg", alt: "Deadvlei", aspect: "portrait" },
@@ -21,23 +22,23 @@ export default function VisionContent() {
   const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
-    <article className="pt-28 pb-24 md:pt-32 md:pb-32 w-full">
+    <article className="pt-32 pb-24 md:pt-44 md:pb-32 w-full overflow-x-hidden">
 
       {/* ─── Opening statement ─────────────────────────────────────────── */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-20 md:mb-28">
+      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-24 md:mb-32">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-[11px] uppercase tracking-[0.3em] text-muted mb-8"
+          className="text-[11px] uppercase tracking-[0.3em] text-muted mb-10"
         >
           The Vision
         </motion.p>
         <motion.h1
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-extralight leading-[1.1] tracking-tight max-w-4xl"
+          className="text-5xl md:text-7xl lg:text-8xl font-extralight leading-[1.05] tracking-tight max-w-4xl"
         >
           A kid with a camera
           <br />
@@ -46,8 +47,8 @@ export default function VisionContent() {
       </div>
 
       {/* ─── Kid + Africa photos + copy ─────────────────────────────────── */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-20 md:mb-28">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-start">
+      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-24 md:mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-24 items-center">
 
           {/* Photos */}
           <motion.div
@@ -83,7 +84,7 @@ export default function VisionContent() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             viewport={{ once: true }}
-            className="flex flex-col gap-6 text-muted font-light text-base md:text-lg leading-relaxed md:pt-6"
+            className="flex flex-col gap-6 text-muted font-light text-base md:text-lg leading-relaxed"
           >
             <p>
               From a toy camera in my childhood hands to a cinema rig
@@ -105,7 +106,7 @@ export default function VisionContent() {
       {/* ─── Editorial block: parallax portrait + copy ───────────────────── */}
       <div
         ref={parallaxRef}
-        className="max-w-[1400px] mx-auto px-5 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center mb-20 md:mb-28"
+        className="max-w-[1400px] mx-auto px-5 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center mb-24 md:mb-32"
       >
         <motion.div
           initial={{ opacity: 0, x: -24 }}
@@ -148,7 +149,7 @@ export default function VisionContent() {
       </div>
 
       {/* ─── Pull quote ───────────────────────────────────────────────────── */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-20 md:mb-28">
+      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-24 md:mb-32">
         <motion.blockquote
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -166,46 +167,34 @@ export default function VisionContent() {
         </motion.blockquote>
       </div>
 
-      {/* ─── Photo grid — multiple images (replaces single full-width) ───── */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-20 md:mb-28">
-        {/* Row 1: 3 columns */}
-        <div className="grid grid-cols-3 gap-2 md:gap-3 mb-2 md:mb-3">
-          {bottomPhotos.slice(0, 3).map((photo, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className={`overflow-hidden ${photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"}`}
-            >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                loading="lazy"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              />
-            </motion.div>
-          ))}
-        </div>
-        {/* Row 2: 3 columns */}
-        <div className="grid grid-cols-3 gap-2 md:gap-3">
-          {bottomPhotos.slice(3).map((photo, i) => (
-            <motion.div
-              key={i + 3}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className={`overflow-hidden ${photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"}`}
-            >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                loading="lazy"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              />
-            </motion.div>
+      {/* ─── Photo grid — 3 independent flex columns (no CSS grid rows → no black gaps) */}
+      <div className="max-w-[1400px] mx-auto px-5 md:px-10 mb-24 md:mb-32">
+        <div className="flex gap-2 md:gap-3">
+          {/* col 0: photos[0] + photos[3] */}
+          {/* col 1: photos[1] + photos[4] */}
+          {/* col 2: photos[2] + photos[5] */}
+          {[0, 1, 2].map((colIdx) => (
+            <div key={colIdx} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">
+              {bottomPhotos
+                .filter((_, i) => i % 3 === colIdx)
+                .map((photo, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: (colIdx * 0.08) + (i * 0.12) }}
+                    viewport={{ once: true }}
+                    className={`overflow-hidden ${photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"}`}
+                  >
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      loading="lazy"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    />
+                  </motion.div>
+                ))}
+            </div>
           ))}
         </div>
       </div>

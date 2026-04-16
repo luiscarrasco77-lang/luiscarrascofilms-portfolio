@@ -68,6 +68,28 @@ export const featuredProjects: ProjectMedia[] = [
     featured: true,
     description: "Luxury hotel campaign — Courchevel",
   },
+  {
+    id: "feat-capriati",
+    src: "/videos/capriati-festival.mp4",
+    poster: "/posters/capriati-festival.jpg",
+    type: "video",
+    title: "Joseph Capriati",
+    category: "festivals",
+    aspect: "portrait",
+    featured: true,
+    description: "Festival aftermovie",
+  },
+  {
+    id: "feat-mestiza",
+    src: "/videos/mestiza-vertical.mp4",
+    poster: "/posters/mestiza-vertical.jpg",
+    type: "video",
+    title: "Mestiza",
+    category: "commercial",
+    aspect: "portrait",
+    featured: true,
+    description: "Commercial — vertical",
+  },
 ];
 
 // ── LANDING PAGE PHOTO HIGHLIGHTS ─────────────────────────────────────
