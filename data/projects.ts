@@ -36,15 +36,15 @@ export const featuredProjects: ProjectMedia[] = [
     description: "Commercial production",
   },
   {
-    id: "feat-hugel",
-    src: "/videos/hugel-festival.mp4",
-    poster: "/posters/hugel-festival.jpg",
+    id: "feat-nayarit",
+    src: "/videos/nayarit-travel.mp4",
+    poster: "/posters/nayarit-travel.jpg",
     type: "video",
-    title: "HUGEL",
-    category: "festivals",
+    title: "Riviera Nayarit",
+    category: "travel",
     aspect: "landscape",
     featured: true,
-    description: "Festival film — Ibiza",
+    description: "Travel film — Mexico",
   },
   {
     id: "feat-ski",
@@ -425,7 +425,7 @@ export const allProjects: ProjectMedia[] = [
     type: "video",
     title: "HUGEL",
     category: "festivals",
-    aspect: "landscape",
+    aspect: "portrait",
   },
   {
     id: "fest-blondish-vid",
@@ -434,7 +434,7 @@ export const allProjects: ProjectMedia[] = [
     type: "video",
     title: "Blond:ish",
     category: "festivals",
-    aspect: "landscape",
+    aspect: "portrait",
   },
   {
     id: "fest-shimza-vid",
@@ -443,7 +443,7 @@ export const allProjects: ProjectMedia[] = [
     type: "video",
     title: "Shimza",
     category: "festivals",
-    aspect: "landscape",
+    aspect: "portrait",
   },
   {
     id: "fest-capriati-vid",
@@ -452,7 +452,7 @@ export const allProjects: ProjectMedia[] = [
     type: "video",
     title: "Joseph Capriati",
     category: "festivals",
-    aspect: "landscape",
+    aspect: "portrait",
   },
   {
     id: "fest-serge-vid",
@@ -461,7 +461,7 @@ export const allProjects: ProjectMedia[] = [
     type: "video",
     title: "Serge Devant",
     category: "festivals",
-    aspect: "landscape",
+    aspect: "portrait",
   },
 
   // ── COMMERCIAL ──

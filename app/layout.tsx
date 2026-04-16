@@ -56,7 +56,7 @@ export default function RootLayout({
       <body className="bg-background text-foreground antialiased">
         <Header />
         <PageTransition>
-          <main className="min-h-screen">{children}</main>
+          <main className="w-full min-h-screen">{children}</main>
         </PageTransition>
         <Footer />
       </body>
