@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# original large video files (compressed versions in /public/videos/ are used)
+/public/projects/videos/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
