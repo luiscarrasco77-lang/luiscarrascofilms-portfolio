@@ -6,6 +6,7 @@ import { useState } from "react";
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     company: "",
     budget: "",
     details: "",
@@ -119,6 +120,18 @@ export default function ContactForm() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 placeholder:text-white/15"
                     placeholder="Your name"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Email</label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 placeholder:text-white/15"
+                    placeholder="your@email.com"
                   />
                 </div>
 

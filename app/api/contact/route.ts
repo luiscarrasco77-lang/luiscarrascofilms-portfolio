@@ -3,19 +3,19 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { name, company, budget, details } = await request.json();
+    const { name, email, company, budget, details } = await request.json();
 
     // Lazy init — env var only available at runtime, not build time
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    if (!name || !details) {
+    if (!name || !email || !details) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     await resend.emails.send({
       from: "Luis Carrasco Films <onboarding@resend.dev>",
       to: "luisalejandrocarrascosaa@gmail.com",
-      replyTo: undefined,
+      replyTo: email,
       subject: `New Inquiry — ${name}${company ? ` (${company})` : ""}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; color: #111;">
@@ -26,6 +26,10 @@ export async function POST(request: Request) {
             <tr>
               <td style="padding:8px 0; color:#666; width:140px;">Name</td>
               <td style="padding:8px 0; font-weight:500;">${name}</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 0; color:#666;">Email</td>
+              <td style="padding:8px 0;"><a href="mailto:${email}" style="color:#111;">${email}</a></td>
             </tr>
             <tr>
               <td style="padding:8px 0; color:#666;">Company / Brand</td>
