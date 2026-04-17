@@ -205,21 +205,49 @@ export default function FeaturedWork() {
               </div>
             </div>
 
-            {/* Portrait vertical videos row 1 — Capriati + Mestiza */}
+            {/* Portrait row 1 — Video | Photo | Video */}
             <div className="flex gap-2 md:gap-3">
               <div className="flex-1 min-w-0">
                 <FeaturedCard project={featuredProjects[5]} index={5} onVideoClick={handleVideoClick} />
               </div>
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="flex-1 min-w-0 overflow-hidden aspect-[9/16]"
+              >
+                <img
+                  src="/projects/fotosciudad/DSC00202.jpg"
+                  alt="Madrid nights"
+                  loading="lazy"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </motion.div>
               <div className="flex-1 min-w-0">
                 <FeaturedCard project={featuredProjects[6]} index={6} onVideoClick={handleVideoClick} />
               </div>
             </div>
 
-            {/* Portrait vertical videos row 2 — Real Estate I + II */}
+            {/* Portrait row 2 — Video | Photo | Video */}
             <div className="flex gap-2 md:gap-3">
               <div className="flex-1 min-w-0">
                 <FeaturedCard project={featuredProjects[7]} index={7} onVideoClick={handleVideoClick} />
               </div>
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="flex-1 min-w-0 overflow-hidden aspect-[9/16]"
+              >
+                <img
+                  src="/projects/fotosnaturaleza/DSC09119-2 3.jpg"
+                  alt="Deadvlei"
+                  loading="lazy"
+                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
+                />
+              </motion.div>
               <div className="flex-1 min-w-0">
                 <FeaturedCard project={featuredProjects[8]} index={8} onVideoClick={handleVideoClick} />
               </div>

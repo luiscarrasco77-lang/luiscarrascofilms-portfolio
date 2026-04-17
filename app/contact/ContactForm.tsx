@@ -154,10 +154,10 @@ export default function ContactForm() {
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 appearance-none cursor-pointer"
                   >
                     <option value="" className="bg-background">Select a range</option>
-                    <option value="Under $5,000" className="bg-background">Under $5,000</option>
-                    <option value="$5,000 – $15,000" className="bg-background">$5,000 – $15,000</option>
-                    <option value="$15,000 – $50,000" className="bg-background">$15,000 – $50,000</option>
-                    <option value="$50,000+" className="bg-background">$50,000+</option>
+                    <option value="Under $1,500" className="bg-background">Under $1,500</option>
+                    <option value="$1,500 – $5,000" className="bg-background">$1,500 – $5,000</option>
+                    <option value="$5,000 – $10,000" className="bg-background">$5,000 – $10,000</option>
+                    <option value="$10,000+" className="bg-background">$10,000+</option>
                   </select>
                 </div>
 

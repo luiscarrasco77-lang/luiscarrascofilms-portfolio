@@ -738,6 +738,15 @@ export const allProjects: ProjectMedia[] = [
     category: "commercial",
     aspect: "portrait",
   },
+  {
+    id: "travel-sudafrica-vid",
+    src: "/videos/sudafrica-travel.mp4",
+    poster: "/videos/sudafrica-travel-poster.jpg",
+    type: "video",
+    title: "South Africa",
+    category: "travel",
+    aspect: "landscape",
+  },
 ];
 
 export const categories = [
