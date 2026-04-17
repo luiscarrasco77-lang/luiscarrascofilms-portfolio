@@ -139,7 +139,7 @@ export default function VisionContent() {
         </div>
       </div>
 
-      {/* ── 4. FULL-WIDTH PORTRAIT PHOTO ──────────────────────────────────── */}
+      {/* ── 4. WIDE BANNER — FotoSkiSuiza ─────────────────────────────────── */}
       <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
         <motion.div
           initial={{ opacity: 0 }}
@@ -149,30 +149,49 @@ export default function VisionContent() {
           className="overflow-hidden aspect-[21/9]"
         >
           <img
-            src="/projects/fotosnaturaleza/miniormond3 2.jpg"
-            alt="Luis Carrasco"
+            src="/projects/FotoSkiSuiza.JPG"
+            alt="Skiing in Switzerland"
             className="w-full h-full object-cover object-center"
           />
         </motion.div>
       </div>
 
-      {/* ── 5. PULL QUOTE ─────────────────────────────────────────────────── */}
+      {/* ── 5. PULL QUOTE + PORTRAIT (miniormond3 vertical) ───────────────── */}
       <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
-        <motion.blockquote
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="border-l border-white/20 pl-6 md:pl-10"
-        >
-          <p className="text-xl md:text-3xl lg:text-4xl font-extralight leading-tight tracking-tight text-white/80 max-w-3xl">
-            &ldquo;In a world full of AI and noise, companies look for
-            craftsmen — not machines. Storytelling is the engine behind growth.&rdquo;
-          </p>
-          <cite className="text-[11px] uppercase tracking-[0.3em] text-muted mt-5 block not-italic">
-            Luis Carrasco
-          </cite>
-        </motion.blockquote>
+        <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-center">
+
+          {/* Portrait photo — vertical */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="w-full md:w-[32%] overflow-hidden aspect-[3/4] flex-shrink-0"
+          >
+            <img
+              src="/projects/fotosnaturaleza/miniormond3 2.jpg"
+              alt="Luis Carrasco"
+              className="w-full h-full object-cover object-top"
+            />
+          </motion.div>
+
+          {/* Quote */}
+          <motion.blockquote
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="border-l border-white/20 pl-6 md:pl-10"
+          >
+            <p className="text-xl md:text-3xl lg:text-4xl font-extralight leading-tight tracking-tight text-white/80">
+              &ldquo;In a world full of AI and noise, companies look for
+              craftsmen — not machines. Storytelling is the engine behind growth.&rdquo;
+            </p>
+            <cite className="text-[11px] uppercase tracking-[0.3em] text-muted mt-6 block not-italic">
+              Luis Carrasco
+            </cite>
+          </motion.blockquote>
+        </div>
       </div>
 
       {/* ── 6. PHOTO GRID — 3 flex columns, no CSS grid rows, no black gaps ── */}
