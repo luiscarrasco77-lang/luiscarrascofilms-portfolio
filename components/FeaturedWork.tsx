@@ -205,31 +205,7 @@ export default function FeaturedWork() {
               </div>
             </div>
 
-            {/* Portrait row 1 — Video | Photo | Video */}
-            <div className="flex gap-2 md:gap-3">
-              <div className="flex-1 min-w-0">
-                <FeaturedCard project={featuredProjects[5]} index={5} onVideoClick={handleVideoClick} />
-              </div>
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="flex-1 min-w-0 overflow-hidden aspect-[9/16]"
-              >
-                <img
-                  src="/projects/fotosciudad/DSC00202.jpg"
-                  alt="Madrid nights"
-                  loading="lazy"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                />
-              </motion.div>
-              <div className="flex-1 min-w-0">
-                <FeaturedCard project={featuredProjects[6]} index={6} onVideoClick={handleVideoClick} />
-              </div>
-            </div>
-
-            {/* Row 2 — Real Estate portrait + Real Estate Horizontal (fills height) */}
+            {/* Row 1 — Real Estate portrait + Real Estate Horizontal (fills height) */}
             <div className="flex gap-2 md:gap-3 items-stretch">
               <div className="w-[32%] min-w-0 flex-shrink-0">
                 <FeaturedCard project={featuredProjects[7]} index={7} onVideoClick={handleVideoClick} />
@@ -266,6 +242,30 @@ export default function FeaturedWork() {
                   </div>
                 </div>
               </motion.div>
+            </div>
+
+            {/* Row 2 — Capriati | Madrid photo | Mestiza */}
+            <div className="flex gap-2 md:gap-3">
+              <div className="flex-1 min-w-0">
+                <FeaturedCard project={featuredProjects[5]} index={5} onVideoClick={handleVideoClick} />
+              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="flex-1 min-w-0 overflow-hidden aspect-[9/16]"
+              >
+                <img
+                  src="/projects/fotosciudad/DSC00202.jpg"
+                  alt="Madrid nights"
+                  loading="lazy"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </motion.div>
+              <div className="flex-1 min-w-0">
+                <FeaturedCard project={featuredProjects[6]} index={6} onVideoClick={handleVideoClick} />
+              </div>
             </div>
           </div>
         </div>
