@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const photoGrid = [
   { src: "/projects/fotosnaturaleza/DJI_20251026164651_0595_D.jpg", alt: "Aerial coast", aspect: "landscape" },
@@ -19,13 +20,14 @@ export default function VisionContent() {
       <section style={{ position: "relative", overflow: "hidden" }}>
         {/* Background photo fills section height */}
         <div style={{ position: "absolute", inset: 0 }}>
-          <img
+          <Image
             src="/projects/fotosnaturaleza/DJI_20260308151945_0076_D.jpg"
             alt=""
             aria-hidden="true"
-            decoding="async"
-            fetchPriority="high"
-            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }}
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: "cover", opacity: 0.35 }}
           />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, transparent 40%, rgba(5,5,5,0.8) 85%, #050505 100%)" }} />
         </div>
@@ -61,14 +63,14 @@ export default function VisionContent() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="md:w-[28%] overflow-hidden aspect-[3/4]"
+            className="md:w-[28%] relative overflow-hidden aspect-[3/4]"
           >
-            <img
+            <Image
               src="/projects/KidCamera.png"
               alt="Luis as a kid with a camera"
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover"
+              fill
+              sizes="(min-width: 768px) 28vw, 100vw"
+              className="object-cover"
             />
           </motion.div>
 
@@ -104,14 +106,14 @@ export default function VisionContent() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
             viewport={{ once: true }}
-            className="md:w-[28%] overflow-hidden aspect-[3/4]"
+            className="md:w-[28%] relative overflow-hidden aspect-[3/4]"
           >
-            <img
+            <Image
               src="/projects/CameraAfrica.JPG"
               alt="Luis filming in Africa"
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover"
+              fill
+              sizes="(min-width: 768px) 28vw, 100vw"
+              className="object-cover"
             />
           </motion.div>
         </div>
@@ -152,14 +154,14 @@ export default function VisionContent() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.9 }}
           viewport={{ once: true }}
-          className="overflow-hidden aspect-[21/9]"
+          className="relative overflow-hidden aspect-[21/9]"
         >
-          <img
+          <Image
             src="/projects/FotoSkiSuiza.JPG"
             alt="Skiing in Switzerland"
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover object-center"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
           />
         </motion.div>
       </div>
@@ -174,14 +176,14 @@ export default function VisionContent() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="w-full md:w-[32%] overflow-hidden aspect-[3/4] flex-shrink-0"
+            className="w-full md:w-[32%] relative overflow-hidden aspect-[3/4] flex-shrink-0"
           >
-            <img
+            <Image
               src="/projects/fotosnaturaleza/miniormond3 2.jpg"
               alt="Luis Carrasco"
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover object-top"
+              fill
+              sizes="(min-width: 768px) 32vw, 100vw"
+              className="object-cover object-top"
             />
           </motion.div>
 
@@ -218,16 +220,16 @@ export default function VisionContent() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: col * 0.07 + i * 0.1 }}
                     viewport={{ once: true }}
-                    className={`overflow-hidden ${
+                    className={`relative overflow-hidden ${
                       photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"
                     }`}
                   >
-                    <img
+                    <Image
                       src={photo.src}
                       alt={photo.alt}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                      fill
+                      sizes="(min-width: 768px) 33vw, 50vw"
+                      className="object-cover hover:scale-105 transition-transform duration-700"
                     />
                   </motion.div>
                 ))}

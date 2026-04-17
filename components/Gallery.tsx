@@ -132,39 +132,46 @@ export default function Gallery() {
     <>
       {modal && <VideoModal src={modal.src} title={modal.title} onClose={closeModal} />}
 
-      <section className="pt-36 pb-24 md:pt-40 md:pb-32">
-        {/* Header — constrained */}
-        <div className="px-5 md:px-10 max-w-[1400px] mx-auto">
-          <motion.div
+      <section className="pt-32 pb-24 md:pt-36 md:pb-32">
+        {/* Title — scrolls with content */}
+        <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-8 md:mb-10">
+          <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-10 md:mb-12"
+            className="text-4xl md:text-5xl font-extralight tracking-tight"
           >
-            <h1 className="text-4xl md:text-5xl font-extralight tracking-tight">Portfolio</h1>
-            <p className="text-sm text-muted mt-2">Click any video to watch with sound</p>
-          </motion.div>
+            Portfolio
+          </motion.h1>
+        </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex flex-wrap gap-2 mb-10"
-          >
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 text-[11px] uppercase tracking-[0.2em] rounded-full transition-all duration-250 ${
-                  selectedCategory === cat.id
-                    ? "bg-white text-black font-medium"
-                    : "text-white/50 hover:text-white hover:bg-white/8"
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </motion.div>
+        {/* Sticky bar — categories + hint, always visible below header */}
+        <div className="sticky top-16 z-30 bg-background/95 backdrop-blur-md border-y border-white/5 mb-8 md:mb-10">
+          <div className="px-5 md:px-10 max-w-[1400px] mx-auto py-3 md:py-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="flex flex-wrap gap-2"
+            >
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] rounded-full transition-all duration-250 ${
+                    selectedCategory === cat.id
+                      ? "bg-white text-black font-medium"
+                      : "text-white/50 hover:text-white hover:bg-white/8"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </motion.div>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-white/40 md:ml-auto">
+              Click any video to watch with sound
+            </p>
+          </div>
         </div>
 
         {/* Masonry grid — full-bleed */}
