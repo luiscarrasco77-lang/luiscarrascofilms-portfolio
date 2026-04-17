@@ -42,3 +42,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Raw video source files
+public/videos2/
+public/videos/*.MOV
+public/videos/*.mov
+public/videos/nayarit.MOV
+"public/videos/Ski Freestyle.mp4"
