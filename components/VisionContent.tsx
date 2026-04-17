@@ -23,6 +23,8 @@ export default function VisionContent() {
             src="/projects/fotosnaturaleza/DJI_20260308151945_0076_D.jpg"
             alt=""
             aria-hidden="true"
+            decoding="async"
+            fetchPriority="high"
             style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }}
           />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, transparent 40%, rgba(5,5,5,0.8) 85%, #050505 100%)" }} />
@@ -64,6 +66,8 @@ export default function VisionContent() {
             <img
               src="/projects/KidCamera.png"
               alt="Luis as a kid with a camera"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -105,6 +109,8 @@ export default function VisionContent() {
             <img
               src="/projects/CameraAfrica.JPG"
               alt="Luis filming in Africa"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -151,6 +157,8 @@ export default function VisionContent() {
           <img
             src="/projects/FotoSkiSuiza.JPG"
             alt="Skiing in Switzerland"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover object-center"
           />
         </motion.div>
@@ -171,6 +179,8 @@ export default function VisionContent() {
             <img
               src="/projects/fotosnaturaleza/miniormond3 2.jpg"
               alt="Luis Carrasco"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover object-top"
             />
           </motion.div>
@@ -216,6 +226,7 @@ export default function VisionContent() {
                       src={photo.src}
                       alt={photo.alt}
                       loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                     />
                   </motion.div>
