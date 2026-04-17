@@ -47,7 +47,7 @@ function GalleryItem({
       onMouseLeave={handleMouseLeave}
       onClick={() => project.type === "video" && onVideoClick(project.src, project.title)}
     >
-      <div className={`relative w-full ${isPortrait ? "aspect-[9/16]" : "aspect-[16/10]"}`}>
+      <div className={`relative w-full ${isPortrait ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
         {project.type === "image" ? (
           <img
             src={project.src}
