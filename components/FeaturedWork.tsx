@@ -191,21 +191,7 @@ export default function FeaturedWork() {
             {/* Photo strip — all portrait, uniform height */}
             <PhotoStrip />
 
-            {/* Two independent flex columns — masonry, no row alignment */}
-            <div className="flex gap-2 md:gap-3">
-              {/* Left column: two landscape videos */}
-              <div className="flex-1 flex flex-col gap-2 md:gap-3">
-                <FeaturedCard project={featuredProjects[1]} index={1} onVideoClick={handleVideoClick} />
-                <FeaturedCard project={featuredProjects[3]} index={3} onVideoClick={handleVideoClick} />
-              </div>
-              {/* Right column: portrait + landscape */}
-              <div className="flex-1 flex flex-col gap-2 md:gap-3">
-                <FeaturedCard project={featuredProjects[2]} index={2} onVideoClick={handleVideoClick} />
-                <FeaturedCard project={featuredProjects[4]} index={4} onVideoClick={handleVideoClick} />
-              </div>
-            </div>
-
-            {/* Row 1 — Real Estate portrait + Real Estate Horizontal (fills height) */}
+            {/* Real Estate portrait + Real Estate Horizontal (fills height) */}
             <div className="flex gap-2 md:gap-3 items-stretch">
               <div className="w-[32%] min-w-0 flex-shrink-0">
                 <FeaturedCard project={featuredProjects[7]} index={7} onVideoClick={handleVideoClick} />
@@ -244,7 +230,19 @@ export default function FeaturedWork() {
               </motion.div>
             </div>
 
-            {/* Row 2 — Capriati | Madrid photo | Mestiza */}
+            {/* Two independent flex columns — Lifestyle + Nayarit + Ski + Airelles */}
+            <div className="flex gap-2 md:gap-3">
+              <div className="flex-1 flex flex-col gap-2 md:gap-3">
+                <FeaturedCard project={featuredProjects[1]} index={1} onVideoClick={handleVideoClick} />
+                <FeaturedCard project={featuredProjects[3]} index={3} onVideoClick={handleVideoClick} />
+              </div>
+              <div className="flex-1 flex flex-col gap-2 md:gap-3">
+                <FeaturedCard project={featuredProjects[2]} index={2} onVideoClick={handleVideoClick} />
+                <FeaturedCard project={featuredProjects[4]} index={4} onVideoClick={handleVideoClick} />
+              </div>
+            </div>
+
+            {/* Capriati | Madrid photo | Mestiza */}
             <div className="flex gap-2 md:gap-3">
               <div className="flex-1 min-w-0">
                 <FeaturedCard project={featuredProjects[5]} index={5} onVideoClick={handleVideoClick} />
