@@ -63,7 +63,7 @@ export default function Stats() {
           The Impact
         </motion.p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 place-items-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -71,7 +71,7 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
               viewport={{ once: true }}
-              className="text-center"
+              className="text-center w-full flex flex-col items-center"
             >
               <div className="text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight text-accent mb-3">
                 <AnimatedCounter

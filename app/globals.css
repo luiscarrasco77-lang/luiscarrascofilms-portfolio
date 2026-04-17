@@ -30,7 +30,6 @@
 
 html {
   overflow-x: hidden;
-  scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: #222 #050505;
 }
@@ -43,6 +42,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
+}
+
+/* Performance: help the browser skip rendering off-screen sections */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* Promote animated videos/images to their own GPU layer */
+video,
+img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 ::selection {
