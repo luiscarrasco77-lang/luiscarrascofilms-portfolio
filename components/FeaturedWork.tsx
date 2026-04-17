@@ -142,10 +142,10 @@ export default function FeaturedWork() {
     <>
       {modal && <VideoModal src={modal.src} title={modal.title} onClose={closeModal} />}
 
-      <section className="py-20 md:py-28 px-5 md:px-10 bg-background">
-        <div className="max-w-[1400px] mx-auto">
+      <section className="py-20 md:py-28 bg-background">
+        <div className="w-full">
           {/* Header */}
-          <div className="flex items-end justify-between mb-12 md:mb-16">
+          <div className="flex items-end justify-between mb-12 md:mb-16 px-5 md:px-10 max-w-[1400px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
