@@ -205,13 +205,23 @@ export default function FeaturedWork() {
               </div>
             </div>
 
-            {/* Portrait vertical videos — Capriati + Mestiza */}
+            {/* Portrait vertical videos row 1 — Capriati + Mestiza */}
             <div className="flex gap-2 md:gap-3">
               <div className="flex-1 min-w-0">
                 <FeaturedCard project={featuredProjects[5]} index={5} onVideoClick={handleVideoClick} />
               </div>
               <div className="flex-1 min-w-0">
                 <FeaturedCard project={featuredProjects[6]} index={6} onVideoClick={handleVideoClick} />
+              </div>
+            </div>
+
+            {/* Portrait vertical videos row 2 — Real Estate I + II */}
+            <div className="flex gap-2 md:gap-3">
+              <div className="flex-1 min-w-0">
+                <FeaturedCard project={featuredProjects[7]} index={7} onVideoClick={handleVideoClick} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <FeaturedCard project={featuredProjects[8]} index={8} onVideoClick={handleVideoClick} />
               </div>
             </div>
           </div>

@@ -90,6 +90,28 @@ export const featuredProjects: ProjectMedia[] = [
     featured: true,
     description: "Commercial — vertical",
   },
+  {
+    id: "feat-realestate1",
+    src: "/videos/realestate-1.mp4",
+    poster: "/videos/realestate-1-poster.jpg",
+    type: "video",
+    title: "Real Estate I",
+    category: "commercial",
+    aspect: "portrait",
+    featured: true,
+    description: "Real estate production",
+  },
+  {
+    id: "feat-realestate2",
+    src: "/videos/realestate-2.mp4",
+    poster: "/videos/realestate-2-poster.jpg",
+    type: "video",
+    title: "Real Estate II",
+    category: "commercial",
+    aspect: "portrait",
+    featured: true,
+    description: "Real estate production",
+  },
 ];
 
 // ── LANDING PAGE PHOTO HIGHLIGHTS ─────────────────────────────────────
@@ -697,6 +719,24 @@ export const allProjects: ProjectMedia[] = [
     title: "Lifestyle Video",
     category: "commercial",
     aspect: "landscape",
+  },
+  {
+    id: "comm-realestate1-vid",
+    src: "/videos/realestate-1.mp4",
+    poster: "/videos/realestate-1-poster.jpg",
+    type: "video",
+    title: "Real Estate I",
+    category: "commercial",
+    aspect: "portrait",
+  },
+  {
+    id: "comm-realestate2-vid",
+    src: "/videos/realestate-2.mp4",
+    poster: "/videos/realestate-2-poster.jpg",
+    type: "video",
+    title: "Real Estate II",
+    category: "commercial",
+    aspect: "portrait",
   },
 ];
 
