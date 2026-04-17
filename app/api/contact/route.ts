@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     }
 
     await resend.emails.send({
-      from: "Luis Carrasco Films <onboarding@resend.dev>",
+      from: "Luis Carrasco Films <noreply@luiscarrascofilms.com>",
       to: "contact@luiscarrascofilms.com",
       replyTo: email,
       subject: `New Inquiry — ${name}${company ? ` (${company})` : ""}`,
