@@ -40,7 +40,7 @@ export default function Header() {
             : "bg-transparent"
         }`}
       >
-        <div className="px-8 md:px-16 h-16 flex items-center justify-between">
+        <div className="px-8 md:px-24 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="group">
             <motion.div
