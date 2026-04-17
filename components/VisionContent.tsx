@@ -50,7 +50,7 @@ export default function VisionContent() {
 
       {/* ── 2. THREE-COLUMN ROW: photo | copy | photo ─────────────────────── */}
       {/*    All three columns same height — flex items-stretch eliminates gaps */}
-      <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
+      <div className="mb-20 md:mb-28">
         <div className="flex flex-col md:flex-row gap-3">
 
           {/* Left photo: KidCamera */}
@@ -140,7 +140,7 @@ export default function VisionContent() {
       </div>
 
       {/* ── 4. WIDE BANNER — FotoSkiSuiza ─────────────────────────────────── */}
-      <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
+      <div className="mb-20 md:mb-28">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
