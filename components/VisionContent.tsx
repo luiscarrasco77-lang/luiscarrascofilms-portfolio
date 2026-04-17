@@ -15,24 +15,25 @@ export default function VisionContent() {
   return (
     <div className="w-full">
 
-      {/* ── 1. FULL-SCREEN HERO — title absolutely at bottom, header can never reach it ── */}
-      <section style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
-        {/* Background photo */}
-        <img
-          src="/projects/fotosnaturaleza/DJI_20260308151945_0076_D.jpg"
-          alt=""
-          aria-hidden="true"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }}
-        />
-        {/* Gradient: transparent → page background */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(5,5,5,0.3) 0%, transparent 30%, rgba(5,5,5,0.7) 70%, #050505 100%)" }} />
+      {/* ── 1. HERO — background photo, title sits naturally below the header ── */}
+      <section style={{ position: "relative", overflow: "hidden" }}>
+        {/* Background photo fills section height */}
+        <div style={{ position: "absolute", inset: 0 }}>
+          <img
+            src="/projects/fotosnaturaleza/DJI_20260308151945_0076_D.jpg"
+            alt=""
+            aria-hidden="true"
+            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }}
+          />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, transparent 40%, rgba(5,5,5,0.8) 85%, #050505 100%)" }} />
+        </div>
 
-        {/* Title pinned to bottom — NEVER behind the fixed header */}
+        {/* Title — in normal document flow, padded below the fixed header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 40px 80px" }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          style={{ position: "relative", zIndex: 1, padding: "120px 40px 80px" }}
         >
           <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
             <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.35em", color: "#666", marginBottom: "24px" }}>
