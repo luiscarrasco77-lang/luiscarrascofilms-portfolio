@@ -132,7 +132,7 @@ export default function Gallery() {
     <>
       {modal && <VideoModal src={modal.src} title={modal.title} onClose={closeModal} />}
 
-      <section className="pt-28 pb-24 md:pt-32 md:pb-32">
+      <section className="pt-36 pb-24 md:pt-40 md:pb-32">
         {/* Header — constrained */}
         <div className="px-5 md:px-10 max-w-[1400px] mx-auto">
           <motion.div
