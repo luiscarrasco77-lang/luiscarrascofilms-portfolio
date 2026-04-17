@@ -121,10 +121,21 @@ export default function Gallery() {
     [selectedCategory]
   );
 
-  // Distribute items across columns for masonry — each column is an independent flex stack
+  // Distribute items across columns via round-robin.
+  // If 1 item is left over, move it to the center column so it sits
+  // symmetrically rather than being stranded alone in the left column.
   const columns = useMemo(() => {
     const cols: ProjectMedia[][] = Array.from({ length: numCols }, () => []);
-    filtered.forEach((item, i) => cols[i % numCols].push(item));
+    const remainder = filtered.length % numCols;
+    const center = Math.floor(numCols / 2);
+    filtered.forEach((item, i) => {
+      // Last orphan item → center column
+      if (remainder === 1 && i === filtered.length - 1) {
+        cols[center].push(item);
+      } else {
+        cols[i % numCols].push(item);
+      }
+    });
     return cols;
   }, [filtered, numCols]);
 
