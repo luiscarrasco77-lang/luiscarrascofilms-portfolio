@@ -194,8 +194,8 @@ export default function VisionContent() {
         </div>
       </div>
 
-      {/* ── 6. PHOTO GRID — 3 flex columns, no CSS grid rows, no black gaps ── */}
-      <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
+      {/* ── 6. PHOTO GRID — full-bleed, no CSS grid rows, no black gaps ── */}
+      <div className="mb-20 md:mb-28">
         <div className="flex gap-2 md:gap-3">
           {[0, 1, 2].map((col) => (
             <div key={col} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">

@@ -132,8 +132,9 @@ export default function Gallery() {
     <>
       {modal && <VideoModal src={modal.src} title={modal.title} onClose={closeModal} />}
 
-      <section className="pt-28 pb-24 md:pt-32 md:pb-32 px-5 md:px-10">
-        <div className="max-w-[1400px] mx-auto">
+      <section className="pt-28 pb-24 md:pt-32 md:pb-32">
+        {/* Header — constrained */}
+        <div className="px-5 md:px-10 max-w-[1400px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -164,30 +165,27 @@ export default function Gallery() {
               </button>
             ))}
           </motion.div>
-
-          {/*
-            Flex-column masonry: items distributed across N independent flex columns.
-            Each column grows to its own height → zero black gaps regardless of aspect ratio mix.
-          */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${selectedCategory}-${numCols}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex gap-2 md:gap-3 w-full"
-            >
-              {columns.map((col, ci) => (
-                <div key={ci} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">
-                  {col.map((project) => (
-                    <GalleryItem key={project.id} project={project} onVideoClick={handleVideoClick} />
-                  ))}
-                </div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
         </div>
+
+        {/* Masonry grid — full-bleed */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${selectedCategory}-${numCols}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex gap-2 md:gap-3 w-full"
+          >
+            {columns.map((col, ci) => (
+              <div key={ci} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">
+                {col.map((project) => (
+                  <GalleryItem key={project.id} project={project} onVideoClick={handleVideoClick} />
+                ))}
+              </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </section>
     </>
   );
