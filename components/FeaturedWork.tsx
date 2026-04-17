@@ -108,6 +108,56 @@ function FeaturedCard({
   );
 }
 
+function RealEstateCard({
+  project,
+  onVideoClick,
+}: {
+  project: (typeof featuredProjects)[0];
+  onVideoClick: (src: string, title: string) => void;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      className="flex-1 min-w-0 relative overflow-hidden cursor-pointer"
+      onClick={() => onVideoClick(project.src, project.title)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <video
+        muted
+        loop
+        playsInline
+        preload="none"
+        poster={project.poster}
+        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${hovered ? "scale-105" : "scale-100"}`}
+        onMouseEnter={e => (e.currentTarget as HTMLVideoElement).play().catch(() => {})}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLVideoElement).pause();
+          (e.currentTarget as HTMLVideoElement).currentTime = 0;
+        }}
+      >
+        <source src={project.src} type="video/mp4" />
+      </video>
+      <div className={`absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-50"}`} />
+      <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-7">
+        <p className="text-[10px] uppercase tracking-[0.28em] text-white/50 mb-1.5">{project.category}</p>
+        <h3 className="text-lg md:text-xl font-light text-white tracking-tight">{project.title}</h3>
+        {project.description && <p className="text-xs text-white/40 mt-1">{project.description}</p>}
+      </div>
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${hovered ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}>
+        <div className="w-14 h-14 rounded-full border border-white/30 bg-black/20 backdrop-blur-sm flex items-center justify-center">
+          <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function PhotoStrip() {
   return (
     /* All 4 photos forced to portrait aspect — same height, zero black gaps */
@@ -196,38 +246,7 @@ export default function FeaturedWork() {
               <div className="w-[32%] min-w-0 flex-shrink-0">
                 <FeaturedCard project={featuredProjects[7]} index={7} onVideoClick={handleVideoClick} />
               </div>
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true, margin: "-40px" }}
-                className="flex-1 min-w-0 relative overflow-hidden group cursor-pointer"
-                onClick={() => handleVideoClick(featuredProjects[8].src, featuredProjects[8].title)}
-              >
-                <video
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
-                  poster={featuredProjects[8].poster}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  onMouseEnter={e => (e.currentTarget as HTMLVideoElement).play().catch(() => {})}
-                  onMouseLeave={e => { (e.currentTarget as HTMLVideoElement).pause(); (e.currentTarget as HTMLVideoElement).currentTime = 0; }}
-                >
-                  <source src={featuredProjects[8].src} type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-7">
-                  <p className="text-[10px] uppercase tracking-[0.28em] text-white/50 mb-1.5">{featuredProjects[8].category}</p>
-                  <h3 className="text-lg md:text-xl font-light text-white tracking-tight">{featuredProjects[8].title}</h3>
-                  {featuredProjects[8].description && <p className="text-xs text-white/40 mt-1">{featuredProjects[8].description}</p>}
-                </div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300">
-                  <div className="w-14 h-14 rounded-full border border-white/30 bg-black/20 backdrop-blur-sm flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                  </div>
-                </div>
-              </motion.div>
+              <RealEstateCard project={featuredProjects[8]} onVideoClick={handleVideoClick} />
             </div>
 
             {/* Two independent flex columns — Lifestyle + Nayarit + Ski + Airelles */}
