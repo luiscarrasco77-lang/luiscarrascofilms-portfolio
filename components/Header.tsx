@@ -44,12 +44,23 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="group">
             <motion.div
-              whileHover={{ letterSpacing: "0.1em" }}
-              transition={{ duration: 0.3 }}
-              className="text-sm md:text-base tracking-[0.18em] transition-all"
+              whileHover={{ opacity: 0.75 }}
+              transition={{ duration: 0.25 }}
+              className="flex items-center gap-3"
             >
-              <span className="font-semibold">LUIS CARRASCO</span>
-              <span className="text-muted font-light ml-1.5 text-xs md:text-sm">FILMS</span>
+              {/* LC monogram */}
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="36" height="36" fill="black"/>
+                {/* L */}
+                <line x1="8" y1="8" x2="8" y2="26" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                <line x1="8" y1="26" x2="16" y2="26" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                {/* C */}
+                <path d="M28 12 C28 12 20 10 20 18 C20 26 28 24 28 24" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none"/>
+              </svg>
+              <div className="text-sm md:text-base tracking-[0.18em]">
+                <span className="font-semibold">LUIS CARRASCO</span>
+                <span className="text-muted font-light ml-1.5 text-xs md:text-sm">FILMS</span>
+              </div>
             </motion.div>
           </Link>
 
