@@ -51,8 +51,7 @@ export default function Stats() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-24 md:py-32 px-6 bg-background">
-      <div className="max-w-[1400px] mx-auto">
+    <section ref={ref} className="py-24 md:py-32 bg-background flex flex-col items-center">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -63,7 +62,7 @@ export default function Stats() {
           The Impact
         </motion.p>
 
-        <div className="flex flex-wrap justify-center gap-x-16 gap-y-12 md:gap-x-24">
+        <div className="flex flex-wrap justify-center gap-x-16 gap-y-12 md:gap-x-24 px-6">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -86,7 +85,6 @@ export default function Stats() {
             </motion.div>
           ))}
         </div>
-      </div>
     </section>
   );
 }
