@@ -747,6 +747,16 @@ export const allProjects: ProjectMedia[] = [
     category: "travel",
     aspect: "landscape",
   },
+  {
+    id: "commercial-ormond",
+    src: "/videos/ormond.mp4",
+    poster: "/posters/ormond.jpg",
+    type: "video",
+    title: "Ormond",
+    category: "commercial",
+    aspect: "landscape",
+    description: "Commercial production",
+  },
 ];
 
 export const categories = [

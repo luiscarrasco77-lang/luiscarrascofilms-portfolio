@@ -51,18 +51,19 @@ export default function Stats() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-24 md:py-32 bg-background flex flex-col items-center">
+    <section ref={ref} className="py-24 md:py-32 bg-background">
+        <div className="px-12 md:px-44">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-[11px] uppercase tracking-[0.3em] text-muted mb-16 text-center"
+          className="text-[11px] uppercase tracking-[0.3em] text-muted mb-16"
         >
           The Impact
         </motion.p>
 
-        <div className="flex flex-wrap justify-center gap-x-16 gap-y-12 md:gap-x-24 px-6">
+        <div className="grid grid-cols-2 gap-x-16 gap-y-12 md:gap-x-24 max-w-sm">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -84,6 +85,7 @@ export default function Stats() {
               </p>
             </motion.div>
           ))}
+        </div>
         </div>
     </section>
   );
