@@ -694,6 +694,16 @@ export const allProjects: ProjectMedia[] = [
 
   // ── COMMERCIAL ──
   {
+    id: "commercial-prince-university",
+    src: "/videos/prince-university.mp4",
+    poster: "/posters/prince-university.jpg",
+    type: "video",
+    title: "Stetson University",
+    category: "commercial",
+    aspect: "landscape",
+    description: "Corporate — Prince Entrepreneurship Program",
+  },
+  {
     id: "comm-airelles-vid",
     src: "/videos/airelles-dinner.mp4",
     poster: "/posters/airelles-dinner.jpg",
@@ -766,16 +776,6 @@ export const allProjects: ProjectMedia[] = [
     category: "travel",
     aspect: "landscape",
     description: "Travel reel",
-  },
-  {
-    id: "commercial-prince-university",
-    src: "/videos/prince-university.mp4",
-    poster: "/posters/prince-university.jpg",
-    type: "video",
-    title: "Prince University",
-    category: "commercial",
-    aspect: "landscape",
-    description: "Corporate — Prince Entrepreneurship Program",
   },
 
   // ── PUERTO RICO ──
