@@ -137,20 +137,22 @@ export default function Gallery() {
     [selectedCategory]
   );
 
-  // Distribute items across columns via round-robin.
-  // If 1 item is left over, move it to the center column so it sits
-  // symmetrically rather than being stranded alone in the left column.
+  // Balanced masonry: place each item into the currently shortest column so all
+  // columns end at nearly the same height (no black gap at the bottom). Item
+  // height is driven by aspect ratio — portrait 3:4 is taller than landscape 4:3.
+  // A small per-item term accounts for the gap between rows.
   const columns = useMemo(() => {
     const cols: ProjectMedia[][] = Array.from({ length: numCols }, () => []);
-    const remainder = filtered.length % numCols;
-    const center = Math.floor(numCols / 2);
-    filtered.forEach((item, i) => {
-      // Last orphan item → center column
-      if (remainder === 1 && i === filtered.length - 1) {
-        cols[center].push(item);
-      } else {
-        cols[i % numCols].push(item);
+    const heights = new Array(numCols).fill(0);
+    const GAP = 0.04; // relative gap added per item
+    filtered.forEach((item) => {
+      const h = (item.aspect === "portrait" ? 4 / 3 : 3 / 4) + GAP;
+      let shortest = 0;
+      for (let c = 1; c < numCols; c++) {
+        if (heights[c] < heights[shortest] - 1e-6) shortest = c;
       }
+      cols[shortest].push(item);
+      heights[shortest] += h;
     });
     return cols;
   }, [filtered, numCols]);
