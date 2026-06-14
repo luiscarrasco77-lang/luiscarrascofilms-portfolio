@@ -34,6 +34,22 @@ export default function Hero() {
     if (videoOn) videoRef.current?.load();
   }, [videoOn]);
 
+  // Pause the video while the hero is scrolled out of view — keeps the GPU/decoder
+  // free so the rest of the page scrolls smoothly.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) el.play().catch(() => {});
+        else el.pause();
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [videoOn]);
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background */}
@@ -72,16 +88,29 @@ export default function Hero() {
               "radial-gradient(120% 90% at 50% 38%, transparent 52%, rgba(0,0,0,0.55) 100%)",
           }}
         />
-        {/* Film grain */}
+        {/* Film grain — plain overlay (no blend mode) so it never forces a
+            re-composite while scrolling through the hero. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay"
+          className="absolute inset-0 pointer-events-none opacity-[0.05]"
           style={{ backgroundImage: GRAIN }}
         />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center">
+      <div
+        className="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center"
+        style={{ textShadow: "0 2px 28px rgba(0,0,0,0.45)" }}
+      >
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+          className="text-[10px] sm:text-[11px] uppercase tracking-[0.5em] text-white/45 mb-7"
+        >
+          Cinematographer &middot; Director
+        </motion.p>
+
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -94,6 +123,14 @@ export default function Hero() {
             FILMS
           </span>
         </motion.h1>
+
+        {/* Expanding hairline — settles after the title lands */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
+          className="h-px w-24 sm:w-32 bg-gradient-to-r from-transparent via-white/50 to-transparent mb-8 origin-center"
+        />
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}

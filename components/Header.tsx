@@ -18,7 +18,14 @@ export default function Header() {
   const isHome = pathname === "/";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    let last = false;
+    const onScroll = () => {
+      const s = window.scrollY > 40;
+      if (s !== last) {
+        last = s;
+        setScrolled(s);
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -46,7 +53,7 @@ export default function Header() {
             : "bg-transparent"
         }`}
       >
-        <div className="px-12 md:px-44 h-16 flex items-center justify-between">
+        <div className="px-6 md:px-12 lg:px-20 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="group">
             <motion.div
@@ -71,7 +78,9 @@ export default function Header() {
                 <Link
                   href={item.href}
                   className={`relative text-[12px] uppercase tracking-[0.22em] transition-colors duration-300 ${
-                    pathname === item.href ? "text-white" : "text-white/50 hover:text-white"
+                    pathname === item.href
+                      ? "text-white"
+                      : "text-white/50 hover:text-white after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-center after:scale-x-0 after:bg-white/40 after:transition-transform after:duration-300 hover:after:scale-x-100"
                   }`}
                 >
                   {item.name}

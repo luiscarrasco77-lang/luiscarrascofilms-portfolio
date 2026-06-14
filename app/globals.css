@@ -20,12 +20,17 @@
   --font-mono: var(--font-geist-mono);
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Keep the reset in the base layer so Tailwind spacing utilities (which live in
+   the utilities layer) always win. Unlayered, this rule beat every padding and
+   margin utility site-wide — which is why header padding never applied. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html {
