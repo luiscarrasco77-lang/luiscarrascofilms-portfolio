@@ -9,6 +9,7 @@ const photoGrid = [
   { src: "/projects/fotosnaturaleza/DJI_20260308151022_0052_D.jpg", alt: "Alpine slope", aspect: "landscape" },
   { src: "/projects/fotosnaturaleza/DJI_20251021182436_0464_D 2.jpg", alt: "Ocean aerial", aspect: "landscape" },
   { src: "/projects/fotosnaturaleza/DSC07810.jpg", alt: "Waterfall", aspect: "portrait" },
+  { src: "/projects/fotosnaturaleza/DJI_20251025124753_0529_D.jpg", alt: "Caribbean cove", aspect: "landscape" },
 ];
 
 export default function VisionContent() {
