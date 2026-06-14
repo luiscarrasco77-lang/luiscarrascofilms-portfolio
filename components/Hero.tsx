@@ -3,8 +3,37 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+
+// Subtle, tiling film grain — adds cinematic texture without a network request.
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoOn, setVideoOn] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+
+  // Defer the heavy hero video until the browser is idle, so it never competes
+  // with hydration or the first scroll for the main thread.
+  useEffect(() => {
+    const start = () => setVideoOn(true);
+    const w = window as typeof window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    };
+    if (w.requestIdleCallback) {
+      const id = w.requestIdleCallback(start, { timeout: 1500 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const t = setTimeout(start, 700);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Once the source is attached, kick off loading + autoplay.
+  useEffect(() => {
+    if (videoOn) videoRef.current?.load();
+  }, [videoOn]);
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background */}
@@ -20,18 +49,35 @@ export default function Hero() {
           className="object-cover"
         />
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover"
+          preload="none"
+          onCanPlay={() => setVideoReady(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoReady ? "opacity-100" : "opacity-0"}`}
         >
-          <source src="/videos/hero-loop.mp4" type="video/mp4" />
+          {videoOn && <source src="/videos/hero-loop.mp4" type="video/mp4" />}
         </video>
         {/* Dark overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-background" />
         <div className="absolute inset-0 bg-black/20" />
+        {/* Cinematic vignette — pulls focus to the center */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(120% 90% at 50% 38%, transparent 52%, rgba(0,0,0,0.55) 100%)",
+          }}
+        />
+        {/* Film grain */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay"
+          style={{ backgroundImage: GRAIN }}
+        />
       </div>
 
       {/* Content */}

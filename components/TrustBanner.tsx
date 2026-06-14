@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 
 const brands = [
   "TOYOTA",
-  "DISNEY",
+  "STETSON UNIVERSITY",
   "SURFSHARK",
   "HUGEL",
   "LES AIRELLES",
+  "HSG ST GALLEN",
   "MESTIZA",
   "BLOND:ISH",
   "SHIMZA",
@@ -22,17 +23,27 @@ export default function TrustBanner() {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
-      className="py-10 border-y border-white/5 overflow-hidden bg-surface"
+      className="py-12 border-y border-white/5 overflow-hidden bg-surface"
     >
-      <div className="relative flex">
-        <div
-          className="flex shrink-0 animate-marquee"
-          style={{ gap: "5rem" }}
-        >
+      <p className="text-center text-[10px] uppercase tracking-[0.4em] text-white/30 mb-8 px-6">
+        Trusted by global brands &amp; artists
+      </p>
+
+      {/* Edge-faded marquee — names dissolve into the background at both ends */}
+      <div
+        className="relative flex"
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+        }}
+      >
+        <div className="flex shrink-0 animate-marquee" style={{ gap: "5rem" }}>
           {[...brands, ...brands].map((brand, i) => (
             <span
               key={i}
-              className="shrink-0 text-[12px] tracking-[0.35em] uppercase text-white/20 font-light"
+              className="shrink-0 text-[12px] tracking-[0.35em] uppercase text-white/25 font-light transition-colors duration-500 hover:text-white/60"
             >
               {brand}
             </span>

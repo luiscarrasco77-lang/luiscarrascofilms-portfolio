@@ -53,7 +53,7 @@ function FeaturedCard({
           src={project.poster}
           alt={project.title}
           fill
-          priority={index === 0}
+          loading="lazy"
           sizes={isFullWidth ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
           className="object-cover"
           style={{ zIndex: 1 }}
