@@ -38,6 +38,8 @@ yarn-error.log*
 
 # original large video files (compressed versions in /public/videos/ are used)
 /public/projects/videos/
+/public/videos2/
+/public/videos/Ski Freestyle.mp4
 
 # typescript
 *.tsbuildinfo

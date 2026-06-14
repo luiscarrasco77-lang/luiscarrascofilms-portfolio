@@ -44,19 +44,6 @@ body {
   width: 100%;
 }
 
-/* Performance: help the browser skip rendering off-screen sections */
-section {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
-
-/* Promote animated videos/images to their own GPU layer */
-video,
-img {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
 ::selection {
   background: rgba(255, 255, 255, 0.15);
   color: #fff;
@@ -81,4 +68,25 @@ img {
 .animate-marquee {
   animation: marquee 35s linear infinite;
   will-change: transform;
+}
+
+/* Respect users who prefer reduced motion — disable looping/transition animation */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
+/* Prevent iOS Safari from auto-inflating text on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }

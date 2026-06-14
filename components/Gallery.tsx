@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import Image from "next/image";
 import { allProjects, categories, type ProjectMedia } from "@/data/projects";
 import VideoModal from "@/components/VideoModal";
 
@@ -25,44 +26,60 @@ function GalleryItem({
   onVideoClick: (src: string, title: string) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [hovered, setHovered] = useState(false);
   const isPortrait = project.aspect === "portrait";
 
   const handleMouseEnter = () => {
-    setHovered(true);
     if (project.type === "video") videoRef.current?.play().catch(() => {});
   };
   const handleMouseLeave = () => {
-    setHovered(false);
     if (project.type === "video") {
       videoRef.current?.pause();
       if (videoRef.current) videoRef.current.currentTime = 0;
     }
   };
 
+  const isVideo = project.type === "video";
+
   return (
     <div
-      className={`group relative overflow-hidden ${project.type === "video" ? "cursor-pointer" : ""}`}
+      className={`group relative overflow-hidden ${isVideo ? "cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70" : ""}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={() => project.type === "video" && onVideoClick(project.src, project.title)}
+      onClick={() => isVideo && onVideoClick(project.src, project.title)}
+      {...(isVideo
+        ? {
+            role: "button",
+            tabIndex: 0,
+            "aria-label": `Play ${project.title} video`,
+            onKeyDown: (e: React.KeyboardEvent) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onVideoClick(project.src, project.title);
+              }
+            },
+          }
+        : {})}
     >
       <div className={`relative w-full ${isPortrait ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
         {project.type === "image" ? (
-          <img
+          <Image
             src={project.src}
             alt={project.title}
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            fill
+            sizes="(min-width: 768px) 33vw, 50vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
           <>
-            {project.poster && !hovered && (
-              <img
+            {/* Optimized poster always sits behind; the muted video (preload=none)
+                paints over it only once it starts playing on hover. */}
+            {project.poster && (
+              <Image
                 src={project.poster}
                 alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover"
+                fill
+                sizes="(min-width: 768px) 33vw, 50vw"
+                className="object-cover"
                 style={{ zIndex: 1 }}
               />
             )}
@@ -72,7 +89,6 @@ function GalleryItem({
               loop
               playsInline
               preload="none"
-              poster={project.poster}
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               style={{ zIndex: 2 }}
             >

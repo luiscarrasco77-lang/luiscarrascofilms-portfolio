@@ -23,7 +23,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
+  // Close the mobile menu on navigation — reset during render when the path
+  // changes (React's recommended pattern over a setState-in-effect).
+  const [prevPath, setPrevPath] = useState(pathname);
+  if (pathname !== prevPath) {
+    setPrevPath(pathname);
+    setMobileOpen(false);
+  }
 
   // On non-home pages → always show background. On home → show only when scrolled.
   const showBg = !isHome || scrolled;

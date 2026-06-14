@@ -2,19 +2,30 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Video Background */}
+      {/* Background */}
       <div className="absolute inset-0">
+        {/* Optimized poster — paints instantly (LCP), sits behind the video */}
+        <Image
+          src="/projects/fotosnaturaleza/DJI_20250507153645_0077_D 2.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="w-full h-full object-cover"
-          poster="/projects/fotosnaturaleza/DJI_20250507153645_0077_D 2.jpg"
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/videos/hero-loop.mp4" type="video/mp4" />
         </video>

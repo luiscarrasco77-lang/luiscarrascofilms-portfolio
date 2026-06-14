@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { featuredProjects, photoHighlights } from "@/data/projects";
 import { useRef, useState, useCallback } from "react";
 import VideoModal from "@/components/VideoModal";
@@ -48,14 +49,15 @@ function FeaturedCard({
               : "aspect-[16/10]"
         }`}
       >
-        {!hovered && (
-          <img
-            src={project.poster}
-            alt={project.title}
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ zIndex: 1 }}
-          />
-        )}
+        <Image
+          src={project.poster}
+          alt={project.title}
+          fill
+          priority={index === 0}
+          sizes={isFullWidth ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
+          className="object-cover"
+          style={{ zIndex: 1 }}
+        />
 
         <video
           ref={videoRef}
@@ -63,7 +65,6 @@ function FeaturedCard({
           loop
           playsInline
           preload="none"
-          poster={project.poster}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           style={{ zIndex: 2 }}
         >
@@ -128,12 +129,18 @@ function RealEstateCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      <Image
+        src={project.poster}
+        alt={project.title}
+        fill
+        sizes="(min-width: 768px) 68vw, 100vw"
+        className="object-cover"
+      />
       <video
         muted
         loop
         playsInline
         preload="none"
-        poster={project.poster}
         className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${hovered ? "scale-105" : "scale-100"}`}
         onMouseEnter={e => (e.currentTarget as HTMLVideoElement).play().catch(() => {})}
         onMouseLeave={e => {
@@ -169,13 +176,14 @@ function PhotoStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: i * 0.08 }}
           viewport={{ once: true }}
-          className="overflow-hidden aspect-[3/4]"
+          className="relative overflow-hidden aspect-[3/4]"
         >
-          <img
+          <Image
             src={photo.src}
             alt={photo.alt}
-            loading="lazy"
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            fill
+            sizes="(min-width: 768px) 25vw, 50vw"
+            className="object-cover hover:scale-105 transition-transform duration-500"
           />
         </motion.div>
       ))}
@@ -271,13 +279,14 @@ export default function FeaturedWork() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
-                className="flex-1 min-w-0 overflow-hidden aspect-[9/16]"
+                className="relative flex-1 min-w-0 overflow-hidden aspect-[9/16]"
               >
-                <img
+                <Image
                   src="/projects/fotosciudad/DSC00202.jpg"
                   alt="Madrid nights"
-                  loading="lazy"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  fill
+                  sizes="(min-width: 768px) 33vw, 50vw"
+                  className="object-cover hover:scale-105 transition-transform duration-700"
                 />
               </motion.div>
               <div className="flex-1 min-w-0">

@@ -112,10 +112,13 @@ export default function ContactForm() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-8">
                 <div>
-                  <label className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Name</label>
+                  <label htmlFor="name" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Name</label>
                   <input
+                    id="name"
+                    name="name"
                     type="text"
                     required
+                    autoComplete="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 placeholder:text-white/15"
@@ -124,10 +127,14 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Email</label>
+                  <label htmlFor="email" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Email</label>
                   <input
+                    id="email"
+                    name="email"
                     type="email"
                     required
+                    autoComplete="email"
+                    inputMode="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 placeholder:text-white/15"
@@ -136,9 +143,12 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Brand / Hotel / Agency</label>
+                  <label htmlFor="company" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Brand / Hotel / Agency</label>
                   <input
+                    id="company"
+                    name="company"
                     type="text"
+                    autoComplete="organization"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 placeholder:text-white/15"
@@ -147,8 +157,10 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Estimated Budget</label>
+                  <label htmlFor="budget" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Estimated Budget</label>
                   <select
+                    id="budget"
+                    name="budget"
                     value={formData.budget}
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 appearance-none cursor-pointer"
@@ -162,8 +174,10 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Project Details</label>
+                  <label htmlFor="details" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Project Details</label>
                   <textarea
+                    id="details"
+                    name="details"
                     required
                     rows={4}
                     value={formData.details}
