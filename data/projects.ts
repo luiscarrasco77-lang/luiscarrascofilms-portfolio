@@ -140,6 +140,38 @@ export const photoHighlights = [
 
 // ── ALL PROJECTS (Work page gallery) ──────────────────────────────────
 export const allProjects: ProjectMedia[] = [
+  // ── FEATURED CLIENT WORK (shown first) ──
+  {
+    id: "commercial-hsg-long",
+    src: "/videos/hsg-entrepreneurship.mp4",
+    poster: "/posters/hsg-entrepreneurship.jpg",
+    type: "video",
+    title: "HSG St. Gallen",
+    category: "commercial",
+    aspect: "landscape",
+    description: "Corporate — Entrepreneurship Program",
+  },
+  {
+    id: "commercial-hsg-reel",
+    src: "/videos/hsg-reel.mp4",
+    poster: "/posters/hsg-reel.jpg",
+    type: "video",
+    title: "HSG St. Gallen",
+    category: "commercial",
+    aspect: "portrait",
+    description: "Entrepreneurship — Reel",
+  },
+  {
+    id: "commercial-prince-university",
+    src: "/videos/prince-university.mp4",
+    poster: "/posters/prince-university.jpg",
+    type: "video",
+    title: "Stetson University",
+    category: "commercial",
+    aspect: "landscape",
+    description: "Corporate — Prince Entrepreneurship Program",
+  },
+
   // ── TRAVEL ──
   {
     id: "travel-dune",
@@ -156,6 +188,15 @@ export const allProjects: ProjectMedia[] = [
     poster: "",
     type: "image",
     title: "Pacific Coast",
+    category: "travel",
+    aspect: "landscape",
+  },
+  {
+    id: "travel-jungle-shore",
+    src: "/projects/fotosnaturaleza/DJI_20251026165114_0609_D.jpg",
+    poster: "",
+    type: "image",
+    title: "Jungle Shore",
     category: "travel",
     aspect: "landscape",
   },
@@ -756,16 +797,6 @@ export const allProjects: ProjectMedia[] = [
     category: "commercial",
     aspect: "landscape",
     description: "Commercial production",
-  },
-  {
-    id: "commercial-prince-university",
-    src: "/videos/prince-university.mp4",
-    poster: "/posters/prince-university.jpg",
-    type: "video",
-    title: "Stetson University",
-    category: "commercial",
-    aspect: "landscape",
-    description: "Corporate — Prince Entrepreneurship Program",
   },
   {
     id: "travel-reel-apagon",
