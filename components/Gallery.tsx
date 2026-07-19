@@ -23,7 +23,7 @@ function GalleryItem({
   onVideoClick,
 }: {
   project: ProjectMedia;
-  onVideoClick: (src: string, title: string) => void;
+  onVideoClick: (id: string, src: string, title: string) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isPortrait = project.aspect === "portrait";
@@ -45,7 +45,7 @@ function GalleryItem({
       className={`group relative overflow-hidden ${isVideo ? "cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70" : ""}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={() => isVideo && onVideoClick(project.src, project.title)}
+      onClick={() => isVideo && onVideoClick(project.id, project.src, project.title)}
       {...(isVideo
         ? {
             role: "button",
@@ -54,7 +54,7 @@ function GalleryItem({
             onKeyDown: (e: React.KeyboardEvent) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                onVideoClick(project.src, project.title);
+                onVideoClick(project.id, project.src, project.title);
               }
             },
           }
@@ -126,10 +126,10 @@ function GalleryItem({
 
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [modal, setModal] = useState<{ src: string; title: string } | null>(null);
+  const [modal, setModal] = useState<{ id: string; src: string; title: string } | null>(null);
   const numCols = useCols();
 
-  const handleVideoClick = useCallback((src: string, title: string) => setModal({ src, title }), []);
+  const handleVideoClick = useCallback((id: string, src: string, title: string) => setModal({ id, src, title }), []);
   const closeModal = useCallback(() => setModal(null), []);
 
   const filtered = useMemo(
@@ -159,7 +159,7 @@ export default function Gallery() {
 
   return (
     <>
-      {modal && <VideoModal src={modal.src} title={modal.title} onClose={closeModal} />}
+      {modal && <VideoModal shareId={modal.id} src={modal.src} title={modal.title} onClose={closeModal} />}
 
       <section className="pt-32 pb-24 md:pt-36 md:pb-32">
         {/* Title — scrolls with content */}

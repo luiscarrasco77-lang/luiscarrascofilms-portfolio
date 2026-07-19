@@ -16,7 +16,7 @@ function FeaturedCard({
   project: (typeof featuredProjects)[0];
   isFullWidth?: boolean;
   index: number;
-  onVideoClick: (src: string, title: string) => void;
+  onVideoClick: (id: string, src: string, title: string) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hovered, setHovered] = useState(false);
@@ -38,7 +38,7 @@ function FeaturedCard({
         videoRef.current?.pause();
         if (videoRef.current) videoRef.current.currentTime = 0;
       }}
-      onClick={() => onVideoClick(project.src, project.title)}
+      onClick={() => onVideoClick(project.id, project.src, project.title)}
     >
       <div
         className={`relative w-full overflow-hidden ${
@@ -114,7 +114,7 @@ function RealEstateCard({
   onVideoClick,
 }: {
   project: (typeof featuredProjects)[0];
-  onVideoClick: (src: string, title: string) => void;
+  onVideoClick: (id: string, src: string, title: string) => void;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -125,7 +125,7 @@ function RealEstateCard({
       transition={{ duration: 0.6, delay: 0.1 }}
       viewport={{ once: true, margin: "-40px" }}
       className="flex-1 min-w-0 relative overflow-hidden cursor-pointer"
-      onClick={() => onVideoClick(project.src, project.title)}
+      onClick={() => onVideoClick(project.id, project.src, project.title)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -192,13 +192,13 @@ function PhotoStrip() {
 }
 
 export default function FeaturedWork() {
-  const [modal, setModal] = useState<{ src: string; title: string } | null>(null);
-  const handleVideoClick = useCallback((src: string, title: string) => setModal({ src, title }), []);
+  const [modal, setModal] = useState<{ id: string; src: string; title: string } | null>(null);
+  const handleVideoClick = useCallback((id: string, src: string, title: string) => setModal({ id, src, title }), []);
   const closeModal = useCallback(() => setModal(null), []);
 
   return (
     <>
-      {modal && <VideoModal src={modal.src} title={modal.title} onClose={closeModal} />}
+      {modal && <VideoModal shareId={modal.id} src={modal.src} title={modal.title} onClose={closeModal} />}
 
       <section className="py-20 md:py-28 bg-background">
         <div className="w-full">

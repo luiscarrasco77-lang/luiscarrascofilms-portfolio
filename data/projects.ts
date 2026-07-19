@@ -152,16 +152,6 @@ export const allProjects: ProjectMedia[] = [
     description: "Corporate — Entrepreneurship Program",
   },
   {
-    id: "commercial-hsg-reel",
-    src: "/videos/hsg-reel.mp4",
-    poster: "/posters/hsg-reel.jpg",
-    type: "video",
-    title: "HSG St. Gallen",
-    category: "commercial",
-    aspect: "portrait",
-    description: "Entrepreneurship — Reel",
-  },
-  {
     id: "commercial-prince-university",
     src: "/videos/prince-university.mp4",
     poster: "/posters/prince-university.jpg",
@@ -170,6 +160,16 @@ export const allProjects: ProjectMedia[] = [
     category: "commercial",
     aspect: "landscape",
     description: "Corporate — Prince Entrepreneurship Program",
+  },
+  {
+    id: "commercial-hsg-reel",
+    src: "/videos/hsg-reel.mp4",
+    poster: "/posters/hsg-reel.jpg",
+    type: "video",
+    title: "HSG St. Gallen",
+    category: "commercial",
+    aspect: "portrait",
+    description: "Entrepreneurship — Reel",
   },
 
   // ── TRAVEL ──
@@ -219,6 +219,15 @@ export const allProjects: ProjectMedia[] = [
     aspect: "landscape",
   },
   {
+    id: "pizol-ridge-bike",
+    src: "/fotos1/DSC02266.jpg",
+    poster: "",
+    type: "image",
+    title: "Pizol Ridge",
+    category: "travel",
+    aspect: "landscape",
+  },
+  {
     id: "travel-waterfall",
     src: "/projects/fotosnaturaleza/DSC07809.jpg",
     poster: "",
@@ -235,6 +244,15 @@ export const allProjects: ProjectMedia[] = [
     title: "La Fortuna Falls",
     category: "travel",
     aspect: "portrait",
+  },
+  {
+    id: "travel-island-cove",
+    src: "/projects/fotosnaturaleza/DJI_20251026164359_0586_D.jpg",
+    poster: "",
+    type: "image",
+    title: "Island Cove",
+    category: "travel",
+    aspect: "landscape",
   },
   {
     id: "travel-monterrey",
@@ -356,6 +374,15 @@ export const allProjects: ProjectMedia[] = [
 
   // ── LIFESTYLE / CITY ──
   {
+    id: "pizol-alpine-lakes",
+    src: "/fotos1/DSC02353.jpg",
+    poster: "",
+    type: "image",
+    title: "Alpine Lakes",
+    category: "travel",
+    aspect: "portrait",
+  },
+  {
     id: "city-london-eye",
     src: "/projects/fotosciudad/DSC06939 2.jpg",
     poster: "",
@@ -475,6 +502,15 @@ export const allProjects: ProjectMedia[] = [
     aspect: "landscape",
   },
   {
+    id: "pizol-summit",
+    src: "/fotos1/Pizol-28.jpg",
+    poster: "",
+    type: "image",
+    title: "Pizol Summit",
+    category: "travel",
+    aspect: "landscape",
+  },
+  {
     id: "action-ski-vid",
     src: "/videos/ski-action.mp4",
     poster: "/posters/ski-action.jpg",
@@ -519,6 +555,15 @@ export const allProjects: ProjectMedia[] = [
     type: "video",
     title: "Blond:ish",
     category: "festivals",
+    aspect: "portrait",
+  },
+  {
+    id: "pizol-trail-ride",
+    src: "/fotos1/DSC02703.jpg",
+    poster: "",
+    type: "image",
+    title: "Trail Ride",
+    category: "travel",
     aspect: "portrait",
   },
   {
@@ -574,6 +619,15 @@ export const allProjects: ProjectMedia[] = [
     poster: "",
     type: "image",
     title: "Alpine Slope",
+    category: "travel",
+    aspect: "landscape",
+  },
+  {
+    id: "pizol-gondola",
+    src: "/fotos1/Pizol-16.jpg",
+    poster: "",
+    type: "image",
+    title: "Pizol Gondola",
     category: "travel",
     aspect: "landscape",
   },
@@ -697,6 +751,15 @@ export const allProjects: ProjectMedia[] = [
     aspect: "portrait",
   },
   {
+    id: "pizol-ridge-hike",
+    src: "/fotos1/DSC02410.jpg",
+    poster: "",
+    type: "image",
+    title: "Ridge Hike",
+    category: "travel",
+    aspect: "landscape",
+  },
+  {
     id: "city-street3",
     src: "/projects/fotosciudad/DSC07077.jpg",
     poster: "",
@@ -722,6 +785,15 @@ export const allProjects: ProjectMedia[] = [
     title: "Night City",
     category: "lifestyle",
     aspect: "portrait",
+  },
+  {
+    id: "travel-golden-delta",
+    src: "/projects/fotosnaturaleza/DJI_20251124173820_0785_D.jpg",
+    poster: "",
+    type: "image",
+    title: "Golden Delta",
+    category: "travel",
+    aspect: "landscape",
   },
   {
     id: "city-street5",
@@ -810,6 +882,15 @@ export const allProjects: ProjectMedia[] = [
   },
 
   // ── PUERTO RICO ──
+  {
+    id: "pizol-summit-trail",
+    src: "/fotos1/Pizol-18.jpg",
+    poster: "",
+    type: "image",
+    title: "Summit Trail",
+    category: "travel",
+    aspect: "landscape",
+  },
   {
     id: "pr-aerial-1",
     src: "/projects/fotosPR/DJI_20260508183728_0180_D.jpg",
