@@ -144,7 +144,7 @@ export const allProjects: ProjectMedia[] = [
   {
     id: "commercial-hsg-long",
     src: "/videos/hsg-entrepreneurship.mp4",
-    poster: "/posters/hsg-entrepreneurship.jpg",
+    poster: "/posters/hsg-entrepreneurship.jpg?v=2",
     type: "video",
     title: "HSG St. Gallen",
     category: "commercial",
@@ -154,7 +154,7 @@ export const allProjects: ProjectMedia[] = [
   {
     id: "commercial-prince-university",
     src: "/videos/prince-university.mp4",
-    poster: "/posters/prince-university.jpg",
+    poster: "/posters/prince-university.jpg?v=2",
     type: "video",
     title: "Stetson University",
     category: "commercial",
@@ -164,7 +164,7 @@ export const allProjects: ProjectMedia[] = [
   {
     id: "commercial-hsg-reel",
     src: "/videos/hsg-reel.mp4",
-    poster: "/posters/hsg-reel.jpg",
+    poster: "/posters/hsg-reel.jpg?v=2",
     type: "video",
     title: "HSG St. Gallen",
     category: "commercial",
