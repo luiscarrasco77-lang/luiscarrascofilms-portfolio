@@ -144,7 +144,7 @@ export const allProjects: ProjectMedia[] = [
   {
     id: "commercial-hsg-long",
     src: "/videos/hsg-entrepreneurship.mp4",
-    poster: "/posters/hsg-entrepreneurship-v2.jpg",
+    poster: "/posters/hsg-entrepreneurship-v3.jpg",
     type: "video",
     title: "HSG St. Gallen",
     category: "commercial",
@@ -164,7 +164,7 @@ export const allProjects: ProjectMedia[] = [
   {
     id: "commercial-hsg-reel",
     src: "/videos/hsg-reel.mp4",
-    poster: "/posters/hsg-reel-v2.jpg",
+    poster: "/posters/hsg-reel-v3.jpg",
     type: "video",
     title: "HSG St. Gallen",
     category: "commercial",
