@@ -2,12 +2,14 @@ export type ProjectMedia = {
   id: string;
   src: string;
   poster: string;
-  type: "image" | "video";
+  type: "image" | "video" | "embed";
   title: string;
   category: "travel" | "festivals" | "action" | "commercial" | "lifestyle";
   aspect: "landscape" | "portrait" | "square";
   featured?: boolean;
   description?: string;
+  // For type "embed": the external player URL (e.g. a Behance embed iframe src).
+  embedUrl?: string;
 };
 
 // ── FEATURED PROJECTS (Landing page) ──────────────────────────────────
@@ -170,6 +172,17 @@ export const allProjects: ProjectMedia[] = [
     category: "commercial",
     aspect: "portrait",
     description: "Entrepreneurship — Reel",
+  },
+  {
+    id: "commercial-toyota",
+    src: "",
+    poster: "/posters/toyota-commercial.jpg",
+    type: "embed",
+    title: "Toyota",
+    category: "commercial",
+    aspect: "landscape",
+    description: "Brand film",
+    embedUrl: "https://www.behance.net/embed/project/136605657?ilo0=1",
   },
 
   // ── TRAVEL ──
@@ -942,6 +955,24 @@ export const allProjects: ProjectMedia[] = [
     poster: "",
     type: "image",
     title: "Puerto Rico",
+    category: "travel",
+    aspect: "landscape",
+  },
+  {
+    id: "travel-coral-bay",
+    src: "/projects/fotosnaturaleza/DJI_20250507154503_0101_D 3.jpg",
+    poster: "",
+    type: "image",
+    title: "Coral Bay",
+    category: "travel",
+    aspect: "landscape",
+  },
+  {
+    id: "travel-jungle-cascade",
+    src: "/projects/fotosnaturaleza/DSC08195.jpg",
+    poster: "",
+    type: "image",
+    title: "Jungle Cascade",
     category: "travel",
     aspect: "landscape",
   },

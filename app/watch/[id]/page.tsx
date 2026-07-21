@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { allProjects, featuredProjects, type ProjectMedia } from "@/data/projects";
 
-// Every shareable video, from both the homepage reel and the Work gallery.
+// Every shareable video (self-hosted or external embed), from both the homepage
+// reel and the Work gallery.
 const videoPool: ProjectMedia[] = [...featuredProjects, ...allProjects].filter(
-  (p) => p.type === "video"
+  (p) => p.type === "video" || p.type === "embed"
 );
 
 function findVideo(id: string) {
@@ -72,15 +73,27 @@ export default async function WatchPage({
         </Link>
 
         <div className={`mx-auto ${isPortrait ? "max-w-[440px]" : "max-w-5xl"}`}>
-          <video
-            controls
-            autoPlay
-            playsInline
-            poster={v.poster || undefined}
-            className="w-full max-h-[80vh] bg-black"
-          >
-            <source src={v.src} type="video/mp4" />
-          </video>
+          {v.embedUrl ? (
+            <div className="relative w-full aspect-video bg-black">
+              <iframe
+                src={v.embedUrl}
+                title={v.title}
+                className="absolute inset-0 w-full h-full"
+                allow="autoplay; clipboard-write; fullscreen; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          ) : (
+            <video
+              controls
+              autoPlay
+              playsInline
+              poster={v.poster || undefined}
+              className="w-full max-h-[80vh] bg-black"
+            >
+              <source src={v.src} type="video/mp4" />
+            </video>
+          )}
 
           <div className="mt-8">
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted mb-2">

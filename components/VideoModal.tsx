@@ -7,10 +7,11 @@ interface VideoModalProps {
   src: string;
   title: string;
   shareId?: string;
+  embedUrl?: string;
   onClose: () => void;
 }
 
-export default function VideoModal({ src, title, shareId, onClose }: VideoModalProps) {
+export default function VideoModal({ src, title, shareId, embedUrl, onClose }: VideoModalProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [copied, setCopied] = useState(false);
 
@@ -99,7 +100,7 @@ export default function VideoModal({ src, title, shareId, onClose }: VideoModalP
           <p className="text-[11px] uppercase tracking-[0.3em] text-white/40">{title}</p>
         </div>
 
-        {/* Video container */}
+        {/* Player container — iframe for external embeds, native video otherwise */}
         <motion.div
           initial={{ scale: 0.94, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -108,16 +109,29 @@ export default function VideoModal({ src, title, shareId, onClose }: VideoModalP
           className="relative w-full max-w-5xl max-h-[85vh]"
           onClick={(e) => e.stopPropagation()}
         >
-          <video
-            ref={videoRef}
-            autoPlay
-            controls
-            playsInline
-            className="w-full h-full max-h-[85vh] object-contain"
-            style={{ background: "transparent" }}
-          >
-            <source src={src} type="video/mp4" />
-          </video>
+          {embedUrl ? (
+            <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black">
+              <iframe
+                src={embedUrl}
+                title={title}
+                className="absolute inset-0 w-full h-full"
+                allow="autoplay; clipboard-write; fullscreen; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <video
+              ref={videoRef}
+              autoPlay
+              controls
+              playsInline
+              className="w-full h-full max-h-[85vh] object-contain"
+              style={{ background: "transparent" }}
+            >
+              <source src={src} type="video/mp4" />
+            </video>
+          )}
         </motion.div>
       </motion.div>
     </AnimatePresence>

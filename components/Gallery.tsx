@@ -23,7 +23,7 @@ function GalleryItem({
   onVideoClick,
 }: {
   project: ProjectMedia;
-  onVideoClick: (id: string, src: string, title: string) => void;
+  onVideoClick: (id: string, src: string, title: string, embedUrl?: string) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isPortrait = project.aspect === "portrait";
@@ -39,14 +39,16 @@ function GalleryItem({
   };
 
   const isVideo = project.type === "video";
+  const isEmbed = project.type === "embed";
+  const isClickable = isVideo || isEmbed;
 
   return (
     <div
-      className={`group relative overflow-hidden ${isVideo ? "cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70" : ""}`}
+      className={`group relative overflow-hidden ${isClickable ? "cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70" : ""}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={() => isVideo && onVideoClick(project.id, project.src, project.title)}
-      {...(isVideo
+      onClick={() => isClickable && onVideoClick(project.id, project.src, project.title, project.embedUrl)}
+      {...(isClickable
         ? {
             role: "button",
             tabIndex: 0,
@@ -54,16 +56,16 @@ function GalleryItem({
             onKeyDown: (e: React.KeyboardEvent) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                onVideoClick(project.id, project.src, project.title);
+                onVideoClick(project.id, project.src, project.title, project.embedUrl);
               }
             },
           }
         : {})}
     >
       <div className={`relative w-full ${isPortrait ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
-        {project.type === "image" ? (
+        {project.type !== "video" ? (
           <Image
-            src={project.src}
+            src={isEmbed ? project.poster : project.src}
             alt={project.title}
             fill
             sizes="(min-width: 768px) 33vw, 50vw"
@@ -109,7 +111,7 @@ function GalleryItem({
           <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 mt-0.5">{project.category}</p>
         </div>
 
-        {project.type === "video" && (
+        {isClickable && (
           <div
             className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300"
             style={{ zIndex: 4 }}
@@ -126,10 +128,10 @@ function GalleryItem({
 
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [modal, setModal] = useState<{ id: string; src: string; title: string } | null>(null);
+  const [modal, setModal] = useState<{ id: string; src: string; title: string; embedUrl?: string } | null>(null);
   const numCols = useCols();
 
-  const handleVideoClick = useCallback((id: string, src: string, title: string) => setModal({ id, src, title }), []);
+  const handleVideoClick = useCallback((id: string, src: string, title: string, embedUrl?: string) => setModal({ id, src, title, embedUrl }), []);
   const closeModal = useCallback(() => setModal(null), []);
 
   const filtered = useMemo(
@@ -159,7 +161,7 @@ export default function Gallery() {
 
   return (
     <>
-      {modal && <VideoModal shareId={modal.id} src={modal.src} title={modal.title} onClose={closeModal} />}
+      {modal && <VideoModal shareId={modal.id} src={modal.src} title={modal.title} embedUrl={modal.embedUrl} onClose={closeModal} />}
 
       <section className="pt-32 pb-24 md:pt-36 md:pb-32">
         {/* Title — scrolls with content */}
