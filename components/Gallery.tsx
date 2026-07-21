@@ -5,6 +5,13 @@ import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { allProjects, categories, type ProjectMedia } from "@/data/projects";
 import VideoModal from "@/components/VideoModal";
+import ImageModal from "@/components/ImageModal";
+
+const mediaTypes = [
+  { id: "all", label: "All" },
+  { id: "video", label: "Video" },
+  { id: "photo", label: "Photography" },
+] as const;
 
 // Returns 2 on mobile, 3 on desktop — updates on resize
 function useCols() {
@@ -20,50 +27,45 @@ function useCols() {
 
 function GalleryItem({
   project,
-  onVideoClick,
+  onOpen,
 }: {
   project: ProjectMedia;
-  onVideoClick: (id: string, src: string, title: string, embedUrl?: string) => void;
+  onOpen: (project: ProjectMedia) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isPortrait = project.aspect === "portrait";
+  const isVideo = project.type === "video";
+  const isEmbed = project.type === "embed";
+  const isImage = project.type === "image";
 
   const handleMouseEnter = () => {
-    if (project.type === "video") videoRef.current?.play().catch(() => {});
+    if (isVideo) videoRef.current?.play().catch(() => {});
   };
   const handleMouseLeave = () => {
-    if (project.type === "video") {
+    if (isVideo) {
       videoRef.current?.pause();
       if (videoRef.current) videoRef.current.currentTime = 0;
     }
   };
 
-  const isVideo = project.type === "video";
-  const isEmbed = project.type === "embed";
-  const isClickable = isVideo || isEmbed;
-
   return (
     <div
-      className={`group relative overflow-hidden ${isClickable ? "cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70" : ""}`}
+      className="group relative overflow-hidden cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70"
+      role="button"
+      tabIndex={0}
+      aria-label={isImage ? `Enlarge ${project.title} photo` : `Play ${project.title} video`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={() => isClickable && onVideoClick(project.id, project.src, project.title, project.embedUrl)}
-      {...(isClickable
-        ? {
-            role: "button",
-            tabIndex: 0,
-            "aria-label": `Play ${project.title} video`,
-            onKeyDown: (e: React.KeyboardEvent) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                onVideoClick(project.id, project.src, project.title, project.embedUrl);
-              }
-            },
-          }
-        : {})}
+      onClick={() => onOpen(project)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen(project);
+        }
+      }}
     >
       <div className={`relative w-full ${isPortrait ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
-        {project.type !== "video" ? (
+        {!isVideo ? (
           <Image
             src={isEmbed ? project.poster : project.src}
             alt={project.title}
@@ -111,16 +113,21 @@ function GalleryItem({
           <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 mt-0.5">{project.category}</p>
         </div>
 
-        {isClickable && (
-          <div
-            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300"
-            style={{ zIndex: 4 }}
-          >
+        {/* Corner badge: play for video/embed, expand for photos */}
+        <div
+          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300"
+          style={{ zIndex: 4 }}
+        >
+          {isImage ? (
+            <svg className="w-3.5 h-3.5 text-white group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4" />
+            </svg>
+          ) : (
             <svg className="w-3 h-3 text-white ml-0.5 group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
@@ -128,15 +135,32 @@ function GalleryItem({
 
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [mediaFilter, setMediaFilter] = useState<"all" | "video" | "photo">("all");
   const [modal, setModal] = useState<{ id: string; src: string; title: string; embedUrl?: string } | null>(null);
+  const [imageModal, setImageModal] = useState<{ src: string; alt: string } | null>(null);
   const numCols = useCols();
 
-  const handleVideoClick = useCallback((id: string, src: string, title: string, embedUrl?: string) => setModal({ id, src, title, embedUrl }), []);
+  const handleOpen = useCallback((project: ProjectMedia) => {
+    if (project.type === "image") {
+      setImageModal({ src: project.src, alt: project.title });
+    } else {
+      setModal({ id: project.id, src: project.src, title: project.title, embedUrl: project.embedUrl });
+    }
+  }, []);
   const closeModal = useCallback(() => setModal(null), []);
+  const closeImageModal = useCallback(() => setImageModal(null), []);
 
   const filtered = useMemo(
-    () => selectedCategory === "all" ? allProjects : allProjects.filter((p) => p.category === selectedCategory),
-    [selectedCategory]
+    () =>
+      allProjects.filter((p) => {
+        const catOk = selectedCategory === "all" || p.category === selectedCategory;
+        const mediaOk =
+          mediaFilter === "all" ||
+          (mediaFilter === "video" && (p.type === "video" || p.type === "embed")) ||
+          (mediaFilter === "photo" && p.type === "image");
+        return catOk && mediaOk;
+      }),
+    [selectedCategory, mediaFilter]
   );
 
   // Balanced masonry: place each item into the currently shortest column so all
@@ -162,6 +186,7 @@ export default function Gallery() {
   return (
     <>
       {modal && <VideoModal shareId={modal.id} src={modal.src} title={modal.title} embedUrl={modal.embedUrl} onClose={closeModal} />}
+      {imageModal && <ImageModal src={imageModal.src} alt={imageModal.alt} onClose={closeImageModal} />}
 
       <section className="pt-32 pb-24 md:pt-36 md:pb-32">
         {/* Title — scrolls with content */}
@@ -176,53 +201,79 @@ export default function Gallery() {
           </motion.h1>
         </div>
 
-        {/* Sticky bar — categories + hint, always visible below header */}
+        {/* Sticky bar — media type + categories, always visible below header */}
         <div className="sticky top-16 z-30 bg-background/95 backdrop-blur-md border-y border-white/5 mb-8 md:mb-10">
-          <div className="px-5 md:px-10 max-w-[1400px] mx-auto py-3 md:py-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="flex flex-wrap gap-2"
-            >
-              {categories.map((cat) => (
+          <div className="px-5 md:px-10 max-w-[1400px] mx-auto py-3 md:py-4 space-y-3">
+            {/* Media type — All / Video / Photography */}
+            <div className="flex flex-wrap items-center gap-2">
+              {mediaTypes.map((m) => (
                 <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] rounded-full transition-all duration-250 ${
-                    selectedCategory === cat.id
-                      ? "bg-white text-black font-medium"
-                      : "text-white/50 hover:text-white hover:bg-white/8"
+                  key={m.id}
+                  onClick={() => setMediaFilter(m.id)}
+                  className={`px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] rounded-full border transition-all duration-250 ${
+                    mediaFilter === m.id
+                      ? "bg-white text-black border-white font-medium"
+                      : "text-white/60 border-white/15 hover:text-white hover:border-white/40"
                   }`}
                 >
-                  {cat.label}
+                  {m.label}
                 </button>
               ))}
-            </motion.div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-white/40 md:ml-auto">
-              Click any video to watch with sound
-            </p>
+            </div>
+
+            {/* Categories */}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/5 pt-3">
+              <div className="flex flex-wrap gap-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] rounded-full transition-all duration-250 ${
+                      selectedCategory === cat.id
+                        ? "bg-white text-black font-medium"
+                        : "text-white/50 hover:text-white hover:bg-white/8"
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/40 md:ml-auto">
+                Click any item to view
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Masonry grid — full-bleed */}
         <AnimatePresence mode="wait">
-          <motion.div
-            key={`${selectedCategory}-${numCols}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="flex gap-2 md:gap-3 w-full"
-          >
-            {columns.map((col, ci) => (
-              <div key={ci} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">
-                {col.map((project) => (
-                  <GalleryItem key={project.id} project={project} onVideoClick={handleVideoClick} />
-                ))}
-              </div>
-            ))}
-          </motion.div>
+          {filtered.length > 0 ? (
+            <motion.div
+              key={`${selectedCategory}-${mediaFilter}-${numCols}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex gap-2 md:gap-3 w-full"
+            >
+              {columns.map((col, ci) => (
+                <div key={ci} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">
+                  {col.map((project) => (
+                    <GalleryItem key={project.id} project={project} onOpen={handleOpen} />
+                  ))}
+                </div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.p
+              key="empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="px-5 md:px-10 max-w-[1400px] mx-auto text-sm text-muted py-20 text-center"
+            >
+              Nothing here yet in this filter.
+            </motion.p>
+          )}
         </AnimatePresence>
       </section>
     </>
