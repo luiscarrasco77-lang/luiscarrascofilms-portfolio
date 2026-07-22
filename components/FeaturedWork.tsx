@@ -6,6 +6,7 @@ import Image from "next/image";
 import { featuredProjects, photoHighlights } from "@/data/projects";
 import { useRef, useState, useCallback } from "react";
 import VideoModal from "@/components/VideoModal";
+import { useI18n } from "@/lib/i18n";
 
 function FeaturedCard({
   project,
@@ -192,6 +193,7 @@ function PhotoStrip() {
 }
 
 export default function FeaturedWork() {
+  const { t } = useI18n();
   const [modal, setModal] = useState<{ id: string; src: string; title: string } | null>(null);
   const handleVideoClick = useCallback((id: string, src: string, title: string) => setModal({ id, src, title }), []);
   const closeModal = useCallback(() => setModal(null), []);
@@ -210,8 +212,8 @@ export default function FeaturedWork() {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <p className="text-[11px] uppercase tracking-[0.3em] text-muted mb-3">Selected Work</p>
-              <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">Featured Projects</h2>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-muted mb-3">{t.featured.eyebrow}</p>
+              <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">{t.featured.title}</h2>
             </motion.div>
             <motion.div
               initial={{ opacity: 0 }}
@@ -223,7 +225,7 @@ export default function FeaturedWork() {
                 href="/work"
                 className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/40 hover:text-white transition-colors duration-300"
               >
-                View All Work
+                {t.featured.viewAll}
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>

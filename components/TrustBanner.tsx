@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 
 const brands = [
   "TOYOTA",
@@ -17,6 +18,7 @@ const brands = [
 ];
 
 export default function TrustBanner() {
+  const { t } = useI18n();
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -26,7 +28,7 @@ export default function TrustBanner() {
       className="py-12 border-y border-white/5 overflow-hidden bg-surface"
     >
       <p className="text-center text-[10px] uppercase tracking-[0.4em] text-white/30 mb-8 px-6">
-        Trusted by global brands &amp; artists
+        {t.trust.label}
       </p>
 
       {/* Edge-faded marquee — names dissolve into the background at both ends */}

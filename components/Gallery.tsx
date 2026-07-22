@@ -6,12 +6,9 @@ import Image from "next/image";
 import { allProjects, categories, type ProjectMedia } from "@/data/projects";
 import VideoModal from "@/components/VideoModal";
 import ImageModal from "@/components/ImageModal";
+import { useI18n } from "@/lib/i18n";
 
-const mediaTypes = [
-  { id: "all", label: "All" },
-  { id: "video", label: "Video" },
-  { id: "photo", label: "Photography" },
-] as const;
+const mediaTypes = [{ id: "all" }, { id: "video" }, { id: "photo" }] as const;
 
 // Returns 2 on mobile, 3 on desktop — updates on resize
 function useCols() {
@@ -32,6 +29,7 @@ function GalleryItem({
   project: ProjectMedia;
   onOpen: (project: ProjectMedia) => void;
 }) {
+  const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const isPortrait = project.aspect === "portrait";
   const isVideo = project.type === "video";
@@ -110,7 +108,7 @@ function GalleryItem({
           style={{ zIndex: 4 }}
         >
           <p className="text-sm font-light text-white">{project.title}</p>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 mt-0.5">{project.category}</p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 mt-0.5">{t.gallery.categories[project.category]}</p>
         </div>
 
         {/* Corner badge: play for video/embed, expand for photos */}
@@ -134,6 +132,7 @@ function GalleryItem({
 }
 
 export default function Gallery() {
+  const { t } = useI18n();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [mediaFilter, setMediaFilter] = useState<"all" | "video" | "photo">("all");
   const [modal, setModal] = useState<{ id: string; src: string; title: string; embedUrl?: string } | null>(null);
@@ -197,7 +196,7 @@ export default function Gallery() {
             transition={{ duration: 0.5 }}
             className="text-4xl md:text-5xl font-extralight tracking-tight"
           >
-            Portfolio
+            {t.gallery.title}
           </motion.h1>
         </div>
 
@@ -216,7 +215,7 @@ export default function Gallery() {
                       : "text-white/60 border-white/15 hover:text-white hover:border-white/40"
                   }`}
                 >
-                  {m.label}
+                  {t.gallery.media[m.id]}
                 </button>
               ))}
             </div>
@@ -234,12 +233,12 @@ export default function Gallery() {
                         : "text-white/50 hover:text-white hover:bg-white/8"
                     }`}
                   >
-                    {cat.label}
+                    {t.gallery.categories[cat.id]}
                   </button>
                 ))}
               </div>
               <p className="text-[11px] uppercase tracking-[0.2em] text-white/40 md:ml-auto">
-                Click any item to view
+                {t.gallery.hint}
               </p>
             </div>
           </div>
@@ -271,7 +270,7 @@ export default function Gallery() {
               animate={{ opacity: 1 }}
               className="px-5 md:px-10 max-w-[1400px] mx-auto text-sm text-muted py-20 text-center"
             >
-              Nothing here yet in this filter.
+              {t.gallery.empty}
             </motion.p>
           )}
         </AnimatePresence>

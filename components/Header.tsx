@@ -4,14 +4,31 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useI18n } from "@/lib/i18n";
 
 const navItems = [
-  { name: "Work", href: "/work" },
-  { name: "Vision", href: "/vision" },
-  { name: "Contact", href: "/contact" },
-];
+  { key: "work", href: "/work" },
+  { key: "vision", href: "/vision" },
+  { key: "contact", href: "/contact" },
+] as const;
+
+function LangToggle({ className = "" }: { className?: string }) {
+  const { lang, toggle } = useI18n();
+  return (
+    <button
+      onClick={toggle}
+      aria-label="Switch language"
+      className={`text-[11px] uppercase tracking-[0.2em] transition-colors ${className}`}
+    >
+      <span className={lang === "en" ? "text-white" : "text-white/40 hover:text-white/70"}>EN</span>
+      <span className="text-white/20 mx-1">/</span>
+      <span className={lang === "es" ? "text-white" : "text-white/40 hover:text-white/70"}>ES</span>
+    </button>
+  );
+}
 
 export default function Header() {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
@@ -70,7 +87,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item, i) => (
               <motion.div
-                key={item.name}
+                key={item.key}
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + i * 0.08 }}
@@ -83,7 +100,7 @@ export default function Header() {
                       : "text-white/50 hover:text-white after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-center after:scale-x-0 after:bg-white/40 after:transition-transform after:duration-300 hover:after:scale-x-100"
                   }`}
                 >
-                  {item.name}
+                  {t.nav[item.key]}
                   {pathname === item.href && (
                     <motion.span
                       layoutId="nav-indicator"
@@ -97,8 +114,9 @@ export default function Header() {
               href="/contact"
               className="ml-2 px-5 py-2 border border-white/20 text-[11px] uppercase tracking-[0.2em] text-white/70 hover:bg-white hover:text-black transition-all duration-300"
             >
-              Let&apos;s Work
+              {t.nav.letsWork}
             </Link>
+            <LangToggle />
           </nav>
 
           {/* Mobile toggle */}
@@ -135,7 +153,7 @@ export default function Header() {
           >
             {navItems.map((item, i) => (
               <motion.div
-                key={item.name}
+                key={item.key}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
@@ -147,7 +165,7 @@ export default function Header() {
                     pathname === item.href ? "text-white" : "text-white/40"
                   }`}
                 >
-                  {item.name}
+                  {t.nav[item.key]}
                 </Link>
               </motion.div>
             ))}
@@ -155,13 +173,15 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
+              className="flex flex-col items-center gap-8"
             >
               <Link
                 href="/contact"
                 className="mt-4 px-8 py-3 border border-white/20 text-[11px] uppercase tracking-[0.3em] text-white/60"
               >
-                Let&apos;s Work
+                {t.nav.letsWork}
               </Link>
+              <LangToggle className="text-sm" />
             </motion.div>
           </motion.div>
         )}

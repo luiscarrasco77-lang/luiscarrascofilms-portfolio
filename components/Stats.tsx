@@ -2,13 +2,14 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 const stats = [
-  { value: 5, suffix: "+", label: "Years of Global Production" },
-  { value: 1, suffix: "M+", label: "Instagram Followers Reached" },
-  { value: 500, suffix: "K+", label: "YouTube Subs Built" },
-  { value: 2, suffix: "M", label: "Monthly Views" },
-];
+  { value: 5, suffix: "+", key: "years" },
+  { value: 1, suffix: "M+", key: "instagram" },
+  { value: 500, suffix: "K+", key: "youtube" },
+  { value: 2, suffix: "M", key: "monthly" },
+] as const;
 
 function AnimatedCounter({
   target,
@@ -47,6 +48,7 @@ function AnimatedCounter({
 }
 
 export default function Stats() {
+  const { t } = useI18n();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -59,13 +61,13 @@ export default function Stats() {
           viewport={{ once: true }}
           className="text-[11px] uppercase tracking-[0.3em] text-muted mb-16 text-center"
         >
-          The Impact
+          {t.stats.impact}
         </motion.p>
 
         <div className="flex flex-wrap justify-center gap-x-16 gap-y-12 md:gap-x-24 px-6">
           {stats.map((stat, i) => (
             <motion.div
-              key={stat.label}
+              key={stat.key}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
@@ -80,7 +82,7 @@ export default function Stats() {
                 />
               </div>
               <p className="text-[11px] uppercase tracking-[0.2em] text-muted leading-relaxed">
-                {stat.label}
+                {t.stats[stat.key]}
               </p>
             </motion.div>
           ))}

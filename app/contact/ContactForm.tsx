@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 export default function ContactForm() {
+  const { t } = useI18n();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -49,16 +51,15 @@ export default function ContactForm() {
             className="flex flex-col justify-center"
           >
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted mb-8">
-              Get in Touch
+              {t.contact.eyebrow}
             </p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-[1.1] tracking-tight mb-8">
-              Let&apos;s create your brand
+              {t.contact.headingLine1}
               <br />
-              <span className="text-muted">through visual storytelling.</span>
+              <span className="text-muted">{t.contact.headingLine2}</span>
             </h1>
             <p className="text-base text-muted font-light leading-relaxed max-w-md mb-12">
-              Whether you&apos;re a hotel, a brand, a festival, or a creator — I
-              help you turn visual content into real growth. Let&apos;s talk.
+              {t.contact.intro}
             </p>
 
             <div className="flex flex-col gap-4">
@@ -105,14 +106,14 @@ export default function ContactForm() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <p className="text-lg font-light">Message sent.</p>
-                  <p className="text-sm text-muted mt-2">I&apos;ll be in touch shortly.</p>
+                  <p className="text-lg font-light">{t.contact.successTitle}</p>
+                  <p className="text-sm text-muted mt-2">{t.contact.successMsg}</p>
                 </div>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-8">
                 <div>
-                  <label htmlFor="name" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Name</label>
+                  <label htmlFor="name" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">{t.contact.name}</label>
                   <input
                     id="name"
                     name="name"
@@ -122,12 +123,12 @@ export default function ContactForm() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 placeholder:text-white/15"
-                    placeholder="Your name"
+                    placeholder={t.contact.namePlaceholder}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Email</label>
+                  <label htmlFor="email" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">{t.contact.email}</label>
                   <input
                     id="email"
                     name="email"
@@ -143,7 +144,7 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label htmlFor="company" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Brand / Hotel / Agency</label>
+                  <label htmlFor="company" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">{t.contact.company}</label>
                   <input
                     id="company"
                     name="company"
@@ -152,12 +153,12 @@ export default function ContactForm() {
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 placeholder:text-white/15"
-                    placeholder="Company or brand name"
+                    placeholder={t.contact.companyPlaceholder}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="budget" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Estimated Budget</label>
+                  <label htmlFor="budget" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">{t.contact.budget}</label>
                   <select
                     id="budget"
                     name="budget"
@@ -165,7 +166,7 @@ export default function ContactForm() {
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 appearance-none cursor-pointer"
                   >
-                    <option value="" className="bg-background">Select a range</option>
+                    <option value="" className="bg-background">{t.contact.budgetSelect}</option>
                     <option value="Under $1,500" className="bg-background">Under $1,500</option>
                     <option value="$1,500 – $5,000" className="bg-background">$1,500 – $5,000</option>
                     <option value="$5,000 – $10,000" className="bg-background">$5,000 – $10,000</option>
@@ -174,7 +175,7 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label htmlFor="details" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">Project Details</label>
+                  <label htmlFor="details" className="text-[11px] uppercase tracking-[0.25em] text-muted block mb-3">{t.contact.details}</label>
                   <textarea
                     id="details"
                     name="details"
@@ -183,12 +184,12 @@ export default function ContactForm() {
                     value={formData.details}
                     onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                     className="w-full bg-transparent border-b border-white/10 py-3 text-foreground font-light focus:outline-none focus:border-white/40 transition-colors duration-300 resize-none placeholder:text-white/15"
-                    placeholder="Tell me about your project, timeline, and vision..."
+                    placeholder={t.contact.detailsPlaceholder}
                   />
                 </div>
 
                 {status === "error" && (
-                  <p className="text-sm text-red-400">Something went wrong. Please try again or email directly.</p>
+                  <p className="text-sm text-red-400">{t.contact.error}</p>
                 )}
 
                 <motion.button
@@ -198,7 +199,7 @@ export default function ContactForm() {
                   whileTap={{ scale: status === "loading" ? 1 : 0.98 }}
                   className="w-full py-4 bg-white text-black text-sm uppercase tracking-[0.25em] hover:bg-white/90 transition-colors duration-300 disabled:opacity-50"
                 >
-                  {status === "loading" ? "Sending..." : "Send Inquiry"}
+                  {status === "loading" ? t.contact.sending : t.contact.submit}
                 </motion.button>
               </form>
             )}

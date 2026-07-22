@@ -4,19 +4,25 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 // Subtle, tiling film grain — adds cinematic texture without a network request.
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 export default function Hero() {
+  const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoOn, setVideoOn] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
 
   // Defer the heavy hero video until the browser is idle, so it never competes
-  // with hydration or the first scroll for the main thread.
+  // with hydration or the first scroll for the main thread. On phones we skip it
+  // entirely — the optimized poster (~75KB AVIF) carries the hero and we save the
+  // ~5MB video download on cellular. Respect prefers-reduced-data too.
   useEffect(() => {
+    const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
+    if (window.innerWidth < 768 || nav.connection?.saveData) return;
     const start = () => setVideoOn(true);
     const w = window as typeof window & {
       requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
@@ -108,7 +114,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
           className="text-[10px] sm:text-[11px] uppercase tracking-[0.5em] text-white/45 mb-7"
         >
-          Cinematographer &middot; Director
+          {t.hero.eyebrow}
         </motion.p>
 
         <motion.h1
@@ -138,8 +144,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
           className="max-w-2xl text-base sm:text-lg text-white/60 font-light leading-relaxed tracking-wide mb-12"
         >
-          Turning stories into growth. We build digital stories that connect,
-          convert, and create loyal communities.
+          {t.hero.subtitle}
         </motion.p>
 
         <motion.div
@@ -151,7 +156,7 @@ export default function Hero() {
             href="/work"
             className="group relative inline-flex items-center gap-3 px-10 py-4 border border-white/30 text-white text-sm uppercase tracking-[0.25em] hover:bg-white hover:text-black transition-all duration-500"
           >
-            View the Work
+            {t.hero.cta}
             <svg
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
               fill="none"

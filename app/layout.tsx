@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import ScrollProgress from "@/components/ScrollProgress";
+import { LanguageProvider } from "@/lib/i18n";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,12 +66,14 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-background text-foreground antialiased">
-        <ScrollProgress />
-        <Header />
-        <PageTransition>
-          <main className="w-full min-h-screen">{children}</main>
-        </PageTransition>
-        <Footer />
+        <LanguageProvider>
+          <ScrollProgress />
+          <Header />
+          <PageTransition>
+            <main className="w-full min-h-screen">{children}</main>
+          </PageTransition>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

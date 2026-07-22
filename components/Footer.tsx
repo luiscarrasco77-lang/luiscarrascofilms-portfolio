@@ -2,8 +2,16 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
+
+const footerNav = [
+  { key: "work", href: "/work" },
+  { key: "vision", href: "/vision" },
+  { key: "contact", href: "/contact" },
+] as const;
 
 export default function Footer() {
+  const { t } = useI18n();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -24,28 +32,23 @@ export default function Footer() {
               <span className="text-muted font-light ml-1.5">FILMS</span>
             </h3>
             <p className="text-sm text-muted leading-relaxed max-w-sm">
-              Turning stories into growth. Cinematic audiovisual production for
-              brands, festivals, and lifestyle content worldwide.
+              {t.footer.tagline}
             </p>
           </div>
 
           {/* Nav */}
           <div className="md:col-span-3">
             <h4 className="text-[11px] uppercase tracking-[0.3em] text-muted mb-6">
-              Navigate
+              {t.footer.navigate}
             </h4>
             <nav className="flex flex-col gap-4">
-              {[
-                { name: "Work", href: "/work" },
-                { name: "Vision", href: "/vision" },
-                { name: "Contact", href: "/contact" },
-              ].map((item) => (
+              {footerNav.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.key}
                   href={item.href}
                   className="text-sm text-muted hover:text-foreground transition-colors duration-300"
                 >
-                  {item.name}
+                  {t.nav[item.key]}
                 </Link>
               ))}
             </nav>
@@ -54,7 +57,7 @@ export default function Footer() {
           {/* Connect */}
           <div className="md:col-span-4">
             <h4 className="text-[11px] uppercase tracking-[0.3em] text-muted mb-6">
-              Connect
+              {t.footer.connect}
             </h4>
             <div className="flex flex-col gap-4">
               <a
@@ -86,10 +89,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/5 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[11px] text-muted tracking-wider">
-            &copy; {currentYear} Luis Carrasco Films. All rights reserved.
+            &copy; {currentYear} Luis Carrasco Films. {t.footer.rights}
           </p>
           <p className="text-[11px] text-white/10 tracking-wider">
-            Crafted with vision
+            {t.footer.crafted}
           </p>
         </div>
       </div>
