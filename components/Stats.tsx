@@ -64,7 +64,7 @@ export default function Stats() {
           {t.stats.impact}
         </motion.p>
 
-        <div className="flex flex-wrap justify-center gap-x-16 gap-y-12 md:gap-x-24 px-6">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 px-6 w-full max-w-sm mx-auto md:flex md:flex-wrap md:justify-center md:gap-x-24 md:max-w-none">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.key}
@@ -72,7 +72,7 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
               viewport={{ once: true }}
-              className="text-center flex flex-col items-center min-w-[120px]"
+              className="text-center flex flex-col items-center min-w-0 md:min-w-[120px]"
             >
               <div className="text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight text-accent mb-3">
                 <AnimatedCounter

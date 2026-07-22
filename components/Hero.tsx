@@ -16,13 +16,10 @@ export default function Hero() {
   const [videoOn, setVideoOn] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
 
-  // Defer the heavy hero video until the browser is idle, so it never competes
-  // with hydration or the first scroll for the main thread. On phones we skip it
-  // entirely — the optimized poster (~75KB AVIF) carries the hero and we save the
-  // ~5MB video download on cellular. Respect prefers-reduced-data too.
+  // Defer the hero video until the browser is idle so it never competes with
+  // hydration or the first scroll for the main thread — but load it on every
+  // device (desktop and mobile). The optimized poster paints instantly as LCP.
   useEffect(() => {
-    const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
-    if (window.innerWidth < 768 || nav.connection?.saveData) return;
     const start = () => setVideoOn(true);
     const w = window as typeof window & {
       requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
