@@ -202,7 +202,7 @@ export default function FeaturedWork() {
     <>
       {modal && <VideoModal shareId={modal.id} src={modal.src} title={modal.title} onClose={closeModal} />}
 
-      <section className="py-20 md:py-28 bg-background">
+      <section className="pt-12 md:pt-16 pb-20 md:pb-28 bg-background">
         <div className="w-full">
           {/* Header */}
           <div className="flex items-end justify-between mb-12 md:mb-16 px-5 md:px-10 max-w-[1400px] mx-auto">

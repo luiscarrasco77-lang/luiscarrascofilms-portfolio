@@ -53,7 +53,7 @@ export default function Stats() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-24 md:py-32 bg-background flex flex-col items-center">
+    <section ref={ref} className="pt-24 md:pt-32 pb-14 md:pb-20 bg-background flex flex-col items-center">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
