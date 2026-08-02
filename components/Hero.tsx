@@ -76,6 +76,17 @@ export default function Hero() {
     return () => io.disconnect();
   }, [videoOn]);
 
+  // Fallback: if automatic autoplay is blocked (e.g. Safari in Low Power Mode),
+  // start the video on the first user gesture — gestures are allowed to play
+  // media even when autoplay isn't.
+  useEffect(() => {
+    const onGesture = () => tryPlay();
+    const opts: AddEventListenerOptions = { once: true, passive: true };
+    const events = ["pointerdown", "touchstart", "scroll", "keydown"] as const;
+    events.forEach((e) => window.addEventListener(e, onGesture, opts));
+    return () => events.forEach((e) => window.removeEventListener(e, onGesture));
+  }, []);
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background */}
