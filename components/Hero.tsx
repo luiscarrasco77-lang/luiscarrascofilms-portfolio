@@ -32,10 +32,27 @@ export default function Hero() {
     return () => clearTimeout(t);
   }, []);
 
-  // Once the source is attached, kick off loading + autoplay.
+  // Once the source is attached, load and start playing. We set the `muted`
+  // *property* explicitly (React's muted attribute alone doesn't always apply it,
+  // and browsers block autoplay of a non-muted video — which leaves it paused
+  // showing a play button). play() may reject before data is ready; onCanPlay
+  // retries.
   useEffect(() => {
-    if (videoOn) videoRef.current?.load();
+    const el = videoRef.current;
+    if (!videoOn || !el) return;
+    el.muted = true;
+    el.load();
+    el.play().catch(() => {});
   }, [videoOn]);
+
+  const handleCanPlay = () => {
+    const el = videoRef.current;
+    if (el) {
+      el.muted = true;
+      el.play().catch(() => {});
+    }
+    setVideoReady(true);
+  };
 
   // Pause the video while the hero is scrolled out of view — keeps the GPU/decoder
   // free so the rest of the page scrolls smoothly.
@@ -44,8 +61,12 @@ export default function Hero() {
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) el.play().catch(() => {});
-        else el.pause();
+        if (entry.isIntersecting) {
+          el.muted = true;
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
       },
       { threshold: 0.1 }
     );
@@ -74,7 +95,7 @@ export default function Hero() {
           loop
           playsInline
           preload="none"
-          onCanPlay={() => setVideoReady(true)}
+          onCanPlay={handleCanPlay}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoReady ? "opacity-100" : "opacity-0"}`}
         >
           {videoOn && <source src="/videos/hero-loop.mp4" type="video/mp4" />}
