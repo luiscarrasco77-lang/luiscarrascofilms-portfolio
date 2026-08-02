@@ -32,11 +32,16 @@ export default function Hero() {
     return () => clearTimeout(t);
   }, []);
 
-  // Once the source is attached, load and start playing. We set the `muted`
+  // Once the source is attached, load and try to play. We set the `muted`
   // *property* explicitly (React's muted attribute alone doesn't always apply it,
-  // and browsers block autoplay of a non-muted video — which leaves it paused
-  // showing a play button). play() may reject before data is ready; onCanPlay
-  // retries.
+  // and browsers refuse to autoplay a non-muted video).
+  const tryPlay = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.muted = true;
+    el.play().catch(() => {});
+  };
+
   useEffect(() => {
     const el = videoRef.current;
     if (!videoOn || !el) return;
@@ -45,15 +50,6 @@ export default function Hero() {
     el.play().catch(() => {});
   }, [videoOn]);
 
-  const handleCanPlay = () => {
-    const el = videoRef.current;
-    if (el) {
-      el.muted = true;
-      el.play().catch(() => {});
-    }
-    setVideoReady(true);
-  };
-
   // Pause the video while the hero is scrolled out of view — keeps the GPU/decoder
   // free so the rest of the page scrolls smoothly.
   useEffect(() => {
@@ -61,12 +57,8 @@ export default function Hero() {
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          el.muted = true;
-          el.play().catch(() => {});
-        } else {
-          el.pause();
-        }
+        if (entry.isIntersecting) tryPlay();
+        else el.pause();
       },
       { threshold: 0.1 }
     );
@@ -94,12 +86,14 @@ export default function Hero() {
           muted
           loop
           playsInline
-          preload="none"
-          onCanPlay={handleCanPlay}
+          preload="auto"
+          src={videoOn ? "/videos/hero-loop.mp4" : undefined}
+          onLoadedData={tryPlay}
+          onCanPlay={tryPlay}
+          onPlaying={() => setVideoReady(true)}
+          onPause={() => setVideoReady(false)}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoReady ? "opacity-100" : "opacity-0"}`}
-        >
-          {videoOn && <source src="/videos/hero-loop.mp4" type="video/mp4" />}
-        </video>
+        />
         {/* Dark overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-background" />
         <div className="absolute inset-0 bg-black/20" />
