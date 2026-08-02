@@ -45,7 +45,17 @@ export default function Hero() {
   useEffect(() => {
     const el = videoRef.current;
     if (!videoOn || !el) return;
+    // Safari decides autoplay eligibility from the `muted` ATTRIBUTE at the moment
+    // the source is set — and React doesn't render that attribute. Set the muted
+    // attribute + property + defaultMuted BEFORE assigning src so Safari treats it
+    // as a muted video and allows autoplay.
+    el.defaultMuted = true;
     el.muted = true;
+    el.setAttribute("muted", "");
+    el.setAttribute("playsinline", "");
+    if (!el.getAttribute("src")) {
+      el.setAttribute("src", "/videos/hero-loop.mp4");
+    }
     el.load();
     el.play().catch(() => {});
   }, [videoOn]);
@@ -87,7 +97,6 @@ export default function Hero() {
           loop
           playsInline
           preload="auto"
-          src={videoOn ? "/videos/hero-loop.mp4" : undefined}
           onLoadedData={tryPlay}
           onCanPlay={tryPlay}
           onPlaying={() => setVideoReady(true)}
