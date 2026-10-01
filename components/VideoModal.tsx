@@ -2,6 +2,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n";
+import { canonicalVideoId } from "@/data/projects";
 
 interface VideoModalProps {
   src: string;
@@ -12,6 +14,7 @@ interface VideoModalProps {
 }
 
 export default function VideoModal({ src, title, shareId, embedUrl, onClose }: VideoModalProps) {
+  const { t, href } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [copied, setCopied] = useState(false);
 
@@ -31,7 +34,7 @@ export default function VideoModal({ src, title, shareId, embedUrl, onClose }: V
 
   const copyLink = async () => {
     if (!shareId) return;
-    const url = `${window.location.origin}/watch/${shareId}`;
+    const url = `${window.location.origin}${href(`/watch/${canonicalVideoId({ id: shareId, src })}`)}`;
     try {
       await navigator.clipboard.writeText(url);
     } catch {
@@ -64,21 +67,21 @@ export default function VideoModal({ src, title, shareId, embedUrl, onClose }: V
           <button
             className="absolute top-5 left-5 flex items-center gap-2 px-3.5 py-2 border border-white/20 rounded-full text-[11px] uppercase tracking-[0.2em] text-white/70 hover:bg-white hover:text-black transition-all duration-300 z-10"
             onClick={(e) => { e.stopPropagation(); copyLink(); }}
-            aria-label="Copy link to this video"
+            aria-label={t.modal.copyLink}
           >
             {copied ? (
               <>
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                Link copied
+                {t.modal.copied}
               </>
             ) : (
               <>
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5M10.172 13.828a4 4 0 010-5.656l3-3a4 4 0 015.656 5.656l-1.5 1.5" />
                 </svg>
-                Copy link
+                {t.modal.copyLink}
               </>
             )}
           </button>
@@ -88,7 +91,7 @@ export default function VideoModal({ src, title, shareId, embedUrl, onClose }: V
         <button
           className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-colors z-10"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t.a11y.close}
         >
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />

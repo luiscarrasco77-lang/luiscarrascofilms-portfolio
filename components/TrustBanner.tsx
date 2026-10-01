@@ -5,6 +5,7 @@ import { useI18n } from "@/lib/i18n";
 
 const brands = [
   "TOYOTA",
+  "PIZOL",
   "STETSON UNIVERSITY",
   "SURFSHARK",
   "HUGEL",

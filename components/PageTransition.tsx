@@ -8,7 +8,9 @@ export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <AnimatePresence mode="wait">
+    // initial={false}: the first page paints immediately (server HTML visible,
+    // faster LCP); the fade only plays between client-side navigations.
+    <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={pathname}
         initial={{ opacity: 0 }}

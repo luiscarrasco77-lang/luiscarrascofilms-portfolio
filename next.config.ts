@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // The root layout lives under app/[lang], so unmatched URLs need a standalone
+  // 404 page (app/global-not-found.tsx).
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     // Cache optimized images on the CDN for 1 year

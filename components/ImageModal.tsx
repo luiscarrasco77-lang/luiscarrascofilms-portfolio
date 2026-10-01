@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useEffect } from "react";
+import { useI18n } from "@/lib/i18n";
 
 interface ImageModalProps {
   src: string;
@@ -11,6 +12,7 @@ interface ImageModalProps {
 }
 
 export default function ImageModal({ src, alt, onClose }: ImageModalProps) {
+  const { t } = useI18n();
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
@@ -38,7 +40,7 @@ export default function ImageModal({ src, alt, onClose }: ImageModalProps) {
         <button
           className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-colors z-10"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t.a11y.close}
         >
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />

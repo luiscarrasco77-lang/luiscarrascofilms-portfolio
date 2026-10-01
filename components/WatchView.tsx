@@ -5,14 +5,14 @@ import { useI18n } from "@/lib/i18n";
 import type { ProjectMedia } from "@/data/projects";
 
 export default function WatchView({ v }: { v: ProjectMedia }) {
-  const { t } = useI18n();
+  const { t, href } = useI18n();
   const isPortrait = v.aspect === "portrait";
 
   return (
     <section className="min-h-screen bg-background px-4 md:px-8 pt-24 md:pt-28 pb-20">
       <div className="max-w-6xl mx-auto">
         <Link
-          href="/work"
+          href={href("/work")}
           className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-white/40 hover:text-white transition-colors duration-300 mb-8"
         >
           <svg
@@ -55,11 +55,13 @@ export default function WatchView({ v }: { v: ProjectMedia }) {
             </p>
             <h1 className="text-2xl md:text-3xl font-extralight tracking-tight">{v.title}</h1>
             {v.description && (
-              <p className="text-sm text-muted mt-3 max-w-xl leading-relaxed">{v.description}</p>
+              <p className="text-sm text-muted mt-3 max-w-xl leading-relaxed">
+                {t.descriptions[v.description] ?? v.description}
+              </p>
             )}
 
             <Link
-              href="/work"
+              href={href("/work")}
               className="group inline-flex items-center gap-2 mt-8 text-[11px] uppercase tracking-[0.2em] text-white/50 hover:text-white transition-colors duration-300"
             >
               {t.watch.exploreMore}

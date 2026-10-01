@@ -184,6 +184,16 @@ export const allProjects: ProjectMedia[] = [
     description: "Brand film",
     embedUrl: "https://www.behance.net/embed/project/136605657?ilo0=1",
   },
+  {
+    id: "commercial-pizol-brand",
+    src: "/videos/brand-swiss.mp4",
+    poster: "/posters/pizol-brand.jpg",
+    type: "video",
+    title: "Pizol",
+    category: "commercial",
+    aspect: "landscape",
+    description: "Brand film — Swiss Alps",
+  },
 
   // ── TRAVEL ──
   {
@@ -986,3 +996,17 @@ export const categories = [
   { id: "commercial", label: "Commercial" },
   { id: "lifestyle", label: "Lifestyle" },
 ] as const;
+
+// ── SHAREABLE VIDEOS (/watch/[id]) ─────────────────────────────────────
+// Every video (self-hosted or external embed), homepage reel first.
+export const videoPool: ProjectMedia[] = [...featuredProjects, ...allProjects].filter(
+  (p) => p.type === "video" || p.type === "embed"
+);
+
+// Some films appear both on the homepage and in the gallery under different ids.
+// All of them resolve to one canonical watch page (the first entry with the same
+// file), so search engines see a single URL per film.
+export function canonicalVideoId(p: Pick<ProjectMedia, "id" | "src">): string {
+  const match = videoPool.find((q) => (p.src ? q.src === p.src : q.id === p.id));
+  return (match ?? p).id;
+}

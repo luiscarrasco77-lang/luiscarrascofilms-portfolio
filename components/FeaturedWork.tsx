@@ -6,6 +6,7 @@ import Image from "next/image";
 import { featuredProjects, photoHighlights } from "@/data/projects";
 import { useRef, useState, useCallback } from "react";
 import VideoModal from "@/components/VideoModal";
+import WatchLink from "@/components/WatchLink";
 import { useI18n } from "@/lib/i18n";
 
 function FeaturedCard({
@@ -19,9 +20,11 @@ function FeaturedCard({
   index: number;
   onVideoClick: (id: string, src: string, title: string) => void;
 }) {
+  const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hovered, setHovered] = useState(false);
   const isPortrait = project.aspect === "portrait";
+  const description = project.description && (t.descriptions[project.description] ?? project.description);
 
   return (
     <motion.div
@@ -39,7 +42,6 @@ function FeaturedCard({
         videoRef.current?.pause();
         if (videoRef.current) videoRef.current.currentTime = 0;
       }}
-      onClick={() => onVideoClick(project.id, project.src, project.title)}
     >
       <div
         className={`relative w-full overflow-hidden ${
@@ -73,24 +75,25 @@ function FeaturedCard({
         </video>
 
         <div
-          className={`absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-50"}`}
+          // Touch screens never hover → keep the full gradient there for legibility.
+          className={`absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-50"}`}
           style={{ zIndex: 3 }}
         />
 
         <div
-          className="absolute inset-0 flex flex-col justify-end p-5 md:p-7"
+          className={`absolute inset-0 flex flex-col justify-end ${isFullWidth ? "p-5 md:p-7" : "p-3 sm:p-5 md:p-7"}`}
           style={{ zIndex: 4 }}
         >
           <motion.div
             animate={hovered ? { y: 0, opacity: 1 } : { y: 4, opacity: 0.75 }}
             transition={{ duration: 0.2 }}
           >
-            <p className="text-[10px] uppercase tracking-[0.28em] text-white/50 mb-1.5">{project.category}</p>
-            <h3 className={`font-light text-white tracking-tight ${isFullWidth ? "text-2xl md:text-3xl" : "text-lg md:text-xl"}`}>
+            <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/70 mb-1.5 truncate">{t.gallery.categories[project.category]}</p>
+            <h3 className={`font-light text-white tracking-tight leading-snug ${isFullWidth ? "text-2xl md:text-3xl" : "text-sm sm:text-lg md:text-xl"}`}>
               {project.title}
             </h3>
-            {project.description && (
-              <p className="text-xs text-white/40 mt-1">{project.description}</p>
+            {description && (
+              <p className={`text-xs text-white/50 mt-1 ${isFullWidth ? "" : "hidden sm:block"}`}>{description}</p>
             )}
           </motion.div>
         </div>
@@ -105,6 +108,8 @@ function FeaturedCard({
             </svg>
           </div>
         </div>
+
+        <WatchLink project={project} onOpen={() => onVideoClick(project.id, project.src, project.title)} />
       </div>
     </motion.div>
   );
@@ -117,7 +122,10 @@ function RealEstateCard({
   project: (typeof featuredProjects)[0];
   onVideoClick: (id: string, src: string, title: string) => void;
 }) {
+  const { t } = useI18n();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [hovered, setHovered] = useState(false);
+  const description = project.description && (t.descriptions[project.description] ?? project.description);
 
   return (
     <motion.div
@@ -126,9 +134,15 @@ function RealEstateCard({
       transition={{ duration: 0.6, delay: 0.1 }}
       viewport={{ once: true, margin: "-40px" }}
       className="flex-1 min-w-0 relative overflow-hidden cursor-pointer"
-      onClick={() => onVideoClick(project.id, project.src, project.title)}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => {
+        setHovered(true);
+        videoRef.current?.play().catch(() => {});
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+        videoRef.current?.pause();
+        if (videoRef.current) videoRef.current.currentTime = 0;
+      }}
     >
       <Image
         src={project.poster}
@@ -138,30 +152,27 @@ function RealEstateCard({
         className="object-cover"
       />
       <video
+        ref={videoRef}
         muted
         loop
         playsInline
         preload="none"
         className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${hovered ? "scale-105" : "scale-100"}`}
-        onMouseEnter={e => (e.currentTarget as HTMLVideoElement).play().catch(() => {})}
-        onMouseLeave={e => {
-          (e.currentTarget as HTMLVideoElement).pause();
-          (e.currentTarget as HTMLVideoElement).currentTime = 0;
-        }}
       >
         <source src={project.src} type="video/mp4" />
       </video>
-      <div className={`absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-50"}`} />
-      <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-7">
-        <p className="text-[10px] uppercase tracking-[0.28em] text-white/50 mb-1.5">{project.category}</p>
-        <h3 className="text-lg md:text-xl font-light text-white tracking-tight">{project.title}</h3>
-        {project.description && <p className="text-xs text-white/40 mt-1">{project.description}</p>}
+      <div className={`absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-50"}`} />
+      <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-5 md:p-7">
+        <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/70 mb-1.5 truncate">{t.gallery.categories[project.category]}</p>
+        <h3 className="text-sm sm:text-lg md:text-xl font-light text-white tracking-tight leading-snug">{project.title}</h3>
+        {description && <p className="hidden sm:block text-xs text-white/50 mt-1">{description}</p>}
       </div>
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${hovered ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}>
         <div className="w-14 h-14 rounded-full border border-white/30 bg-black/20 backdrop-blur-sm flex items-center justify-center">
           <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
         </div>
       </div>
+      <WatchLink project={project} onOpen={() => onVideoClick(project.id, project.src, project.title)} />
     </motion.div>
   );
 }
@@ -193,7 +204,7 @@ function PhotoStrip() {
 }
 
 export default function FeaturedWork() {
-  const { t } = useI18n();
+  const { t, href } = useI18n();
   const [modal, setModal] = useState<{ id: string; src: string; title: string } | null>(null);
   const handleVideoClick = useCallback((id: string, src: string, title: string) => setModal({ id, src, title }), []);
   const closeModal = useCallback(() => setModal(null), []);
@@ -222,7 +233,7 @@ export default function FeaturedWork() {
               viewport={{ once: true }}
             >
               <Link
-                href="/work"
+                href={href("/work")}
                 className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/40 hover:text-white transition-colors duration-300"
               >
                 {t.featured.viewAll}

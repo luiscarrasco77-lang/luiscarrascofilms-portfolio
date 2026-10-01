@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
+import { CONTACT } from "@/lib/locales";
 
 const footerNav = [
   { key: "work", href: "/work" },
@@ -11,7 +12,7 @@ const footerNav = [
 ] as const;
 
 export default function Footer() {
-  const { t } = useI18n();
+  const { t, href } = useI18n();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -34,6 +35,13 @@ export default function Footer() {
             <p className="text-sm text-muted leading-relaxed max-w-sm">
               {t.footer.tagline}
             </p>
+            <p className="mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-white/50">
+              <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+              </svg>
+              {t.location.based}
+            </p>
           </div>
 
           {/* Nav */}
@@ -45,7 +53,7 @@ export default function Footer() {
               {footerNav.map((item) => (
                 <Link
                   key={item.key}
-                  href={item.href}
+                  href={href(item.href)}
                   className="text-sm text-muted hover:text-foreground transition-colors duration-300"
                 >
                   {t.nav[item.key]}
@@ -61,7 +69,21 @@ export default function Footer() {
             </h4>
             <div className="flex flex-col gap-4">
               <a
-                href="https://www.instagram.com/carrascoluis_/"
+                href={CONTACT.phoneHref}
+                className="text-sm text-muted hover:text-foreground transition-colors duration-300"
+              >
+                {CONTACT.phoneDisplay}
+              </a>
+              <a
+                href={CONTACT.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted hover:text-foreground transition-colors duration-300"
+              >
+                WhatsApp
+              </a>
+              <a
+                href={CONTACT.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted hover:text-foreground transition-colors duration-300"
@@ -69,7 +91,7 @@ export default function Footer() {
                 Instagram
               </a>
               <a
-                href="https://www.behance.net/luiscarrasco07"
+                href={CONTACT.behance}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted hover:text-foreground transition-colors duration-300"
@@ -77,10 +99,10 @@ export default function Footer() {
                 Behance
               </a>
               <a
-                href="mailto:contact@luiscarrascofilms.com"
+                href={`mailto:${CONTACT.email}`}
                 className="text-sm text-muted hover:text-foreground transition-colors duration-300"
               >
-                Email
+                {CONTACT.email}
               </a>
             </div>
           </div>
