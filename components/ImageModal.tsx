@@ -59,7 +59,8 @@ export default function ImageModal({ src, alt, onClose }: ImageModalProps) {
             src={src}
             alt={alt}
             fill
-            priority
+            loading="eager"
+            fetchPriority="high"
             sizes="100vw"
             className="object-contain"
           />

@@ -61,6 +61,13 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       suppressHydrationWarning
     >
       <body className="bg-background text-foreground antialiased">
+        {/* Reveal fade-in images as soon as they load — without waiting for React to hydrate */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.addEventListener('load',function(e){var t=e.target;if(t.tagName==='IMG'&&t.classList.contains('img-fade'))t.setAttribute('data-loaded','true')},true);",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript(businessJsonLd(lang)) }}

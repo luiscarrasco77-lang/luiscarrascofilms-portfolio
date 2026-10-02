@@ -81,7 +81,8 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
           src="/fotos1/Pizol-28.jpg"
           alt="Pizol, St. Gallen – tourism photography by Luis Carrasco"
           fill
-          priority
+          preload
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

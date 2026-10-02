@@ -90,12 +90,12 @@ function GalleryItem({
   project,
   onOpen,
   grow = false,
-  priority = false,
+  eager = false,
 }: {
   project: ProjectMedia;
   onOpen: (project: ProjectMedia) => void;
   grow?: boolean;
-  priority?: boolean;
+  eager?: boolean;
 }) {
   const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -147,7 +147,8 @@ function GalleryItem({
               alt={`${project.title} – ${t.gallery.categories[project.category]}`}
               fill
               sizes="(min-width: 768px) 33vw, 50vw"
-              priority={priority}
+              loading={eager ? "eager" : "lazy"}
+              fetchPriority={eager ? "high" : "auto"}
               className="object-cover"
             />
           )}
@@ -340,8 +341,8 @@ export default function Gallery() {
                           project={project}
                           onOpen={handleOpen}
                           grow={i >= col.length - TAIL_GROW}
-                          // First card of each column is above the fold → load it right away.
-                          priority={i === 0}
+                          // First two cards of each column are above the fold → load right away.
+                          eager={i < 2}
                         />
                       ))}
                     </div>

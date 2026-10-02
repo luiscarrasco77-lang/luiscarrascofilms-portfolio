@@ -99,7 +99,8 @@ export default function Hero() {
           alt=""
           aria-hidden="true"
           fill
-          priority
+          preload
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

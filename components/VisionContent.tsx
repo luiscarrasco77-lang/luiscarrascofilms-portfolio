@@ -28,7 +28,8 @@ export default function VisionContent() {
             alt=""
             aria-hidden="true"
             fill
-            priority
+            preload
+            fetchPriority="high"
             sizes="100vw"
             style={{ objectFit: "cover", opacity: 0.35 }}
           />
