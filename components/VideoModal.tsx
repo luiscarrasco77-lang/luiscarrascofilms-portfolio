@@ -2,21 +2,28 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { getImageProps } from "next/image";
 import { useI18n } from "@/lib/i18n";
 import { canonicalVideoId } from "@/data/projects";
 
 interface VideoModalProps {
   src: string;
   title: string;
+  poster?: string;
   shareId?: string;
   embedUrl?: string;
   onClose: () => void;
 }
 
-export default function VideoModal({ src, title, shareId, embedUrl, onClose }: VideoModalProps) {
+export default function VideoModal({ src, title, poster, shareId, embedUrl, onClose }: VideoModalProps) {
   const { t, href } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [copied, setCopied] = useState(false);
+  const [buffering, setBuffering] = useState(true);
+  // The card's poster (optimized, usually already cached) shows instantly while the film buffers.
+  const posterUrl = poster
+    ? getImageProps({ src: poster, alt: "", width: 540, height: 304, quality: 60 }).props.src
+    : undefined;
 
   useEffect(() => {
     // Lock scroll
@@ -124,16 +131,27 @@ export default function VideoModal({ src, title, shareId, embedUrl, onClose }: V
               />
             </div>
           ) : (
-            <video
-              ref={videoRef}
-              autoPlay
-              controls
-              playsInline
-              className="w-full h-full max-h-[85vh] object-contain"
-              style={{ background: "transparent" }}
-            >
-              <source src={src} type="video/mp4" />
-            </video>
+            <div className="relative">
+              <video
+                ref={videoRef}
+                autoPlay
+                controls
+                playsInline
+                preload="auto"
+                poster={posterUrl}
+                onWaiting={() => setBuffering(true)}
+                onPlaying={() => setBuffering(false)}
+                className="w-full h-full max-h-[85vh] object-contain"
+                style={{ background: "transparent" }}
+              >
+                <source src={src} type="video/mp4" />
+              </video>
+              {buffering && (
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
+                  <span className="w-12 h-12 rounded-full border border-white/15 border-t-gold animate-spin" />
+                </div>
+              )}
+            </div>
           )}
         </motion.div>
       </motion.div>

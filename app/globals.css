@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  --foreground: #f0f0f0;
-  --accent: #ffffff;
-  --border: #141414;
-  --muted: #666666;
-  --surface: #0c0c0c;
+  --background: #070707;
+  --foreground: #ede8e1;
+  --accent: #f4efe8;
+  --border: #1a1917;
+  --muted: #8a847c;
+  --surface: #0d0c0b;
+  --gold: #c9b28c;
 }
 
 @theme inline {
@@ -16,8 +17,12 @@
   --color-border: var(--border);
   --color-muted: var(--muted);
   --color-surface: var(--surface);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-gold: var(--gold);
+  /* Warm ivory instead of pure white everywhere text-white / bg-white is used */
+  --color-white: #f4efe8;
+  --color-black: #070707;
+  --font-sans: var(--font-jost);
+  --font-display: var(--font-cormorant);
 }
 
 /* Keep the reset in the base layer so Tailwind spacing utilities (which live in
@@ -36,13 +41,15 @@
 html {
   overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: #222 #050505;
+  scrollbar-color: #2a2826 #070707;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  font-weight: 300;
+  letter-spacing: 0.01em;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -50,8 +57,25 @@ body {
 }
 
 ::selection {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(201, 178, 140, 0.35);
   color: #fff;
+}
+
+/* In the components layer so Tailwind utilities (tracking-*, opacity-*) still win. */
+@layer components {
+  /* Display serif: lining numerals */
+  .font-display {
+    font-feature-settings: "lnum" 1, "kern" 1;
+  }
+
+  /* Images fade in once decoded instead of popping in */
+  .img-fade {
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.7s ease;
+  }
+  .img-fade[data-loaded="true"] {
+    opacity: 1;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -61,7 +85,7 @@ body {
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #222;
+  background: #2a2826;
   border-radius: 2px;
 }
 

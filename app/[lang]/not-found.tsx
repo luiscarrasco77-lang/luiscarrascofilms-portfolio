@@ -8,7 +8,7 @@ export default function NotFound() {
   return (
     <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-6 pt-24">
       <p className="text-[11px] uppercase tracking-[0.4em] text-muted mb-6">404</p>
-      <h1 className="text-3xl md:text-5xl font-extralight tracking-tight mb-4">{t.notFound.title}</h1>
+      <h1 className="font-display text-4xl md:text-6xl font-light mb-4">{t.notFound.title}</h1>
       <p className="text-sm text-muted max-w-md mb-10">{t.notFound.text}</p>
       <Link
         href={href("/")}

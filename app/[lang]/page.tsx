@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import TrustBanner from "@/components/TrustBanner";
 import Stats from "@/components/Stats";
 import FeaturedWork from "@/components/FeaturedWork";
+import ServicesTeaser from "@/components/ServicesTeaser";
 import ContactCTA from "@/components/ContactCTA";
 import { hasLocale } from "@/lib/locales";
 import { pageMetadata } from "@/lib/seo";
@@ -19,6 +20,7 @@ export default function Home() {
       <TrustBanner />
       <Stats />
       <FeaturedWork />
+      <ServicesTeaser />
       <ContactCTA />
     </>
   );

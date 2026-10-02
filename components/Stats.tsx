@@ -59,12 +59,14 @@ export default function Stats() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-[11px] uppercase tracking-[0.3em] text-muted mb-16 text-center"
+          className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-16 text-center"
         >
+          <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
           {t.stats.impact}
+          <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
         </motion.p>
 
-        <div className="grid grid-cols-2 gap-x-6 gap-y-12 px-6 w-full max-w-sm mx-auto md:flex md:flex-wrap md:justify-center md:gap-x-24 md:max-w-none">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 px-6 w-full max-w-sm mx-auto md:flex md:flex-nowrap md:justify-center md:gap-x-0 md:max-w-none md:divide-x md:divide-white/[0.08]">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.key}
@@ -72,16 +74,16 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
               viewport={{ once: true }}
-              className="text-center flex flex-col items-center min-w-0 md:min-w-[120px]"
+              className="text-center flex flex-col items-center min-w-0 md:px-5 lg:px-10 xl:px-14"
             >
-              <div className="text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight text-accent mb-3">
+              <div className="font-display text-5xl md:text-6xl lg:text-7xl font-light text-white mb-3 leading-none">
                 <AnimatedCounter
                   target={stat.value}
                   suffix={stat.suffix}
                   inView={inView}
                 />
               </div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-muted leading-relaxed">
+              <p className="text-[10px] md:text-[11px] uppercase tracking-[0.22em] text-muted leading-relaxed">
                 {t.stats[stat.key]}
               </p>
             </motion.div>

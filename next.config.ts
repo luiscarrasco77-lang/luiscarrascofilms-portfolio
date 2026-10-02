@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    // AVIF at 60 is visually indistinguishable here and ~30% lighter than 75.
+    qualities: [60],
     // Cache optimized images on the CDN for 1 year
     minimumCacheTTL: 31536000,
     remotePatterns: [

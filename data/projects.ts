@@ -17,7 +17,7 @@ export type ProjectMedia = {
 export const featuredProjects: ProjectMedia[] = [
   {
     id: "feat-costarica",
-    src: "/videos/costa-rica-recap.mp4",
+    src: "/videos/costa-rica-recap-v2.mp4",
     poster: "/posters/costa-rica-recap.jpg",
     type: "video",
     title: "Costa Rica",
@@ -39,7 +39,7 @@ export const featuredProjects: ProjectMedia[] = [
   },
   {
     id: "feat-nayarit",
-    src: "/videos/nayarit-travel.mp4",
+    src: "/videos/nayarit-travel-v2.mp4",
     poster: "/posters/nayarit-travel.jpg",
     type: "video",
     title: "Riviera Nayarit",
@@ -50,7 +50,7 @@ export const featuredProjects: ProjectMedia[] = [
   },
   {
     id: "feat-ski",
-    src: "/videos/ski-action.mp4",
+    src: "/videos/ski-action-v2.mp4",
     poster: "/posters/ski-action.jpg",
     type: "video",
     title: "Alpine Ski",
@@ -360,7 +360,7 @@ export const allProjects: ProjectMedia[] = [
   },
   {
     id: "travel-nayarit-vid",
-    src: "/videos/nayarit-travel.mp4",
+    src: "/videos/nayarit-travel-v2.mp4",
     poster: "/posters/nayarit-travel.jpg",
     type: "video",
     title: "Riviera Nayarit",
@@ -369,7 +369,7 @@ export const allProjects: ProjectMedia[] = [
   },
   {
     id: "travel-costarica-vid",
-    src: "/videos/costa-rica-recap.mp4",
+    src: "/videos/costa-rica-recap-v2.mp4",
     poster: "/posters/costa-rica-recap.jpg",
     type: "video",
     title: "Costa Rica",
@@ -535,7 +535,7 @@ export const allProjects: ProjectMedia[] = [
   },
   {
     id: "action-ski-vid",
-    src: "/videos/ski-action.mp4",
+    src: "/videos/ski-action-v2.mp4",
     poster: "/posters/ski-action.jpg",
     type: "video",
     title: "Alpine Ski",
@@ -885,7 +885,7 @@ export const allProjects: ProjectMedia[] = [
   },
   {
     id: "commercial-ormond",
-    src: "/videos/ormond.mp4",
+    src: "/videos/ormond-v2.mp4",
     poster: "/posters/ormond.jpg",
     type: "video",
     title: "Ormond",
@@ -895,7 +895,7 @@ export const allProjects: ProjectMedia[] = [
   },
   {
     id: "travel-reel-apagon",
-    src: "/videos/reel-apagon.mp4",
+    src: "/videos/reel-apagon-v2.mp4",
     poster: "/posters/reel-apagon.jpg",
     type: "video",
     title: "Apagón",

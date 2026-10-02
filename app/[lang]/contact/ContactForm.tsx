@@ -58,13 +58,14 @@ export default function ContactForm() {
             transition={{ duration: 0.7 }}
             className="flex flex-col justify-center"
           >
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted mb-8">
+            <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-8">
+              <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
               {t.contact.eyebrow}
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-[1.1] tracking-tight text-balance mb-8">
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-light leading-[1.02] text-balance mb-8">
               {t.contact.headingLine1}
               <br />
-              <span className="text-muted">{t.contact.headingLine2}</span>
+              <span className="italic text-white/45">{t.contact.headingLine2}</span>
             </h1>
             <p className="text-base text-muted font-light leading-relaxed max-w-md mb-10">
               {t.contact.intro}
@@ -245,7 +246,7 @@ export default function ContactForm() {
                   disabled={status === "loading"}
                   whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
                   whileTap={{ scale: status === "loading" ? 1 : 0.98 }}
-                  className="w-full py-4 bg-white text-black text-sm uppercase tracking-[0.25em] hover:bg-white/90 transition-colors duration-300 disabled:opacity-50"
+                  className="w-full py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-gold transition-colors duration-500 disabled:opacity-50"
                 >
                   {status === "loading" ? t.contact.sending : t.contact.submit}
                 </motion.button>

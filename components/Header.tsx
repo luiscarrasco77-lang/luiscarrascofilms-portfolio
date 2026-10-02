@@ -9,6 +9,7 @@ import { localizePath, locales, splitLocale } from "@/lib/locales";
 
 const navItems = [
   { key: "work", href: "/work" },
+  { key: "services", href: "/services" },
   { key: "vision", href: "/vision" },
   { key: "contact", href: "/contact" },
 ] as const;
@@ -90,19 +91,17 @@ export default function Header() {
       >
         <div className="px-6 md:px-12 lg:px-20 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link href={href("/")} className="group">
-            <motion.div
-              whileHover={{ letterSpacing: "0.1em" }}
-              transition={{ duration: 0.3 }}
-              className="text-sm md:text-base tracking-[0.18em] whitespace-nowrap transition-all"
-            >
-              <span className="font-semibold">LUIS CARRASCO</span>
-              <span className="text-muted font-light ml-1.5 text-xs md:text-sm">FILMS</span>
-            </motion.div>
+          <Link href={href("/")} className="group whitespace-nowrap" aria-label="Luis Carrasco Films">
+            <span className="font-display text-xl md:text-[1.4rem] font-normal uppercase tracking-[0.12em] text-white">
+              Luis Carrasco
+            </span>
+            <span className="ml-2.5 text-[9px] md:text-[10px] font-normal uppercase tracking-[0.5em] text-gold/80 transition-colors duration-300 group-hover:text-gold">
+              Films
+            </span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden xl:flex items-center gap-8">
             {navItems.map((item, i) => (
               <motion.div
                 key={item.key}
@@ -112,17 +111,17 @@ export default function Header() {
               >
                 <Link
                   href={href(item.href)}
-                  className={`relative text-[12px] uppercase tracking-[0.22em] transition-colors duration-300 ${
+                  className={`relative text-[11px] font-normal uppercase tracking-[0.24em] transition-colors duration-300 ${
                     path === item.href
                       ? "text-white"
-                      : "text-white/50 hover:text-white after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-center after:scale-x-0 after:bg-white/40 after:transition-transform after:duration-300 hover:after:scale-x-100"
+                      : "text-white/55 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-gold/70 after:transition-transform after:duration-500 hover:after:scale-x-100"
                   }`}
                 >
                   {t.nav[item.key]}
                   {path === item.href && (
                     <motion.span
                       layoutId="nav-indicator"
-                      className="absolute -bottom-0.5 left-0 right-0 h-px bg-white"
+                      className="absolute -bottom-1 left-0 right-0 h-px bg-gold"
                     />
                   )}
                 </Link>
@@ -130,7 +129,7 @@ export default function Header() {
             ))}
             <Link
               href={href("/contact")}
-              className="ml-2 px-5 py-2 border border-white/20 text-[11px] uppercase tracking-[0.2em] text-white/70 hover:bg-white hover:text-black transition-all duration-300"
+              className="ml-1 px-5 py-2.5 border border-white/25 text-[10px] font-normal uppercase tracking-[0.28em] text-white/85 hover:bg-white hover:text-black hover:border-white transition-all duration-500 whitespace-nowrap"
             >
               {t.nav.letsWork}
             </Link>
@@ -140,7 +139,7 @@ export default function Header() {
           {/* Mobile toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden w-9 h-9 flex flex-col items-center justify-center gap-[5px]"
+            className="xl:hidden w-9 h-9 flex flex-col items-center justify-center gap-[5px]"
             aria-label={t.a11y.menu}
           >
             <motion.span
@@ -167,7 +166,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-12"
+            className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-9"
           >
             {navItems.map((item, i) => (
               <motion.div
@@ -179,8 +178,8 @@ export default function Header() {
               >
                 <Link
                   href={href(item.href)}
-                  className={`text-3xl font-extralight tracking-[0.2em] uppercase ${
-                    path === item.href ? "text-white" : "text-white/40"
+                  className={`font-display text-4xl font-light tracking-[0.06em] ${
+                    path === item.href ? "text-white" : "text-white/45"
                   }`}
                 >
                   {t.nav[item.key]}
@@ -195,7 +194,7 @@ export default function Header() {
             >
               <Link
                 href={href("/contact")}
-                className="mt-4 px-8 py-3 border border-white/20 text-[11px] uppercase tracking-[0.3em] text-white/60"
+                className="mt-4 px-8 py-3 border border-white/25 text-[11px] uppercase tracking-[0.3em] text-white/80"
               >
                 {t.nav.letsWork}
               </Link>

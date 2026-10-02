@@ -19,7 +19,7 @@ export default function ContactCTA() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover opacity-30"
+          className="object-cover opacity-35"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
       </div>
@@ -33,8 +33,8 @@ export default function ContactCTA() {
           className="inline-flex items-center gap-2.5 text-[11px] uppercase tracking-[0.3em] text-white/50 mb-8"
         >
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400/60 animate-ping" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            <span className="absolute inline-flex h-full w-full rounded-full bg-gold/60 animate-ping" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
           </span>
           {t.cta.eyebrow}
         </motion.p>
@@ -44,7 +44,7 @@ export default function ContactCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           viewport={{ once: true }}
-          className="text-4xl sm:text-5xl md:text-6xl font-extralight tracking-tight leading-[1.1] text-balance mb-6"
+          className="font-display text-5xl sm:text-6xl md:text-8xl font-light leading-[0.95] text-balance mb-8"
         >
           {t.cta.title}
         </motion.h2>
@@ -54,7 +54,7 @@ export default function ContactCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-base text-white/55 font-light leading-relaxed max-w-xl mx-auto mb-12"
+          className="font-display italic text-xl md:text-2xl text-white/60 font-light leading-snug max-w-xl mx-auto mb-12"
         >
           {t.cta.text}
         </motion.p>
@@ -68,7 +68,7 @@ export default function ContactCTA() {
         >
           <Link
             href={href("/contact")}
-            className="group inline-flex items-center gap-3 px-10 py-4 bg-white text-black text-sm uppercase tracking-[0.25em] hover:bg-white/85 transition-colors duration-300"
+            className="group inline-flex items-center gap-4 px-11 py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-gold transition-colors duration-500"
           >
             {t.cta.button}
             <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">

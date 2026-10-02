@@ -2,12 +2,42 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
-import { featuredProjects, photoHighlights } from "@/data/projects";
+import { featuredProjects, photoHighlights, type ProjectMedia } from "@/data/projects";
 import { useRef, useState, useCallback } from "react";
 import VideoModal from "@/components/VideoModal";
 import WatchLink from "@/components/WatchLink";
+import FadeImage from "@/components/FadeImage";
 import { useI18n } from "@/lib/i18n";
+import { previewSrc } from "@/lib/media";
+
+type OpenVideo = (project: ProjectMedia) => void;
+
+// Muted 5-second preview that plays on hover and stays invisible otherwise, so
+// the sharp poster is what people see until they interact.
+function useHoverPreview() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [hovered, setHovered] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const enter = () => {
+    setHovered(true);
+    videoRef.current?.play().catch(() => {});
+  };
+  const leave = () => {
+    setHovered(false);
+    videoRef.current?.pause();
+    if (videoRef.current) videoRef.current.currentTime = 0;
+  };
+  const videoProps = {
+    ref: videoRef,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: "none" as const,
+    onPlaying: () => setPlaying(true),
+    onPause: () => setPlaying(false),
+  };
+  return { hovered, playing, enter, leave, videoProps };
+}
 
 function FeaturedCard({
   project,
@@ -15,14 +45,13 @@ function FeaturedCard({
   index,
   onVideoClick,
 }: {
-  project: (typeof featuredProjects)[0];
+  project: ProjectMedia;
   isFullWidth?: boolean;
   index: number;
-  onVideoClick: (id: string, src: string, title: string) => void;
+  onVideoClick: OpenVideo;
 }) {
   const { t } = useI18n();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [hovered, setHovered] = useState(false);
+  const { hovered, playing, enter, leave, videoProps } = useHoverPreview();
   const isPortrait = project.aspect === "portrait";
   const description = project.description && (t.descriptions[project.description] ?? project.description);
 
@@ -30,149 +59,110 @@ function FeaturedCard({
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: Math.min(index * 0.1, 0.4) }}
+      transition={{ duration: 0.8, delay: Math.min(index * 0.1, 0.4), ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true, margin: "-40px" }}
-      className="group relative overflow-hidden cursor-pointer"
-      onMouseEnter={() => {
-        setHovered(true);
-        videoRef.current?.play().catch(() => {});
-      }}
-      onMouseLeave={() => {
-        setHovered(false);
-        videoRef.current?.pause();
-        if (videoRef.current) videoRef.current.currentTime = 0;
-      }}
+      className="group relative overflow-hidden cursor-pointer bg-surface"
+      data-cursor="play"
+      onMouseEnter={enter}
+      onMouseLeave={leave}
     >
       <div
         className={`relative w-full overflow-hidden ${
-          isPortrait
-            ? "aspect-[9/16]"
-            : isFullWidth
-              ? "aspect-[21/9]"
-              : "aspect-[16/10]"
+          isPortrait ? "aspect-[9/16]" : isFullWidth ? "aspect-[21/9]" : "aspect-[16/10]"
         }`}
       >
-        <Image
-          src={project.poster}
-          alt={project.title}
-          fill
-          loading="lazy"
-          sizes={isFullWidth ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
-          className="object-cover"
-          style={{ zIndex: 1 }}
-        />
-
-        <video
-          ref={videoRef}
-          muted
-          loop
-          playsInline
-          preload="none"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          style={{ zIndex: 2 }}
-        >
-          <source src={project.src} type="video/mp4" />
-        </video>
+        <div className="absolute inset-0 transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
+          <FadeImage
+            src={project.poster}
+            alt={project.title}
+            fill
+            sizes={isFullWidth ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
+            className="object-cover"
+          />
+          <video
+            {...videoProps}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${playing ? "opacity-100" : "opacity-0"}`}
+          >
+            <source src={previewSrc(project.src)} type="video/mp4" />
+          </video>
+        </div>
 
         <div
           // Touch screens never hover → keep the full gradient there for legibility.
-          className={`absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-50"}`}
+          className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-60"}`}
           style={{ zIndex: 3 }}
         />
 
         <div
-          className={`absolute inset-0 flex flex-col justify-end ${isFullWidth ? "p-5 md:p-7" : "p-3 sm:p-5 md:p-7"}`}
+          className={`absolute inset-0 flex flex-col justify-end ${isFullWidth ? "p-6 md:p-10" : "p-3 sm:p-5 md:p-7"}`}
           style={{ zIndex: 4 }}
         >
           <motion.div
-            animate={hovered ? { y: 0, opacity: 1 } : { y: 4, opacity: 0.75 }}
-            transition={{ duration: 0.2 }}
+            animate={hovered ? { y: 0, opacity: 1 } : { y: 4, opacity: 0.85 }}
+            transition={{ duration: 0.3 }}
           >
-            <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/70 mb-1.5 truncate">{t.gallery.categories[project.category]}</p>
-            <h3 className={`font-light text-white tracking-tight leading-snug ${isFullWidth ? "text-2xl md:text-3xl" : "text-sm sm:text-lg md:text-xl"}`}>
+            <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gold/90 mb-1.5 truncate">
+              {t.gallery.categories[project.category]}
+            </p>
+            <h3
+              className={`font-display font-light text-white leading-[1.05] ${
+                isFullWidth ? "text-3xl md:text-5xl" : "text-base sm:text-2xl md:text-3xl"
+              }`}
+            >
               {project.title}
             </h3>
             {description && (
-              <p className={`text-xs text-white/50 mt-1 ${isFullWidth ? "" : "hidden sm:block"}`}>{description}</p>
+              <p className={`text-xs text-white/55 mt-1.5 ${isFullWidth ? "" : "hidden sm:block"}`}>{description}</p>
             )}
           </motion.div>
         </div>
 
-        <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${hovered ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
-          style={{ zIndex: 4 }}
-        >
-          <div className="w-14 h-14 rounded-full border border-white/30 bg-black/20 backdrop-blur-sm flex items-center justify-center">
-            <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-        </div>
-
-        <WatchLink project={project} onOpen={() => onVideoClick(project.id, project.src, project.title)} />
+        <WatchLink project={project} onOpen={() => onVideoClick(project)} />
       </div>
     </motion.div>
   );
 }
 
-function RealEstateCard({
-  project,
-  onVideoClick,
-}: {
-  project: (typeof featuredProjects)[0];
-  onVideoClick: (id: string, src: string, title: string) => void;
-}) {
+function RealEstateCard({ project, onVideoClick }: { project: ProjectMedia; onVideoClick: OpenVideo }) {
   const { t } = useI18n();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [hovered, setHovered] = useState(false);
+  const { hovered, playing, enter, leave, videoProps } = useHoverPreview();
   const description = project.description && (t.descriptions[project.description] ?? project.description);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.1 }}
+      transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true, margin: "-40px" }}
-      className="flex-1 min-w-0 relative overflow-hidden cursor-pointer"
-      onMouseEnter={() => {
-        setHovered(true);
-        videoRef.current?.play().catch(() => {});
-      }}
-      onMouseLeave={() => {
-        setHovered(false);
-        videoRef.current?.pause();
-        if (videoRef.current) videoRef.current.currentTime = 0;
-      }}
+      className="group flex-1 min-w-0 relative overflow-hidden cursor-pointer bg-surface"
+      data-cursor="play"
+      onMouseEnter={enter}
+      onMouseLeave={leave}
     >
-      <Image
-        src={project.poster}
-        alt={project.title}
-        fill
-        sizes="(min-width: 768px) 68vw, 100vw"
-        className="object-cover"
-      />
-      <video
-        ref={videoRef}
-        muted
-        loop
-        playsInline
-        preload="none"
-        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${hovered ? "scale-105" : "scale-100"}`}
-      >
-        <source src={project.src} type="video/mp4" />
-      </video>
-      <div className={`absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-50"}`} />
+      <div className="absolute inset-0 transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
+        <FadeImage
+          src={project.poster}
+          alt={project.title}
+          fill
+          sizes="(min-width: 768px) 68vw, 100vw"
+          className="object-cover"
+        />
+        <video
+          {...videoProps}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${playing ? "opacity-100" : "opacity-0"}`}
+        >
+          <source src={previewSrc(project.src)} type="video/mp4" />
+        </video>
+      </div>
+      <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-60"}`} />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-5 md:p-7">
-        <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/70 mb-1.5 truncate">{t.gallery.categories[project.category]}</p>
-        <h3 className="text-sm sm:text-lg md:text-xl font-light text-white tracking-tight leading-snug">{project.title}</h3>
-        {description && <p className="hidden sm:block text-xs text-white/50 mt-1">{description}</p>}
+        <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gold/90 mb-1.5 truncate">
+          {t.gallery.categories[project.category]}
+        </p>
+        <h3 className="font-display text-base sm:text-2xl md:text-3xl font-light text-white leading-[1.05]">{project.title}</h3>
+        {description && <p className="hidden sm:block text-xs text-white/55 mt-1.5">{description}</p>}
       </div>
-      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${hovered ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}>
-        <div className="w-14 h-14 rounded-full border border-white/30 bg-black/20 backdrop-blur-sm flex items-center justify-center">
-          <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-        </div>
-      </div>
-      <WatchLink project={project} onOpen={() => onVideoClick(project.id, project.src, project.title)} />
+      <WatchLink project={project} onOpen={() => onVideoClick(project)} />
     </motion.div>
   );
 }
@@ -186,16 +176,16 @@ function PhotoStrip() {
           key={i}
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: i * 0.08 }}
+          transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
-          className="relative overflow-hidden aspect-[3/4]"
+          className="relative overflow-hidden aspect-[3/4] bg-surface"
         >
-          <Image
+          <FadeImage
             src={photo.src}
             alt={photo.alt}
             fill
             sizes="(min-width: 768px) 25vw, 50vw"
-            className="object-cover hover:scale-105 transition-transform duration-500"
+            className="object-cover hover:scale-[1.04] transition-transform duration-[1.2s]"
           />
         </motion.div>
       ))}
@@ -205,40 +195,48 @@ function PhotoStrip() {
 
 export default function FeaturedWork() {
   const { t, href } = useI18n();
-  const [modal, setModal] = useState<{ id: string; src: string; title: string } | null>(null);
-  const handleVideoClick = useCallback((id: string, src: string, title: string) => setModal({ id, src, title }), []);
+  const [modal, setModal] = useState<ProjectMedia | null>(null);
+  const handleVideoClick = useCallback((project: ProjectMedia) => setModal(project), []);
   const closeModal = useCallback(() => setModal(null), []);
 
   return (
     <>
-      {modal && <VideoModal shareId={modal.id} src={modal.src} title={modal.title} onClose={closeModal} />}
+      {modal && (
+        <VideoModal shareId={modal.id} src={modal.src} title={modal.title} poster={modal.poster} onClose={closeModal} />
+      )}
 
       <section className="pt-12 md:pt-16 pb-20 md:pb-28 bg-background">
         <div className="w-full">
           {/* Header */}
-          <div className="flex items-end justify-between mb-12 md:mb-16 px-5 md:px-10 max-w-[1400px] mx-auto">
+          <div className="flex items-end justify-between gap-6 mb-12 md:mb-16 px-5 md:px-10 max-w-[1400px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.7 }}
               viewport={{ once: true }}
             >
-              <p className="text-[11px] uppercase tracking-[0.3em] text-muted mb-3">{t.featured.eyebrow}</p>
-              <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">{t.featured.title}</h2>
+              <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-4">
+                <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
+                {t.featured.eyebrow}
+              </p>
+              <h2 className="font-display text-4xl md:text-6xl font-light leading-none">{t.featured.title}</h2>
             </motion.div>
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.15 }}
               viewport={{ once: true }}
+              className="shrink-0"
             >
               <Link
                 href={href("/work")}
-                className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/40 hover:text-white transition-colors duration-300"
+                className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-white/50 hover:text-white transition-colors duration-300"
               >
-                {t.featured.viewAll}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <span className="relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-gold after:transition-transform after:duration-500 group-hover:after:scale-x-100">
+                  {t.featured.viewAll}
+                </span>
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.25} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
             </motion.div>
@@ -252,12 +250,7 @@ export default function FeaturedWork() {
           */}
           <div className="flex flex-col gap-2 md:gap-3">
             {/* Full-width hero video */}
-            <FeaturedCard
-              project={featuredProjects[0]}
-              isFullWidth
-              index={0}
-              onVideoClick={handleVideoClick}
-            />
+            <FeaturedCard project={featuredProjects[0]} isFullWidth index={0} onVideoClick={handleVideoClick} />
 
             {/* Photo strip — all portrait, uniform height */}
             <PhotoStrip />
@@ -290,16 +283,16 @@ export default function FeaturedWork() {
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
                 viewport={{ once: true }}
-                className="relative flex-1 min-w-0 overflow-hidden aspect-[9/16]"
+                className="relative flex-1 min-w-0 overflow-hidden aspect-[9/16] bg-surface"
               >
-                <Image
+                <FadeImage
                   src="/projects/fotosciudad/DSC00202.jpg"
                   alt="Madrid nights"
                   fill
                   sizes="(min-width: 768px) 33vw, 50vw"
-                  className="object-cover hover:scale-105 transition-transform duration-700"
+                  className="object-cover hover:scale-[1.04] transition-transform duration-[1.2s]"
                 />
               </motion.div>
               <div className="flex-1 min-w-0">

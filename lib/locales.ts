@@ -46,9 +46,9 @@ export function languageAlternates(path: string): Record<string, string> {
 // Business details (single source of truth for UI + structured data).
 export const CONTACT = {
   email: "contact@luiscarrascofilms.com",
-  phoneDisplay: "+41 57 288 16 35",
-  phoneHref: "tel:+41572881635",
-  whatsappHref: "https://wa.me/41572881635",
+  phoneDisplay: "+41 76 288 16 35",
+  phoneHref: "tel:+41762881635",
+  whatsappHref: "https://wa.me/41762881635",
   instagram: "https://www.instagram.com/carrascoluis_/",
   behance: "https://www.behance.net/luiscarrasco07",
   city: "St. Gallen",

@@ -12,10 +12,10 @@ const OG_IMAGE = {
   url: "/og-image.jpg",
   width: 1200,
   height: 630,
-  alt: "Luis Carrasco Films — Cinematographer & Director, St. Gallen, Switzerland",
+  alt: "Luis Carrasco Films — Filmmaker & Photographer, St. Gallen, Switzerland",
 };
 
-export type PageKey = "home" | "work" | "vision" | "contact";
+export type PageKey = "home" | "work" | "services" | "vision" | "contact";
 
 export function pageMetadata(lang: Lang, page: PageKey, path: string): Metadata {
   const s = getDictionary(lang).seo[page];
@@ -116,7 +116,19 @@ export function businessJsonLd(lang: Lang) {
           "Event and festival videos",
           "Drone filming",
           "Color grading",
+          "Photography",
+          "Commercial photography",
+          "Event photography",
+          "Tourism photography",
         ],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: t.services.title,
+          itemListElement: t.services.items.map((item) => ({
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: item.title, description: item.desc },
+          })),
+        },
         sameAs: [CONTACT.instagram, CONTACT.behance],
         founder: { "@id": `${SITE_URL}/#person` },
       },
@@ -124,7 +136,7 @@ export function businessJsonLd(lang: Lang) {
         "@type": "Person",
         "@id": `${SITE_URL}/#person`,
         name: "Luis Carrasco",
-        jobTitle: "Cinematographer & Director",
+        jobTitle: "Filmmaker & Photographer",
         url: SITE_URL,
         image: `${SITE_URL}${OG_IMAGE.url}`,
         worksFor: { "@id": `${SITE_URL}/#business` },

@@ -2,7 +2,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
-import Image from "next/image";
+import FadeImage from "@/components/FadeImage";
+import { previewSrc } from "@/lib/media";
 import { allProjects, categories, type ProjectMedia } from "@/data/projects";
 import VideoModal from "@/components/VideoModal";
 import ImageModal from "@/components/ImageModal";
@@ -96,11 +97,13 @@ function GalleryItem({
 }) {
   const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
   const isPortrait = project.aspect === "portrait";
   const isVideo = project.type === "video";
   const isEmbed = project.type === "embed";
   const isImage = project.type === "image";
 
+  // Hover plays a light 5-second preview, never the full film.
   const handleMouseEnter = () => {
     if (isVideo) videoRef.current?.play().catch(() => {});
   };
@@ -113,10 +116,11 @@ function GalleryItem({
 
   return (
     <div
-      className={`group relative overflow-hidden cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70 ${grow ? "flex flex-col grow" : ""}`}
+      className={`group relative overflow-hidden cursor-pointer bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70 ${grow ? "flex flex-col grow" : ""}`}
       // Tail items absorb the leftover column height (object-cover crops a touch),
       // capped relative to their natural size via the column's container width.
       style={grow ? { maxHeight: `calc(100cqw * ${isPortrait ? 4 / 3 : 3 / 4} * ${MAX_GROW})` } : undefined}
+      data-cursor={isImage ? "view" : "play"}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       // Photos open the lightbox; videos are handled by their WatchLink.
@@ -133,62 +137,52 @@ function GalleryItem({
         },
       })}
     >
-      <div className={`relative w-full ${isPortrait ? "aspect-[3/4]" : "aspect-[4/3]"} ${grow ? "grow" : ""}`}>
-        {!isVideo ? (
-          <Image
-            src={isEmbed ? project.poster : project.src}
-            alt={project.title}
-            fill
-            sizes="(min-width: 768px) 33vw, 50vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-        ) : (
-          <>
-            {/* Optimized poster always sits behind; the muted video (preload=none)
-                paints over it only once it starts playing on hover. */}
-            {project.poster && (
-              <Image
-                src={project.poster}
-                alt={project.title}
-                fill
-                sizes="(min-width: 768px) 33vw, 50vw"
-                className="object-cover"
-                style={{ zIndex: 1 }}
-              />
-            )}
+      <div className={`relative w-full overflow-hidden ${isPortrait ? "aspect-[3/4]" : "aspect-[4/3]"} ${grow ? "grow" : ""}`}>
+        <div className="absolute inset-0 transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
+          {(!isVideo || project.poster) && (
+            <FadeImage
+              src={isVideo || isEmbed ? project.poster : project.src}
+              alt={`${project.title} – ${t.gallery.categories[project.category]}`}
+              fill
+              sizes="(min-width: 768px) 33vw, 50vw"
+              className="object-cover"
+            />
+          )}
+          {isVideo && (
             <video
               ref={videoRef}
               muted
               loop
               playsInline
               preload="none"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              style={{ zIndex: 2 }}
+              onPlaying={() => setPlaying(true)}
+              onPause={() => setPlaying(false)}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${playing ? "opacity-100" : "opacity-0"}`}
             >
-              <source src={project.src} type="video/mp4" />
+              <source src={previewSrc(project.src)} type="video/mp4" />
             </video>
-          </>
-        )}
+          )}
+        </div>
 
         <div
-          className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           style={{ zIndex: 3 }}
         />
         <div
-          className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
+          className="absolute bottom-0 left-0 right-0 p-4 md:p-5 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"
           style={{ zIndex: 4 }}
         >
-          <p className="text-sm font-light text-white">{project.title}</p>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 mt-0.5">{t.gallery.categories[project.category]}</p>
+          <p className="font-display text-lg md:text-xl font-light text-white leading-tight">{project.title}</p>
+          <p className="text-[10px] uppercase tracking-[0.25em] text-gold/90 mt-1">{t.gallery.categories[project.category]}</p>
         </div>
 
         {/* Corner badge: play for video/embed, expand for photos */}
         <div
-          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300"
+          className="absolute top-3 right-3 w-8 h-8 rounded-full border border-white/30 bg-black/25 backdrop-blur-sm flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-300"
           style={{ zIndex: 4 }}
         >
           {isImage ? (
-            <svg className="w-3.5 h-3.5 text-white group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="w-3.5 h-3.5 text-white group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4" />
             </svg>
           ) : (
@@ -207,7 +201,7 @@ export default function Gallery() {
   const { t } = useI18n();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [mediaFilter, setMediaFilter] = useState<"all" | "video" | "photo">("all");
-  const [modal, setModal] = useState<{ id: string; src: string; title: string; embedUrl?: string } | null>(null);
+  const [modal, setModal] = useState<{ id: string; src: string; title: string; poster?: string; embedUrl?: string } | null>(null);
   const [imageModal, setImageModal] = useState<{ src: string; alt: string } | null>(null);
   const { cols: numCols, width: gridWidth } = useGrid();
 
@@ -215,7 +209,7 @@ export default function Gallery() {
     if (project.type === "image") {
       setImageModal({ src: project.src, alt: project.title });
     } else {
-      setModal({ id: project.id, src: project.src, title: project.title, embedUrl: project.embedUrl });
+      setModal({ id: project.id, src: project.src, title: project.title, poster: project.poster, embedUrl: project.embedUrl });
     }
   }, []);
   const closeModal = useCallback(() => setModal(null), []);
@@ -247,7 +241,7 @@ export default function Gallery() {
 
   return (
     <>
-      {modal && <VideoModal shareId={modal.id} src={modal.src} title={modal.title} embedUrl={modal.embedUrl} onClose={closeModal} />}
+      {modal && <VideoModal shareId={modal.id} src={modal.src} title={modal.title} poster={modal.poster} embedUrl={modal.embedUrl} onClose={closeModal} />}
       {imageModal && <ImageModal src={imageModal.src} alt={imageModal.alt} onClose={closeImageModal} />}
 
       <section className="pt-32 pb-24 md:pt-36 md:pb-32">
@@ -257,7 +251,7 @@ export default function Gallery() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl md:text-5xl font-extralight tracking-tight"
+            className="font-display text-5xl md:text-7xl font-light leading-none"
           >
             {t.gallery.title}
           </motion.h1>
@@ -265,7 +259,7 @@ export default function Gallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-3 max-w-xl text-sm text-muted font-light leading-relaxed"
+            className="mt-5 max-w-xl font-display italic text-lg md:text-xl text-white/60 leading-snug"
           >
             {t.gallery.intro}
           </motion.p>

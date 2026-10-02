@@ -50,10 +50,10 @@ export default function WatchView({ v }: { v: ProjectMedia }) {
           )}
 
           <div className="mt-8">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted mb-2">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-gold/80 mb-3">
               {t.gallery.categories[v.category]}
             </p>
-            <h1 className="text-2xl md:text-3xl font-extralight tracking-tight">{v.title}</h1>
+            <h1 className="font-display text-4xl md:text-5xl font-light leading-tight">{v.title}</h1>
             {v.description && (
               <p className="text-sm text-muted mt-3 max-w-xl leading-relaxed">
                 {t.descriptions[v.description] ?? v.description}

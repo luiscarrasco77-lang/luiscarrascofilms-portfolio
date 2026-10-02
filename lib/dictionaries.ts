@@ -4,9 +4,9 @@
 import type { Lang } from "./locales";
 
 const en = {
-  nav: { work: "Work", vision: "Vision", contact: "Contact", letsWork: "Let's Work" },
+  nav: { work: "Work", services: "Services", vision: "Vision", contact: "Contact", letsWork: "Let's Work" },
   hero: {
-    eyebrow: "Cinematographer · Director",
+    eyebrow: "Filmmaker · Photographer",
     subtitle:
       "Turning stories into growth. We build digital stories that connect, convert, and create loyal communities.",
     cta: "View the Work",
@@ -107,11 +107,91 @@ const en = {
     successTitle: "Message sent.",
     successMsg: "I'll be in touch shortly.",
   },
+  services: {
+    "eyebrow": "Services",
+    "title": "Video production & photography in St. Gallen",
+    "intro": "From concept to final cut: brand films, commercials, event films and photography for companies, hotels and tourism brands — across Switzerland and worldwide.",
+    "items": [
+      {
+        "title": "Brand & corporate films",
+        "desc": "Image films that show who you are — for companies, universities and organisations, told with a cinematic look and a clear message."
+      },
+      {
+        "title": "Commercials & social ads",
+        "desc": "Short, high-retention spots for Instagram, TikTok, YouTube and campaigns — vertical and horizontal, built to perform."
+      },
+      {
+        "title": "Tourism & hospitality",
+        "desc": "Films and photos for destinations, mountain resorts, hotels and restaurants that make people want to be there."
+      },
+      {
+        "title": "Events & festivals",
+        "desc": "Aftermovies and event coverage full of energy — from corporate events to international music festivals."
+      },
+      {
+        "title": "Photography",
+        "desc": "Brand, travel, hospitality and event photography with the same cinematic eye — ready for web, print and social."
+      },
+      {
+        "title": "Aerial & drone",
+        "desc": "Drone footage and aerial photography of landscapes, properties and events across Switzerland."
+      }
+    ],
+    "processTitle": "How we work",
+    "process": [
+      {
+        "title": "Brief",
+        "desc": "We talk about your goals, your audience and your budget."
+      },
+      {
+        "title": "Concept",
+        "desc": "Idea, script and shot list — with a clear timeline and quote."
+      },
+      {
+        "title": "Production",
+        "desc": "Filming and photography on location, anywhere in Switzerland or abroad."
+      },
+      {
+        "title": "Post-production",
+        "desc": "Editing, color grading and sound design, delivered in every format you need."
+      }
+    ],
+    "areasTitle": "Where I work",
+    "areas": "Based in St. Gallen. Regularly filming in Zürich, Winterthur, Appenzell, Thurgau, the Rhine Valley and Liechtenstein — and on location worldwide.",
+    "faqTitle": "Frequently asked questions",
+    "faq": [
+      {
+        "q": "How much does a video production cost?",
+        "a": "It depends on the scope — shooting days, crew, locations and post-production. After a short call you receive a clear quote."
+      },
+      {
+        "q": "Do you also work outside St. Gallen?",
+        "a": "Yes. I work across Switzerland — Zürich, Eastern Switzerland and beyond — and travel for international projects."
+      },
+      {
+        "q": "Can you deliver both video and photos?",
+        "a": "Yes. Many clients book film and photography together, so the campaign looks consistent on every channel."
+      },
+      {
+        "q": "How long does a project take?",
+        "a": "Depending on the scope, from a few days for short social content to a few weeks for a brand film."
+      },
+      {
+        "q": "Do you handle the whole production?",
+        "a": "Yes — concept, filming, drone, editing, color grading and sound, with one single point of contact."
+      }
+    ],
+    "ctaTitle": "Tell me about your project.",
+    "ctaButton": "Request a quote",
+    "homeTitle": "Film & photography for brands that want to stand out.",
+    "homeLink": "All services"
+  },
+  cursor: {"play": "Play", "view": "View"},
   a11y: { menu: "Menu", language: "Language", close: "Close", enlarge: "Enlarge photo" },
   modal: { copyLink: "Copy link", copied: "Link copied" },
   footer: {
     tagline:
-      "Turning stories into growth. Cinematic audiovisual production for brands, festivals, and lifestyle content worldwide.",
+      "Cinematic films and photography for brands, hotels and festivals — from St. Gallen to the world.",
     navigate: "Navigate",
     connect: "Connect",
     rights: "All rights reserved.",
@@ -139,21 +219,26 @@ const en = {
   seo: {
     ogLocale: "en_US",
     siteDescription:
-      "Cinematic video production in St. Gallen, Switzerland: brand films, commercials, tourism and event videos for clients across Switzerland and worldwide.",
+      "Filmmaker and photographer in St. Gallen, Switzerland: brand films, commercials, tourism and event videos, drone and photography across Switzerland.",
     home: {
-      title: "Video Production in St. Gallen, Switzerland | Luis Carrasco Films",
+      title: "Filmmaker & Photographer in St. Gallen | Luis Carrasco Films",
       description:
-        "Cinematic video production in St. Gallen, Switzerland: brand films, commercials, tourism and event videos for clients across Switzerland and worldwide.",
+        "Filmmaker and photographer in St. Gallen, Switzerland: brand films, commercials, tourism and event videos, drone and photography across Switzerland.",
     },
     work: {
-      title: "Portfolio – Brand Films & Commercials",
+      title: "Portfolio – Films & Photography",
       description:
         "Selected video productions by Luis Carrasco, based in St. Gallen: brand and university films, tourism films, festival aftermovies and photography.",
     },
     vision: {
-      title: "About – Cinematographer in St. Gallen",
+      title: "About – Filmmaker & Photographer",
       description:
         "The story behind Luis Carrasco Films — from a kid with a camera to a cinematographer and director based in St. Gallen, Switzerland.",
+    },
+    services: {
+      title: "Services – Film & Photography in St. Gallen",
+      description:
+        "Brand films, commercials, event and tourism videos, drone footage and photography from St. Gallen — for companies across Switzerland and worldwide.",
     },
     contact: {
       title: "Contact – Book a Video Production in Switzerland",
@@ -161,6 +246,11 @@ const en = {
         "Planning a brand film or commercial in Switzerland? Contact Luis Carrasco Films in St. Gallen by phone, WhatsApp or email.",
     },
     keywords: [
+      "photographer St. Gallen",
+      "filmmaker St. Gallen",
+      "photographer Switzerland",
+      "commercial photographer Switzerland",
+      "event photographer St. Gallen",
       "videographer St. Gallen",
       "video production St. Gallen",
       "video production Switzerland",
@@ -180,9 +270,9 @@ const en = {
 export type Dict = typeof en;
 
 const es: Dict = {
-  nav: { work: "Proyectos", vision: "Visión", contact: "Contacto", letsWork: "Trabajemos" },
+  nav: { work: "Proyectos", services: "Servicios", vision: "Visión", contact: "Contacto", letsWork: "Trabajemos" },
   hero: {
-    eyebrow: "Director de Fotografía · Realizador",
+    eyebrow: "Filmmaker · Fotógrafo",
     subtitle:
       "Convertimos historias en crecimiento. Creamos historias digitales que conectan, convierten y construyen comunidades leales.",
     cta: "Ver proyectos",
@@ -283,11 +373,91 @@ const es: Dict = {
     successTitle: "Mensaje enviado.",
     successMsg: "Te contactaré pronto.",
   },
+  services: {
+    "eyebrow": "Servicios",
+    "title": "Producción de video y fotografía en St. Gallen",
+    "intro": "Del concepto al montaje final: films de marca, publicidad, videos de eventos y fotografía para empresas, hoteles y turismo, en toda Suiza y el mundo.",
+    "items": [
+      {
+        "title": "Films de marca y corporativos",
+        "desc": "Videos que muestran quién eres: empresas, universidades y organizaciones, con estética cinematográfica y un mensaje claro."
+      },
+      {
+        "title": "Publicidad y anuncios para redes",
+        "desc": "Spots cortos de alta retención para Instagram, TikTok, YouTube y campañas, en vertical y horizontal."
+      },
+      {
+        "title": "Turismo y hotelería",
+        "desc": "Films y fotos para destinos, estaciones de montaña, hoteles y restaurantes que dan ganas de estar allí."
+      },
+      {
+        "title": "Eventos y festivales",
+        "desc": "Aftermovies y cobertura de eventos llenos de energía, desde eventos corporativos hasta festivales internacionales."
+      },
+      {
+        "title": "Fotografía",
+        "desc": "Fotografía de marca, viajes, hotelería y eventos con la misma mirada cinematográfica, lista para web, impresión y redes."
+      },
+      {
+        "title": "Tomas aéreas con dron",
+        "desc": "Video y fotografía aérea de paisajes, propiedades y eventos en toda Suiza."
+      }
+    ],
+    "processTitle": "Cómo trabajamos",
+    "process": [
+      {
+        "title": "Briefing",
+        "desc": "Hablamos de tus objetivos, tu público y tu presupuesto."
+      },
+      {
+        "title": "Concepto",
+        "desc": "Idea, guion y lista de planos, con un calendario y un presupuesto claros."
+      },
+      {
+        "title": "Producción",
+        "desc": "Rodaje y fotografía en locación, en cualquier lugar de Suiza o del extranjero."
+      },
+      {
+        "title": "Postproducción",
+        "desc": "Edición, corrección de color y diseño de sonido, entregados en todos los formatos que necesites."
+      }
+    ],
+    "areasTitle": "Dónde trabajo",
+    "areas": "Con base en St. Gallen. Rodajes frecuentes en Zúrich, Winterthur, Appenzell, Turgovia, el valle del Rin y Liechtenstein, y en cualquier parte del mundo.",
+    "faqTitle": "Preguntas frecuentes",
+    "faq": [
+      {
+        "q": "¿Cuánto cuesta una producción de video?",
+        "a": "Depende del alcance: días de rodaje, equipo, locaciones y postproducción. Tras una breve llamada recibes un presupuesto claro."
+      },
+      {
+        "q": "¿Trabajas fuera de St. Gallen?",
+        "a": "Sí. Trabajo en toda Suiza (Zúrich, el este de Suiza y más allá) y viajo para proyectos internacionales."
+      },
+      {
+        "q": "¿Ofreces video y fotografía a la vez?",
+        "a": "Sí. Muchos clientes reservan film y fotografía juntos, para que la campaña se vea coherente en todos los canales."
+      },
+      {
+        "q": "¿Cuánto tarda un proyecto?",
+        "a": "Según el alcance, desde pocos días para contenido corto en redes hasta algunas semanas para un film de marca."
+      },
+      {
+        "q": "¿Te encargas de toda la producción?",
+        "a": "Sí: concepto, rodaje, dron, edición, color y sonido, con un único punto de contacto."
+      }
+    ],
+    "ctaTitle": "Cuéntame sobre tu proyecto.",
+    "ctaButton": "Pedir presupuesto",
+    "homeTitle": "Film y fotografía para marcas que quieren destacar.",
+    "homeLink": "Todos los servicios"
+  },
+  cursor: {"play": "Play", "view": "Ver"},
   a11y: { menu: "Menú", language: "Idioma", close: "Cerrar", enlarge: "Ampliar foto" },
   modal: { copyLink: "Copiar enlace", copied: "Enlace copiado" },
   footer: {
     tagline:
-      "Convertimos historias en crecimiento. Producción audiovisual cinematográfica para marcas, festivales y contenido lifestyle en todo el mundo.",
+      "Films y fotografía cinematográfica para marcas, hoteles y festivales, desde St. Gallen para el mundo.",
     navigate: "Navegación",
     connect: "Conecta",
     rights: "Todos los derechos reservados.",
@@ -329,21 +499,26 @@ const es: Dict = {
   seo: {
     ogLocale: "es_ES",
     siteDescription:
-      "Producción audiovisual cinematográfica en St. Gallen, Suiza. Films de marca, comerciales, videos de turismo y eventos para clientes en Suiza y el mundo.",
+      "Filmmaker y fotógrafo en St. Gallen, Suiza: films de marca, publicidad, videos de turismo y eventos, dron y fotografía para clientes en Suiza y el mundo.",
     home: {
-      title: "Producción de video en St. Gallen, Suiza | Luis Carrasco Films",
+      title: "Filmmaker y fotógrafo en St. Gallen, Suiza | Luis Carrasco Films",
       description:
-        "Producción audiovisual cinematográfica en St. Gallen, Suiza. Films de marca, comerciales, videos de turismo y eventos para clientes en Suiza y el mundo.",
+        "Filmmaker y fotógrafo en St. Gallen, Suiza: films de marca, publicidad, videos de turismo y eventos, dron y fotografía para clientes en Suiza y el mundo.",
     },
     work: {
-      title: "Portafolio – Films de marca y comerciales",
+      title: "Portafolio – Films y fotografía",
       description:
         "Producciones seleccionadas de Luis Carrasco en St. Gallen: films para marcas y universidades, videos de turismo, aftermovies de festivales y fotografía.",
     },
     vision: {
-      title: "Sobre mí – Cineasta en St. Gallen",
+      title: "Sobre mí – Filmmaker y fotógrafo",
       description:
         "La historia detrás de Luis Carrasco Films — de un niño con una cámara a director de fotografía y realizador con base en St. Gallen, Suiza.",
+    },
+    services: {
+      title: "Servicios – Video y fotografía en St. Gallen",
+      description:
+        "Films de marca, publicidad, videos de eventos y turismo, tomas con dron y fotografía desde St. Gallen, para empresas en toda Suiza y el mundo.",
     },
     contact: {
       title: "Contacto – Producción de video en Suiza",
@@ -351,6 +526,10 @@ const es: Dict = {
         "¿Planeas un film de marca o un comercial en Suiza? Contacta a Luis Carrasco Films en St. Gallen por teléfono, WhatsApp o correo.",
     },
     keywords: [
+      "fotógrafo St. Gallen",
+      "fotógrafo Suiza",
+      "filmmaker Suiza",
+      "filmmaker St. Gallen",
       "videógrafo St. Gallen",
       "producción de video Suiza",
       "cineasta Suiza",
@@ -366,9 +545,9 @@ const es: Dict = {
 
 // Swiss Standard German: no "ß" (always "ss"), «Guillemets», formal "Sie".
 const de: Dict = {
-  nav: { work: "Projekte", vision: "Vision", contact: "Kontakt", letsWork: "Anfragen" },
+  nav: { work: "Projekte", services: "Leistungen", vision: "Vision", contact: "Kontakt", letsWork: "Anfragen" },
   hero: {
-    eyebrow: "Kameramann · Regisseur",
+    eyebrow: "Filmemacher · Fotograf",
     subtitle:
       "Geschichten, die Wachstum schaffen. Imagefilme, Werbefilme und Eventvideos – vom Konzept bis zum fertigen Schnitt.",
     cta: "Projekte ansehen",
@@ -469,11 +648,91 @@ const de: Dict = {
     successTitle: "Nachricht gesendet.",
     successMsg: "Ich melde mich in Kürze bei Ihnen.",
   },
+  services: {
+    "eyebrow": "Leistungen",
+    "title": "Videoproduktion & Fotografie in St. Gallen",
+    "intro": "Vom Konzept bis zum fertigen Schnitt: Imagefilme, Werbefilme, Eventvideos und Fotografie für Unternehmen, Hotels und Tourismus – in der ganzen Schweiz und weltweit.",
+    "items": [
+      {
+        "title": "Imagefilme & Unternehmensvideos",
+        "desc": "Filme, die zeigen, wer Sie sind – für Unternehmen, Hochschulen und Organisationen, kinematografisch umgesetzt und mit klarer Botschaft."
+      },
+      {
+        "title": "Werbefilme & Social Ads",
+        "desc": "Kurze Spots mit hoher Zuschauerbindung für Instagram, TikTok, YouTube und Kampagnen – im Hoch- und Querformat."
+      },
+      {
+        "title": "Tourismus & Hotellerie",
+        "desc": "Filme und Fotos für Destinationen, Bergbahnen, Hotels und Restaurants, die Lust aufs Erleben machen."
+      },
+      {
+        "title": "Events & Festivals",
+        "desc": "Aftermovies und Eventvideos voller Energie – vom Firmenanlass bis zum internationalen Musikfestival."
+      },
+      {
+        "title": "Fotografie",
+        "desc": "Business-, Tourismus-, Hotel- und Eventfotografie mit demselben filmischen Blick – bereit für Web, Print und Social Media."
+      },
+      {
+        "title": "Drohnenaufnahmen",
+        "desc": "Luftaufnahmen und Drohnenfotos von Landschaften, Immobilien und Events in der ganzen Schweiz."
+      }
+    ],
+    "processTitle": "So arbeiten wir",
+    "process": [
+      {
+        "title": "Briefing",
+        "desc": "Wir besprechen Ihre Ziele, Ihre Zielgruppe und Ihr Budget."
+      },
+      {
+        "title": "Konzept",
+        "desc": "Idee, Drehbuch und Shotlist – mit klarem Zeitplan und Offerte."
+      },
+      {
+        "title": "Produktion",
+        "desc": "Dreh und Fotografie vor Ort, überall in der Schweiz und im Ausland."
+      },
+      {
+        "title": "Postproduktion",
+        "desc": "Schnitt, Color Grading und Sounddesign – geliefert in allen benötigten Formaten."
+      }
+    ],
+    "areasTitle": "Einsatzgebiet",
+    "areas": "Mit Sitz in St. Gallen. Regelmässig im Einsatz in Zürich, Winterthur, Appenzell, im Thurgau, im Rheintal und in Liechtenstein – und weltweit vor Ort.",
+    "faqTitle": "Häufige Fragen",
+    "faq": [
+      {
+        "q": "Was kostet eine Videoproduktion?",
+        "a": "Das hängt vom Umfang ab – Drehtage, Team, Locations und Postproduktion. Nach einem kurzen Gespräch erhalten Sie eine klare Offerte."
+      },
+      {
+        "q": "Arbeiten Sie auch ausserhalb von St. Gallen?",
+        "a": "Ja. Ich arbeite in der ganzen Schweiz – in Zürich, der Ostschweiz und darüber hinaus – und reise für Projekte auch international."
+      },
+      {
+        "q": "Bieten Sie Video und Fotografie aus einer Hand?",
+        "a": "Ja. Viele Kunden buchen Film und Fotografie zusammen – so wirkt die Kampagne auf allen Kanälen einheitlich."
+      },
+      {
+        "q": "Wie lange dauert ein Projekt?",
+        "a": "Je nach Umfang wenige Tage für kurze Social-Media-Inhalte bis einige Wochen für einen Imagefilm."
+      },
+      {
+        "q": "Übernehmen Sie die gesamte Produktion?",
+        "a": "Ja – Konzept, Dreh, Drohne, Schnitt, Color Grading und Ton, mit einer einzigen Ansprechperson."
+      }
+    ],
+    "ctaTitle": "Erzählen Sie mir von Ihrem Projekt.",
+    "ctaButton": "Offerte anfragen",
+    "homeTitle": "Film & Fotografie für Marken, die auffallen wollen.",
+    "homeLink": "Alle Leistungen"
+  },
+  cursor: {"play": "Play", "view": "Ansehen"},
   a11y: { menu: "Menü", language: "Sprache", close: "Schliessen", enlarge: "Foto vergrössern" },
   modal: { copyLink: "Link kopieren", copied: "Link kopiert" },
   footer: {
     tagline:
-      "Videoproduktion aus St. Gallen: Imagefilme, Werbefilme, Eventvideos und Drohnenaufnahmen für die ganze Schweiz und weltweit.",
+      "Videoproduktion und Fotografie aus St. Gallen: Imagefilme, Werbefilme, Eventvideos und Drohnenaufnahmen für die ganze Schweiz und weltweit.",
     navigate: "Navigation",
     connect: "Kontakt",
     rights: "Alle Rechte vorbehalten.",
@@ -515,21 +774,26 @@ const de: Dict = {
   seo: {
     ogLocale: "de_CH",
     siteDescription:
-      "Videoproduktion aus St. Gallen: Imagefilme, Werbefilme, Eventvideos und Drohnenaufnahmen für Unternehmen in der Ostschweiz, Zürich und der ganzen Schweiz.",
+      "Videograf & Fotograf in St. Gallen: Imagefilme, Werbefilme, Eventvideos, Drohnenaufnahmen und Fotografie für Unternehmen in der ganzen Schweiz.",
     home: {
-      title: "Videoproduktion & Videograf in St. Gallen | Luis Carrasco Films",
+      title: "Videograf & Fotograf in St. Gallen | Luis Carrasco Films",
       description:
-        "Videoproduktion aus St. Gallen: Imagefilme, Werbefilme, Eventvideos und Drohnenaufnahmen für Unternehmen in der Ostschweiz, Zürich und der ganzen Schweiz.",
+        "Videograf & Fotograf in St. Gallen: Imagefilme, Werbefilme, Eventvideos, Drohnenaufnahmen und Fotografie für Unternehmen in der ganzen Schweiz.",
     },
     work: {
-      title: "Imagefilme & Werbefilme – Portfolio",
+      title: "Portfolio – Imagefilme & Fotografie",
       description:
         "Imagefilme, Werbefilme, Event- und Tourismusvideos von Luis Carrasco, Videograf in St. Gallen – u. a. für die Universität St. Gallen (HSG) und Pizol.",
     },
     vision: {
-      title: "Über mich – Videograf in St. Gallen",
+      title: "Über mich – Filmemacher & Fotograf",
       description:
         "Die Geschichte hinter Luis Carrasco Films – vom Kind mit einer Kamera zum Kameramann und Regisseur mit Sitz in St. Gallen, Schweiz.",
+    },
+    services: {
+      title: "Leistungen – Video & Fotografie St. Gallen",
+      description:
+        "Imagefilme, Werbefilme, Event- und Tourismusvideos, Drohnenaufnahmen und Fotografie aus St. Gallen – für Unternehmen in der ganzen Schweiz.",
     },
     contact: {
       title: "Kontakt & Offerte – Videoproduktion",
@@ -537,6 +801,11 @@ const de: Dict = {
         "Sie planen einen Imagefilm, Werbefilm oder ein Eventvideo? Offerte anfragen bei Luis Carrasco Films in St. Gallen – per Telefon, WhatsApp oder E-Mail.",
     },
     keywords: [
+      "Fotograf St. Gallen",
+      "Fotograf Ostschweiz",
+      "Fotograf Zürich",
+      "Businessfotograf St. Gallen",
+      "Eventfotograf St. Gallen",
       "Videograf St. Gallen",
       "Videoproduktion St. Gallen",
       "Videoproduktion Schweiz",
