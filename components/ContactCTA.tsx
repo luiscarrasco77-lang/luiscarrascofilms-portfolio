@@ -44,7 +44,7 @@ export default function ContactCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           viewport={{ once: true }}
-          className="font-display text-5xl sm:text-6xl md:text-8xl font-light leading-[0.95] text-balance mb-8"
+          className="text-4xl sm:text-5xl md:text-6xl font-extralight tracking-tight leading-[1.1] text-balance mb-6"
         >
           {t.cta.title}
         </motion.h2>
@@ -54,7 +54,7 @@ export default function ContactCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
           viewport={{ once: true }}
-          className="font-display italic text-xl md:text-2xl text-white/60 font-light leading-snug max-w-xl mx-auto mb-12"
+          className="text-base text-white/55 font-light leading-relaxed max-w-xl mx-auto mb-12"
         >
           {t.cta.text}
         </motion.p>

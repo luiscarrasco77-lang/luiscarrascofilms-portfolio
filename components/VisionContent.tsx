@@ -40,10 +40,10 @@ export default function VisionContent() {
               <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
               {t.vision.eyebrow}
             </p>
-            <h1 className="font-display font-light leading-[0.98]" style={{ fontSize: "clamp(48px, 8.5vw, 128px)" }}>
+            <h1 style={{ fontSize: "clamp(40px, 7vw, 88px)", fontWeight: 200, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
               {t.vision.titleLine1}
               <br />
-              <span className="italic text-white/45">{t.vision.titleLine2}</span>
+              <span style={{ color: "rgba(255,255,255,0.35)" }}>{t.vision.titleLine2}</span>
             </h1>
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function VisionContent() {
           <div className="md:flex-1 flex flex-col justify-center gap-6 text-muted font-light text-base md:text-lg leading-relaxed px-0 md:px-10">
             <p>{t.vision.p1}</p>
             <p>{t.vision.p2}</p>
-            <p className="font-display italic text-2xl md:text-3xl leading-snug text-white">{t.vision.p3}</p>
+            <p className="text-foreground">{t.vision.p3}</p>
             <p className="text-[11px] uppercase tracking-[0.3em] text-gold/70 mt-4">
               {t.vision.thenNow}
             </p>
@@ -83,11 +83,11 @@ export default function VisionContent() {
 
       {/* ── 3. EDITORIAL COPY ── */}
       <div className="px-5 md:px-10 max-w-[1400px] mx-auto mb-20 md:mb-28">
-        <div className="max-w-4xl">
-          <p className="font-display text-2xl md:text-4xl font-light leading-snug text-white/55 mb-8">
+        <div className="max-w-2xl">
+          <p className="text-base md:text-xl text-muted font-light leading-relaxed mb-6">
             {t.vision.editorial1}
           </p>
-          <p className="font-display text-2xl md:text-4xl font-light leading-snug text-white">
+          <p className="text-base md:text-xl font-light leading-relaxed text-foreground">
             {t.vision.editorial2}
           </p>
         </div>
@@ -119,7 +119,7 @@ export default function VisionContent() {
             />
           </div>
           <blockquote className="border-l border-gold/40 pl-6 md:pl-10">
-            <p className="font-display italic text-3xl md:text-5xl lg:text-6xl font-light leading-[1.08] text-white/90">
+            <p className="text-xl md:text-3xl lg:text-4xl font-extralight leading-tight tracking-tight text-white/80">
               {t.vision.quote}
             </p>
             <cite className="text-[11px] uppercase tracking-[0.35em] text-gold/80 mt-8 block not-italic">
@@ -175,7 +175,7 @@ export default function VisionContent() {
           {t.vision.services.map((s) => (
             <div key={s.title}>
               <div className="w-8 h-px bg-gold/50 mb-6" />
-              <h3 className="font-display text-2xl md:text-3xl font-light leading-tight mb-3 text-white">{s.title}</h3>
+              <h3 className="text-base font-light tracking-tight mb-3 text-white">{s.title}</h3>
               <p className="text-sm text-muted leading-relaxed">{s.desc}</p>
             </div>
           ))}

@@ -21,8 +21,8 @@
   /* Warm ivory instead of pure white everywhere text-white / bg-white is used */
   --color-white: #f4efe8;
   --color-black: #070707;
-  --font-sans: var(--font-jost);
-  --font-display: var(--font-cormorant);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 /* Keep the reset in the base layer so Tailwind spacing utilities (which live in
@@ -48,8 +48,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  font-weight: 300;
-  letter-spacing: 0.01em;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -63,11 +61,6 @@ body {
 
 /* In the components layer so Tailwind utilities (tracking-*, opacity-*) still win. */
 @layer components {
-  /* Display serif: lining numerals */
-  .font-display {
-    font-feature-settings: "lnum" 1, "kern" 1;
-  }
-
   /* Images fade in once decoded instead of popping in */
   .img-fade {
     opacity: 0;

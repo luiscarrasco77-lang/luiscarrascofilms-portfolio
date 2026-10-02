@@ -154,18 +154,14 @@ export default function Hero() {
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="block font-display font-light uppercase tracking-[0.06em] text-[3.4rem] leading-[0.95] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] 2xl:text-[9.5rem] text-white"
+            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+            className="block text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-light tracking-[0.15em] text-white mb-6"
           >
-            Luis Carrasco
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="block mt-4 sm:mt-5 pl-[0.9em] text-[11px] sm:text-sm uppercase font-normal tracking-[0.9em] text-white/70"
-          >
-            Films
+            LUIS CARRASCO
+            <br />
+            <span className="text-white/60 text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.3em] font-extralight">
+              FILMS
+            </span>
           </motion.span>
 
           {/* Expanding hairline — settles after the title lands */}
@@ -174,7 +170,7 @@ export default function Hero() {
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 1.2, delay: 0.9, ease: "easeOut" }}
-            className="block h-px w-24 sm:w-40 bg-gradient-to-r from-transparent via-gold/70 to-transparent mt-8 mb-7 origin-center"
+            className="block h-px w-24 sm:w-40 bg-gradient-to-r from-transparent via-gold/70 to-transparent mb-7 origin-center"
           />
 
           {/* Location — clearly visible */}
@@ -197,7 +193,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1, ease: "easeOut" }}
-          className="max-w-2xl font-display italic font-light text-xl sm:text-2xl md:text-[1.75rem] text-white/75 leading-snug mb-11"
+          className="max-w-2xl text-base sm:text-lg text-white/60 font-light leading-relaxed tracking-wide mb-12"
         >
           {t.hero.subtitle}
         </motion.p>

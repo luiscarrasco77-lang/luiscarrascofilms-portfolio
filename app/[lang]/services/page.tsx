@@ -67,10 +67,10 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-8">
             {eyebrow(s.eyebrow)}
-            <h1 className="font-display text-5xl sm:text-6xl md:text-8xl font-light leading-[0.98] text-balance">{s.title}</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extralight tracking-tight leading-[1.05] text-balance">{s.title}</h1>
           </div>
           <div className="lg:col-span-4 lg:pt-24">
-            <p className="font-display italic text-xl md:text-2xl font-light text-white/70 leading-snug">{s.intro}</p>
+            <p className="text-base md:text-lg text-white/60 font-light leading-relaxed">{s.intro}</p>
           </div>
         </div>
       </section>
@@ -96,8 +96,8 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
               key={item.title}
               className={`py-10 md:py-14 border-b border-white/[0.08] ${i % 2 === 0 ? "md:pr-14 md:border-r" : "md:pl-14"}`}
             >
-              <span className="block font-display text-sm text-gold/80 mb-6">{String(i + 1).padStart(2, "0")}</span>
-              <h2 className="font-display text-3xl md:text-4xl font-light leading-tight mb-4">{item.title}</h2>
+              <span className="block text-[11px] tracking-[0.3em] text-gold/80 mb-6">{String(i + 1).padStart(2, "0")}</span>
+              <h2 className="text-2xl md:text-3xl font-extralight tracking-tight mb-4">{item.title}</h2>
               <p className="text-base text-muted leading-relaxed max-w-md">{item.desc}</p>
             </article>
           ))}
@@ -111,8 +111,8 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
           <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.08] border border-white/[0.08]">
             {s.process.map((step, i) => (
               <li key={step.title} className="bg-background p-8 md:p-10">
-                <span className="block font-display text-5xl font-light text-white/15 mb-8 leading-none">{i + 1}</span>
-                <h3 className="font-display text-2xl font-light mb-3">{step.title}</h3>
+                <span className="block text-5xl font-extralight text-white/15 mb-8 leading-none">{i + 1}</span>
+                <h3 className="text-lg font-light tracking-tight mb-3">{step.title}</h3>
                 <p className="text-sm text-muted leading-relaxed">{step.desc}</p>
               </li>
             ))}
@@ -125,7 +125,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
             {eyebrow(s.areasTitle)}
-            <p className="font-display text-2xl md:text-3xl font-light leading-snug text-white/85">{s.areas}</p>
+            <p className="text-xl md:text-2xl font-extralight tracking-tight leading-snug text-white/85">{s.areas}</p>
           </div>
           <ul className="lg:col-span-6 lg:col-start-7 flex flex-wrap content-start gap-3 lg:pt-14">
             {CITIES.map((city) => (
@@ -148,7 +148,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
             {s.faq.map((f) => (
               <details key={f.q} className="group border-b border-white/[0.08]">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-7 [&::-webkit-details-marker]:hidden">
-                  <h3 className="font-display text-xl md:text-2xl font-light">{f.q}</h3>
+                  <h3 className="text-base md:text-lg font-light">{f.q}</h3>
                   <span
                     aria-hidden="true"
                     className="relative h-4 w-4 shrink-0 before:absolute before:left-0 before:top-1/2 before:h-px before:w-4 before:bg-gold after:absolute after:left-1/2 after:top-0 after:h-4 after:w-px after:bg-gold after:transition-transform after:duration-300 group-open:after:scale-y-0"
@@ -163,7 +163,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
 
       {/* CTA */}
       <section className="px-5 md:px-10 py-24 md:py-32 border-t border-white/[0.06] text-center">
-        <h2 className="font-display text-5xl md:text-7xl font-light leading-[1] text-balance mb-10">{s.ctaTitle}</h2>
+        <h2 className="text-4xl md:text-6xl font-extralight tracking-tight leading-[1.05] text-balance mb-10">{s.ctaTitle}</h2>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link
             href={localizePath("/contact", lang)}

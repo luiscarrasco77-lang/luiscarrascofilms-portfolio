@@ -29,11 +29,11 @@ export default function Footer() {
         <div className="py-20 grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand */}
           <div className="md:col-span-5">
-            <p className="mb-5">
-              <span className="font-display text-2xl uppercase tracking-[0.12em]">Luis Carrasco</span>
-              <span className="ml-2.5 text-[10px] uppercase tracking-[0.5em] text-gold/80">Films</span>
-            </p>
-            <p className="font-display italic text-lg text-white/60 leading-snug max-w-sm">
+            <h3 className="text-lg tracking-[0.15em] mb-4">
+              <span className="font-semibold">LUIS CARRASCO</span>
+              <span className="text-muted font-light ml-1.5">FILMS</span>
+            </h3>
+            <p className="text-sm text-muted leading-relaxed max-w-sm">
               {t.footer.tagline}
             </p>
             <p className="mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-white/55">
@@ -122,7 +122,7 @@ export default function Footer() {
 
       {/* Oversized signature */}
       <div aria-hidden="true" className="overflow-hidden select-none pointer-events-none">
-        <p className="font-display font-light uppercase whitespace-nowrap text-center text-[11vw] leading-[0.8] tracking-[0.02em] text-white/[0.04] translate-y-[18%]">
+        <p className="font-extralight uppercase whitespace-nowrap text-center text-[9.5vw] leading-[0.8] tracking-[0.04em] text-white/[0.04] translate-y-[18%]">
           Luis Carrasco
         </p>
       </div>

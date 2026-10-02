@@ -6,7 +6,7 @@ import { useI18n } from "@/lib/i18n";
 import { CONTACT } from "@/lib/locales";
 
 // Values stay in English so inquiry emails are consistent; labels are localized.
-const BUDGET_VALUES = ["Under $1,500", "$1,500 – $5,000", "$5,000 – $10,000", "$10,000+"];
+const BUDGET_VALUES = ["Under CHF 1,500", "CHF 1,500 – 5,000", "CHF 5,000 – 10,000", "CHF 10,000+"];
 
 const directLinkClass =
   "group flex items-center gap-4 py-4 border-b border-white/[0.06] text-sm text-white/70 hover:text-white transition-colors duration-300";
@@ -62,10 +62,10 @@ export default function ContactForm() {
               <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
               {t.contact.eyebrow}
             </p>
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-light leading-[1.02] text-balance mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-[1.1] tracking-tight text-balance mb-8">
               {t.contact.headingLine1}
               <br />
-              <span className="italic text-white/45">{t.contact.headingLine2}</span>
+              <span className="text-muted">{t.contact.headingLine2}</span>
             </h1>
             <p className="text-base text-muted font-light leading-relaxed max-w-md mb-10">
               {t.contact.intro}

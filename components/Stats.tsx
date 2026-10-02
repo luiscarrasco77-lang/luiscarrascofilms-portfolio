@@ -76,7 +76,7 @@ export default function Stats() {
               viewport={{ once: true }}
               className="text-center flex flex-col items-center min-w-0 md:px-5 lg:px-10 xl:px-14"
             >
-              <div className="font-display text-5xl md:text-6xl lg:text-7xl font-light text-white mb-3 leading-none">
+              <div className="text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight text-accent mb-3">
                 <AnimatedCounter
                   target={stat.value}
                   suffix={stat.suffix}

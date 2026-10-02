@@ -24,7 +24,7 @@ export default function ServicesTeaser() {
               <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
               {s.eyebrow}
             </p>
-            <h2 className="font-display text-4xl md:text-6xl font-light leading-[1.02] text-balance">{s.homeTitle}</h2>
+            <h2 className="text-3xl md:text-5xl font-extralight tracking-tight leading-[1.1] text-balance">{s.homeTitle}</h2>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -58,8 +58,8 @@ export default function ServicesTeaser() {
               viewport={{ once: true }}
               className="group py-9 sm:pr-10 border-b border-white/[0.08]"
             >
-              <span className="block font-display text-sm text-gold/80 mb-5">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="font-display text-2xl md:text-[1.75rem] font-light leading-tight mb-3 transition-colors duration-500 group-hover:text-gold">
+              <span className="block text-[11px] tracking-[0.3em] text-gold/80 mb-5">{String(i + 1).padStart(2, "0")}</span>
+              <h3 className="text-lg md:text-xl font-light tracking-tight mb-3 transition-colors duration-500 group-hover:text-gold">
                 {item.title}
               </h3>
               <p className="text-sm text-muted leading-relaxed max-w-sm">{item.desc}</p>

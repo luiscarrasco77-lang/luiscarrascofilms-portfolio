@@ -105,8 +105,8 @@ function FeaturedCard({
               {t.gallery.categories[project.category]}
             </p>
             <h3
-              className={`font-display font-light text-white leading-[1.05] ${
-                isFullWidth ? "text-3xl md:text-5xl" : "text-base sm:text-2xl md:text-3xl"
+              className={`font-light text-white tracking-tight leading-snug ${
+                isFullWidth ? "text-2xl md:text-3xl" : "text-sm sm:text-lg md:text-xl"
               }`}
             >
               {project.title}
@@ -159,7 +159,7 @@ function RealEstateCard({ project, onVideoClick }: { project: ProjectMedia; onVi
         <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gold/90 mb-1.5 truncate">
           {t.gallery.categories[project.category]}
         </p>
-        <h3 className="font-display text-base sm:text-2xl md:text-3xl font-light text-white leading-[1.05]">{project.title}</h3>
+        <h3 className="text-sm sm:text-lg md:text-xl font-light text-white tracking-tight leading-snug">{project.title}</h3>
         {description && <p className="hidden sm:block text-xs text-white/55 mt-1.5">{description}</p>}
       </div>
       <WatchLink project={project} onOpen={() => onVideoClick(project)} />
@@ -219,7 +219,7 @@ export default function FeaturedWork() {
                 <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
                 {t.featured.eyebrow}
               </p>
-              <h2 className="font-display text-4xl md:text-6xl font-light leading-none">{t.featured.title}</h2>
+              <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">{t.featured.title}</h2>
             </motion.div>
             <motion.div
               initial={{ opacity: 0 }}

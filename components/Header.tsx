@@ -91,13 +91,15 @@ export default function Header() {
       >
         <div className="px-6 md:px-12 lg:px-20 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link href={href("/")} className="group whitespace-nowrap" aria-label="Luis Carrasco Films">
-            <span className="font-display text-xl md:text-[1.4rem] font-normal uppercase tracking-[0.12em] text-white">
-              Luis Carrasco
-            </span>
-            <span className="ml-2.5 text-[9px] md:text-[10px] font-normal uppercase tracking-[0.5em] text-gold/80 transition-colors duration-300 group-hover:text-gold">
-              Films
-            </span>
+          <Link href={href("/")} className="group">
+            <motion.div
+              whileHover={{ letterSpacing: "0.1em" }}
+              transition={{ duration: 0.3 }}
+              className="text-sm md:text-base tracking-[0.18em] whitespace-nowrap transition-all"
+            >
+              <span className="font-semibold">LUIS CARRASCO</span>
+              <span className="text-muted font-light ml-1.5 text-xs md:text-sm">FILMS</span>
+            </motion.div>
           </Link>
 
           {/* Desktop Nav */}
@@ -178,8 +180,8 @@ export default function Header() {
               >
                 <Link
                   href={href(item.href)}
-                  className={`font-display text-4xl font-light tracking-[0.06em] ${
-                    path === item.href ? "text-white" : "text-white/45"
+                  className={`text-3xl font-extralight tracking-[0.2em] uppercase ${
+                    path === item.href ? "text-white" : "text-white/40"
                   }`}
                 >
                   {t.nav[item.key]}

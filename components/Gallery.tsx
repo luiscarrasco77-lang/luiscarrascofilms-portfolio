@@ -172,7 +172,7 @@ function GalleryItem({
           className="absolute bottom-0 left-0 right-0 p-4 md:p-5 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"
           style={{ zIndex: 4 }}
         >
-          <p className="font-display text-lg md:text-xl font-light text-white leading-tight">{project.title}</p>
+          <p className="text-sm font-light text-white">{project.title}</p>
           <p className="text-[10px] uppercase tracking-[0.25em] text-gold/90 mt-1">{t.gallery.categories[project.category]}</p>
         </div>
 
@@ -251,7 +251,7 @@ export default function Gallery() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-display text-5xl md:text-7xl font-light leading-none"
+            className="text-4xl md:text-5xl font-extralight tracking-tight"
           >
             {t.gallery.title}
           </motion.h1>
@@ -259,7 +259,7 @@ export default function Gallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-5 max-w-xl font-display italic text-lg md:text-xl text-white/60 leading-snug"
+            className="mt-3 max-w-xl text-sm text-muted font-light leading-relaxed"
           >
             {t.gallery.intro}
           </motion.p>

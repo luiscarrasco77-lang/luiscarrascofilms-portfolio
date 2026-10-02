@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Cormorant_Garamond, Jost } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,19 +12,15 @@ import { getDictionary } from "@/lib/dictionaries";
 import { hasLocale, locales } from "@/lib/locales";
 import { businessJsonLd, jsonLdScript, siteMetadata } from "@/lib/seo";
 
-// Jost (geometric sans) for UI and body; Cormorant Garamond for editorial display type.
-const jost = Jost({
-  variable: "--font-jost",
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500"],
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400"],
-  style: ["normal", "italic"],
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -61,7 +57,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   return (
     <html
       lang={lang === "de" ? "de-CH" : lang}
-      className={`${jost.variable} ${cormorant.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
       <body className="bg-background text-foreground antialiased">
