@@ -29,9 +29,9 @@ export default function TrustBanner() {
       className="py-14 md:py-16 border-y border-white/[0.06] overflow-hidden bg-surface"
     >
       <p className="flex items-center justify-center gap-4 text-center text-[10px] uppercase tracking-[0.4em] text-white/40 mb-10 px-6">
-        <span aria-hidden="true" className="hidden sm:block h-px w-8 bg-gold/50" />
+        <span aria-hidden="true" className="hidden sm:block h-px w-8 bg-white/25" />
         {t.trust.label}
-        <span aria-hidden="true" className="hidden sm:block h-px w-8 bg-gold/50" />
+        <span aria-hidden="true" className="hidden sm:block h-px w-8 bg-white/25" />
       </p>
 
       {/* Edge-faded marquee — names dissolve into the background at both ends */}
@@ -50,7 +50,7 @@ export default function TrustBanner() {
               <span className="text-[12px] tracking-[0.35em] uppercase text-white/30 font-light transition-colors duration-500 hover:text-white/70">
                 {brand}
               </span>
-              <span aria-hidden="true" className="w-1 h-1 rotate-45 bg-gold/40" />
+              <span aria-hidden="true" className="w-1 h-1 rotate-45 bg-white/20" />
             </span>
           ))}
         </div>

@@ -12,7 +12,7 @@ const OG_IMAGE = {
   url: "/og-image.jpg",
   width: 1200,
   height: 630,
-  alt: "Luis Carrasco Films — Filmmaker & Photographer, St. Gallen, Switzerland",
+  alt: "Luis Carrasco Films, Filmmaker & Photographer in St. Gallen, Switzerland",
 };
 
 export type PageKey = "home" | "work" | "services" | "vision" | "contact";

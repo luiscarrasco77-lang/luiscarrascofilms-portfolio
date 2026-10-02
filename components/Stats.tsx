@@ -61,9 +61,9 @@ export default function Stats() {
           viewport={{ once: true }}
           className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-16 text-center"
         >
-          <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
+          <span aria-hidden="true" className="h-px w-8 bg-white/25" />
           {t.stats.impact}
-          <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
+          <span aria-hidden="true" className="h-px w-8 bg-white/25" />
         </motion.p>
 
         <div className="grid grid-cols-2 gap-x-6 gap-y-12 px-6 w-full max-w-sm mx-auto md:flex md:flex-nowrap md:justify-center md:gap-x-0 md:max-w-none md:divide-x md:divide-white/[0.08]">

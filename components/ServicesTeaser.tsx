@@ -21,7 +21,7 @@ export default function ServicesTeaser() {
             className="lg:col-span-7"
           >
             <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-5">
-              <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
+              <span aria-hidden="true" className="h-px w-8 bg-white/25" />
               {s.eyebrow}
             </p>
             <h2 className="text-3xl md:text-5xl font-extralight tracking-tight leading-[1.1] text-balance">{s.homeTitle}</h2>
@@ -38,7 +38,7 @@ export default function ServicesTeaser() {
               href={href("/services")}
               className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-white/70 hover:text-white transition-colors duration-300"
             >
-              <span className="relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-gold after:transition-transform after:duration-500 group-hover:after:scale-x-100">
+              <span className="relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-white/60 after:transition-transform after:duration-500 group-hover:after:scale-x-100">
                 {s.homeLink}
               </span>
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -58,8 +58,8 @@ export default function ServicesTeaser() {
               viewport={{ once: true }}
               className="group py-9 sm:pr-10 border-b border-white/[0.08]"
             >
-              <span className="block text-[11px] tracking-[0.3em] text-gold/80 mb-5">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="text-lg md:text-xl font-light tracking-tight mb-3 transition-colors duration-500 group-hover:text-gold">
+              <span className="block text-[11px] tracking-[0.3em] text-white/50 mb-5">{String(i + 1).padStart(2, "0")}</span>
+              <h3 className="text-lg md:text-xl font-light tracking-tight mb-3 transition-colors duration-500 group-hover:text-white">
                 {item.title}
               </h3>
               <p className="text-sm text-muted leading-relaxed max-w-sm">{item.desc}</p>

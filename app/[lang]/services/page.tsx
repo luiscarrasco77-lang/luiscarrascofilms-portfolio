@@ -53,7 +53,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
 
   const eyebrow = (text: string) => (
     <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-6">
-      <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
+      <span aria-hidden="true" className="h-px w-8 bg-white/25" />
       {text}
     </p>
   );
@@ -79,7 +79,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
       <div className="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-surface">
         <Image
           src="/fotos1/Pizol-28.jpg"
-          alt="Pizol, St. Gallen – tourism photography by Luis Carrasco"
+          alt="Pizol, St. Gallen. Tourism photography by Luis Carrasco"
           fill
           preload
           fetchPriority="high"
@@ -97,7 +97,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
               key={item.title}
               className={`py-10 md:py-14 border-b border-white/[0.08] ${i % 2 === 0 ? "md:pr-14 md:border-r" : "md:pl-14"}`}
             >
-              <span className="block text-[11px] tracking-[0.3em] text-gold/80 mb-6">{String(i + 1).padStart(2, "0")}</span>
+              <span className="block text-[11px] tracking-[0.3em] text-white/50 mb-6">{String(i + 1).padStart(2, "0")}</span>
               <h2 className="text-2xl md:text-3xl font-extralight tracking-tight mb-4">{item.title}</h2>
               <p className="text-base text-muted leading-relaxed max-w-md">{item.desc}</p>
             </article>
@@ -152,7 +152,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
                   <h3 className="text-base md:text-lg font-light">{f.q}</h3>
                   <span
                     aria-hidden="true"
-                    className="relative h-4 w-4 shrink-0 before:absolute before:left-0 before:top-1/2 before:h-px before:w-4 before:bg-gold after:absolute after:left-1/2 after:top-0 after:h-4 after:w-px after:bg-gold after:transition-transform after:duration-300 group-open:after:scale-y-0"
+                    className="relative h-4 w-4 shrink-0 before:absolute before:left-0 before:top-1/2 before:h-px before:w-4 before:bg-white/60 after:absolute after:left-1/2 after:top-0 after:h-4 after:w-px after:bg-white/60 after:transition-transform after:duration-300 group-open:after:scale-y-0"
                   />
                 </summary>
                 <p className="pb-7 pr-10 text-base text-muted leading-relaxed">{f.a}</p>
@@ -168,7 +168,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link
             href={localizePath("/contact", lang)}
-            className="inline-flex items-center gap-4 px-11 py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-gold transition-colors duration-500"
+            className="inline-flex items-center gap-4 px-11 py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-white/85 transition-colors duration-500"
           >
             {s.ctaButton}
           </Link>

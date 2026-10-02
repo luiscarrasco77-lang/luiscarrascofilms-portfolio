@@ -19,14 +19,14 @@ export function generateStaticParams() {
   return [...ids].map((id) => ({ id }));
 }
 
-/** Localized, unique copy for a video page: "Pizol: Imagefilm – Schweizer Alpen". */
+/** Localized, unique copy for a video page: "Pizol: Imagefilm in den Schweizer Alpen". */
 function videoCopy(v: ProjectMedia, lang: Lang) {
   const t = getDictionary(lang);
   const kind = t.watch.kinds[v.category];
   const detail = v.description ? (t.descriptions[v.description] ?? v.description) : kind;
   return {
     title: `${v.title}: ${detail}`,
-    description: `${v.title} – ${detail}. ${t.watch.seoSuffix}`,
+    description: `${v.title}: ${detail}. ${t.watch.seoSuffix}`,
   };
 }
 

@@ -144,7 +144,7 @@ function GalleryItem({
           {(!isVideo || project.poster) && (
             <FadeImage
               src={isVideo || isEmbed ? project.poster : project.src}
-              alt={`${project.title} – ${t.gallery.categories[project.category]}`}
+              alt={`${project.title}, ${t.gallery.categories[project.category]}`}
               fill
               sizes="(min-width: 768px) 33vw, 50vw"
               loading={eager ? "eager" : "lazy"}
@@ -177,7 +177,7 @@ function GalleryItem({
           style={{ zIndex: 4 }}
         >
           <p className="text-sm font-light text-white">{project.title}</p>
-          <p className="text-[10px] uppercase tracking-[0.25em] text-gold/90 mt-1">{t.gallery.categories[project.category]}</p>
+          <p className="text-[10px] uppercase tracking-[0.25em] text-white/50 mt-1">{t.gallery.categories[project.category]}</p>
         </div>
 
         {/* Corner badge: play for video/embed, expand for photos */}

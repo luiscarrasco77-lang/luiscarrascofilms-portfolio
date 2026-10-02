@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #070707;
-  --foreground: #ede8e1;
-  --accent: #f4efe8;
-  --border: #1a1917;
-  --muted: #8a847c;
-  --surface: #0d0c0b;
-  --gold: #c9b28c;
+  --background: #050505;
+  --foreground: #f0f0f0;
+  --accent: #ffffff;
+  --border: #141414;
+  --muted: #888888;
+  --surface: #0c0c0c;
 }
 
 @theme inline {
@@ -17,10 +16,6 @@
   --color-border: var(--border);
   --color-muted: var(--muted);
   --color-surface: var(--surface);
-  --color-gold: var(--gold);
-  /* Warm ivory instead of pure white everywhere text-white / bg-white is used */
-  --color-white: #f4efe8;
-  --color-black: #070707;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -41,7 +36,7 @@
 html {
   overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: #2a2826 #070707;
+  scrollbar-color: #222 #050505;
 }
 
 body {
@@ -55,7 +50,7 @@ body {
 }
 
 ::selection {
-  background: rgba(201, 178, 140, 0.35);
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
 }
 
@@ -78,7 +73,7 @@ body {
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2826;
+  background: #222;
   border-radius: 2px;
 }
 

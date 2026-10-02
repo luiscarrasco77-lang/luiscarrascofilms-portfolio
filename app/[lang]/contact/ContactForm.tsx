@@ -6,7 +6,7 @@ import { useI18n } from "@/lib/i18n";
 import { CONTACT } from "@/lib/locales";
 
 // Values stay in English so inquiry emails are consistent; labels are localized.
-const BUDGET_VALUES = ["Under CHF 1,500", "CHF 1,500 – 5,000", "CHF 5,000 – 10,000", "CHF 10,000+"];
+const BUDGET_VALUES = ["Under CHF 1,500", "CHF 1,500-5,000", "CHF 5,000-10,000", "CHF 10,000+"];
 
 const directLinkClass =
   "group flex items-center gap-4 py-4 border-b border-white/[0.06] text-sm text-white/70 hover:text-white transition-colors duration-300";
@@ -59,7 +59,7 @@ export default function ContactForm() {
             className="flex flex-col justify-center"
           >
             <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-8">
-              <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
+              <span aria-hidden="true" className="h-px w-8 bg-white/25" />
               {t.contact.eyebrow}
             </p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-[1.1] tracking-tight text-balance mb-8">
@@ -246,7 +246,7 @@ export default function ContactForm() {
                   disabled={status === "loading"}
                   whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
                   whileTap={{ scale: status === "loading" ? 1 : 0.98 }}
-                  className="w-full py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-gold transition-colors duration-500 disabled:opacity-50"
+                  className="w-full py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-white/85 transition-colors duration-500 disabled:opacity-50"
                 >
                   {status === "loading" ? t.contact.sending : t.contact.submit}
                 </motion.button>

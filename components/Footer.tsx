@@ -37,7 +37,7 @@ export default function Footer() {
               {t.footer.tagline}
             </p>
             <p className="mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-white/55">
-              <svg className="w-3.5 h-3.5 shrink-0 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+              <svg className="w-3.5 h-3.5 shrink-0 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
               </svg>
@@ -47,7 +47,7 @@ export default function Footer() {
 
           {/* Nav */}
           <div className="md:col-span-3">
-            <h4 className="text-[10px] uppercase tracking-[0.35em] text-gold/80 mb-6">
+            <h4 className="text-[10px] uppercase tracking-[0.35em] text-white/50 mb-6">
               {t.footer.navigate}
             </h4>
             <nav className="flex flex-col gap-4">
@@ -65,7 +65,7 @@ export default function Footer() {
 
           {/* Connect */}
           <div className="md:col-span-4">
-            <h4 className="text-[10px] uppercase tracking-[0.35em] text-gold/80 mb-6">
+            <h4 className="text-[10px] uppercase tracking-[0.35em] text-white/50 mb-6">
               {t.footer.connect}
             </h4>
             <div className="flex flex-col gap-4">

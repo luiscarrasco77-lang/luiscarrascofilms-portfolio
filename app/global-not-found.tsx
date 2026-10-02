@@ -6,7 +6,7 @@ import "./globals.css";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "404 – Luis Carrasco Films",
+  title: "404 | Luis Carrasco Films",
   robots: { index: false },
 };
 

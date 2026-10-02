@@ -33,8 +33,8 @@ export default function ContactCTA() {
           className="inline-flex items-center gap-2.5 text-[11px] uppercase tracking-[0.3em] text-white/50 mb-8"
         >
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-gold/60 animate-ping" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
+            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400/60 animate-ping" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
           </span>
           {t.cta.eyebrow}
         </motion.p>
@@ -68,7 +68,7 @@ export default function ContactCTA() {
         >
           <Link
             href={href("/contact")}
-            className="group inline-flex items-center gap-4 px-11 py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-gold transition-colors duration-500"
+            className="group inline-flex items-center gap-4 px-11 py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-white/85 transition-colors duration-500"
           >
             {t.cta.button}
             <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">

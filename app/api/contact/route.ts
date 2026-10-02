@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       from: "Luis Carrasco Films <noreply@luiscarrascofilms.com>",
       to: "contact@luiscarrascofilms.com",
       replyTo: email,
-      subject: `New Inquiry — ${name}${company ? ` (${company})` : ""}`,
+      subject: `New inquiry: ${name}${company ? ` (${company})` : ""}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; color: #111;">
           <h2 style="font-weight: 300; font-size: 24px; margin-bottom: 24px;">
@@ -33,11 +33,11 @@ export async function POST(request: Request) {
             </tr>
             <tr>
               <td style="padding:8px 0; color:#666;">Company / Brand</td>
-              <td style="padding:8px 0;">${company || "—"}</td>
+              <td style="padding:8px 0;">${company || "-"}</td>
             </tr>
             <tr>
               <td style="padding:8px 0; color:#666;">Budget</td>
-              <td style="padding:8px 0;">${budget || "—"}</td>
+              <td style="padding:8px 0;">${budget || "-"}</td>
             </tr>
           </table>
           <hr style="border:none; border-top:1px solid #eee; margin:20px 0;" />

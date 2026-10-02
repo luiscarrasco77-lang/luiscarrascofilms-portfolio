@@ -24,7 +24,7 @@ export const featuredProjects: ProjectMedia[] = [
     category: "travel",
     aspect: "landscape",
     featured: true,
-    description: "Travel film — Central America",
+    description: "Travel film, Central America",
   },
   {
     id: "feat-elizabeth",
@@ -46,7 +46,7 @@ export const featuredProjects: ProjectMedia[] = [
     category: "travel",
     aspect: "landscape",
     featured: true,
-    description: "Travel film — Mexico",
+    description: "Travel film, Mexico",
   },
   {
     id: "feat-ski",
@@ -57,7 +57,7 @@ export const featuredProjects: ProjectMedia[] = [
     category: "action",
     aspect: "landscape",
     featured: true,
-    description: "Action sports — French Alps",
+    description: "Action sports, French Alps",
   },
   {
     id: "feat-airelles",
@@ -68,7 +68,7 @@ export const featuredProjects: ProjectMedia[] = [
     category: "commercial",
     aspect: "landscape",
     featured: true,
-    description: "Luxury hotel campaign — Courchevel",
+    description: "Luxury hotel campaign in Courchevel",
   },
   {
     id: "feat-capriati",
@@ -90,7 +90,7 @@ export const featuredProjects: ProjectMedia[] = [
     category: "commercial",
     aspect: "portrait",
     featured: true,
-    description: "Commercial — vertical",
+    description: "Vertical commercial",
   },
   {
     id: "feat-realestate1",
@@ -151,7 +151,7 @@ export const allProjects: ProjectMedia[] = [
     title: "HSG St. Gallen",
     category: "commercial",
     aspect: "landscape",
-    description: "Corporate — Entrepreneurship Program",
+    description: "Corporate film for the Entrepreneurship Program",
   },
   {
     id: "commercial-prince-university",
@@ -161,7 +161,7 @@ export const allProjects: ProjectMedia[] = [
     title: "Stetson University",
     category: "commercial",
     aspect: "landscape",
-    description: "Corporate — Prince Entrepreneurship Program",
+    description: "Corporate film for the Prince Entrepreneurship Program",
   },
   {
     id: "commercial-hsg-reel",
@@ -171,7 +171,7 @@ export const allProjects: ProjectMedia[] = [
     title: "HSG St. Gallen",
     category: "commercial",
     aspect: "portrait",
-    description: "Entrepreneurship — Reel",
+    description: "Entrepreneurship reel",
   },
   {
     id: "commercial-toyota",
@@ -192,7 +192,7 @@ export const allProjects: ProjectMedia[] = [
     title: "Pizol",
     category: "commercial",
     aspect: "landscape",
-    description: "Brand film — Swiss Alps",
+    description: "Brand film in the Swiss Alps",
   },
 
   // ── TRAVEL ──

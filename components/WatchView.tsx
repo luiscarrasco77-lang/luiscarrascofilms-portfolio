@@ -50,7 +50,7 @@ export default function WatchView({ v }: { v: ProjectMedia }) {
           )}
 
           <div className="mt-8">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-gold/80 mb-3">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-white/50 mb-3">
               {t.gallery.categories[v.category]}
             </p>
             <h1 className="text-2xl md:text-3xl font-extralight tracking-tight">{v.title}</h1>

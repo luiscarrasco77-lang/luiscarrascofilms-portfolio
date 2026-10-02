@@ -148,7 +148,7 @@ export default function VideoModal({ src, title, poster, shareId, embedUrl, onCl
               </video>
               {buffering && (
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
-                  <span className="w-12 h-12 rounded-full border border-white/15 border-t-gold animate-spin" />
+                  <span className="w-12 h-12 rounded-full border border-white/15 border-t-white/80 animate-spin" />
                 </div>
               )}
             </div>

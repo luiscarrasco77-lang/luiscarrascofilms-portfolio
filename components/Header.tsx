@@ -116,14 +116,14 @@ export default function Header() {
                   className={`relative text-[11px] font-normal uppercase tracking-[0.24em] transition-colors duration-300 ${
                     path === item.href
                       ? "text-white"
-                      : "text-white/55 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-gold/70 after:transition-transform after:duration-500 hover:after:scale-x-100"
+                      : "text-white/55 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-white/40 after:transition-transform after:duration-500 hover:after:scale-x-100"
                   }`}
                 >
                   {t.nav[item.key]}
                   {path === item.href && (
                     <motion.span
                       layoutId="nav-indicator"
-                      className="absolute -bottom-1 left-0 right-0 h-px bg-gold"
+                      className="absolute -bottom-1 left-0 right-0 h-px bg-white"
                     />
                   )}
                 </Link>

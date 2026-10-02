@@ -101,7 +101,7 @@ function FeaturedCard({
             animate={hovered ? { y: 0, opacity: 1 } : { y: 4, opacity: 0.85 }}
             transition={{ duration: 0.3 }}
           >
-            <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gold/90 mb-1.5 truncate">
+            <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/50 mb-1.5 truncate">
               {t.gallery.categories[project.category]}
             </p>
             <h3
@@ -156,7 +156,7 @@ function RealEstateCard({ project, onVideoClick }: { project: ProjectMedia; onVi
       </div>
       <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-60"}`} />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-5 md:p-7">
-        <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gold/90 mb-1.5 truncate">
+        <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/50 mb-1.5 truncate">
           {t.gallery.categories[project.category]}
         </p>
         <h3 className="text-sm sm:text-lg md:text-xl font-light text-white tracking-tight leading-snug">{project.title}</h3>
@@ -216,7 +216,7 @@ export default function FeaturedWork() {
               viewport={{ once: true }}
             >
               <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-4">
-                <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
+                <span aria-hidden="true" className="h-px w-8 bg-white/25" />
                 {t.featured.eyebrow}
               </p>
               <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">{t.featured.title}</h2>
@@ -232,7 +232,7 @@ export default function FeaturedWork() {
                 href={href("/work")}
                 className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-white/50 hover:text-white transition-colors duration-300"
               >
-                <span className="relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-gold after:transition-transform after:duration-500 group-hover:after:scale-x-100">
+                <span className="relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-white/60 after:transition-transform after:duration-500 group-hover:after:scale-x-100">
                   {t.featured.viewAll}
                 </span>
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">

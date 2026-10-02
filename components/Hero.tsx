@@ -145,9 +145,9 @@ export default function Hero() {
             t.hero.eyebrow.length > 28 ? "tracking-[0.3em] sm:tracking-[0.5em]" : "tracking-[0.5em]"
           }`}
         >
-          <span aria-hidden="true" className="hidden sm:block h-px w-10 bg-gold/60" />
+          <span aria-hidden="true" className="hidden sm:block h-px w-10 bg-white/25" />
           {t.hero.eyebrow}
-          <span aria-hidden="true" className="hidden sm:block h-px w-10 bg-gold/60" />
+          <span aria-hidden="true" className="hidden sm:block h-px w-10 bg-white/25" />
         </motion.p>
 
         {/* One H1 = brand + location (strong local signal) */}
@@ -171,7 +171,7 @@ export default function Hero() {
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 1.2, delay: 0.9, ease: "easeOut" }}
-            className="block h-px w-24 sm:w-40 bg-gradient-to-r from-transparent via-gold/70 to-transparent mb-7 origin-center"
+            className="block h-px w-24 sm:w-40 bg-gradient-to-r from-transparent via-white/50 to-transparent mb-7 origin-center"
           />
 
           {/* Location — clearly visible */}
@@ -181,11 +181,11 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
             className="inline-flex items-center gap-2.5 text-[10px] sm:text-xs font-normal uppercase tracking-[0.3em] sm:tracking-[0.35em] text-white/85 mb-7"
           >
-            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
             </svg>
-            <span className="sr-only"> – </span>
+            <span className="sr-only">, </span>
             {t.location.based}
           </motion.span>
         </h1>
@@ -237,7 +237,7 @@ export default function Hero() {
           <span className="text-[10px] uppercase tracking-[0.4em] text-white/45">
             {t.hero.scroll}
           </span>
-          <div className="w-px h-10 bg-gradient-to-b from-gold/60 to-transparent" />
+          <div className="w-px h-10 bg-gradient-to-b from-white/40 to-transparent" />
         </motion.div>
       </motion.div>
     </section>
