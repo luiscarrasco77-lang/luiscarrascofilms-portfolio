@@ -22,7 +22,7 @@ export default function VideoModal({ src, title, poster, shareId, embedUrl, onCl
   const [buffering, setBuffering] = useState(true);
   // The card's poster (optimized, usually already cached) shows instantly while the film buffers.
   const posterUrl = poster
-    ? getImageProps({ src: poster, alt: "", width: 540, height: 304, quality: 60 }).props.src
+    ? getImageProps({ src: poster, alt: "", width: 540, height: 304, quality: 75 }).props.src
     : undefined;
 
   useEffect(() => {

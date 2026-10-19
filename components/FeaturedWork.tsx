@@ -3,32 +3,53 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { featuredProjects, photoHighlights, type ProjectMedia } from "@/data/projects";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import VideoModal from "@/components/VideoModal";
 import WatchLink from "@/components/WatchLink";
 import FadeImage from "@/components/FadeImage";
 import { useI18n } from "@/lib/i18n";
-import { previewSrc } from "@/lib/media";
+import { previewSrc, useHdPreviews } from "@/lib/media";
 
 type OpenVideo = (project: ProjectMedia) => void;
 
-// Muted 5-second preview that plays on hover and stays invisible otherwise, so
-// the sharp poster is what people see until they interact.
-function useHoverPreview() {
+// Muted 5-second preview (HD on desktop) that plays on hover and stays
+// invisible otherwise, so the sharp poster is what people see until they
+// interact. With autoplay it instead plays whenever the card is on screen
+// (like the hero videos on dji.com).
+function useHoverPreview(src: string, autoplay = false) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hovered, setHovered] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const hd = useHdPreviews();
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!autoplay || !el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) el.play().catch(() => {});
+        else el.pause();
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [autoplay, hd]);
+
   const enter = () => {
     setHovered(true);
     videoRef.current?.play().catch(() => {});
   };
   const leave = () => {
     setHovered(false);
+    if (autoplay) return;
     videoRef.current?.pause();
     if (videoRef.current) videoRef.current.currentTime = 0;
   };
   const videoProps = {
     ref: videoRef,
+    src: previewSrc(src, hd),
     muted: true,
     loop: true,
     playsInline: true,
@@ -51,7 +72,8 @@ function FeaturedCard({
   onVideoClick: OpenVideo;
 }) {
   const { t } = useI18n();
-  const { hovered, playing, enter, leave, videoProps } = useHoverPreview();
+  // The full-width lead film plays on its own when on screen; the rest on hover.
+  const { hovered, playing, enter, leave, videoProps } = useHoverPreview(project.src, isFullWidth);
   const isPortrait = project.aspect === "portrait";
   const description = project.description && (t.descriptions[project.description] ?? project.description);
 
@@ -82,9 +104,7 @@ function FeaturedCard({
           <video
             {...videoProps}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${playing ? "opacity-100" : "opacity-0"}`}
-          >
-            <source src={previewSrc(project.src)} type="video/mp4" />
-          </video>
+          />
         </div>
 
         <div
@@ -125,7 +145,7 @@ function FeaturedCard({
 
 function RealEstateCard({ project, onVideoClick }: { project: ProjectMedia; onVideoClick: OpenVideo }) {
   const { t } = useI18n();
-  const { hovered, playing, enter, leave, videoProps } = useHoverPreview();
+  const { hovered, playing, enter, leave, videoProps } = useHoverPreview(project.src);
   const description = project.description && (t.descriptions[project.description] ?? project.description);
 
   return (
@@ -150,9 +170,7 @@ function RealEstateCard({ project, onVideoClick }: { project: ProjectMedia; onVi
         <video
           {...videoProps}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${playing ? "opacity-100" : "opacity-0"}`}
-        >
-          <source src={previewSrc(project.src)} type="video/mp4" />
-        </video>
+        />
       </div>
       <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-60"}`} />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-5 md:p-7">

@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import FadeImage from "@/components/FadeImage";
-import { previewSrc } from "@/lib/media";
+import { previewSrc, useHdPreviews } from "@/lib/media";
 import { allProjects, categories, type ProjectMedia } from "@/data/projects";
 import VideoModal from "@/components/VideoModal";
 import ImageModal from "@/components/ImageModal";
@@ -100,6 +100,7 @@ function GalleryItem({
   const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const hd = useHdPreviews();
   const isPortrait = project.aspect === "portrait";
   const isVideo = project.type === "video";
   const isEmbed = project.type === "embed";
@@ -155,6 +156,7 @@ function GalleryItem({
           {isVideo && (
             <video
               ref={videoRef}
+              src={previewSrc(project.src, hd)}
               muted
               loop
               playsInline
@@ -162,9 +164,7 @@ function GalleryItem({
               onPlaying={() => setPlaying(true)}
               onPause={() => setPlaying(false)}
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${playing ? "opacity-100" : "opacity-0"}`}
-            >
-              <source src={previewSrc(project.src)} type="video/mp4" />
-            </video>
+            />
           )}
         </div>
 
