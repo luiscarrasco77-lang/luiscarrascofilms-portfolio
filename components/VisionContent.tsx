@@ -132,7 +132,7 @@ export default function VisionContent() {
 
       {/* ── 6. PHOTO GRID ── */}
       <div className="mb-20 md:mb-28">
-        <div className="flex gap-2 md:gap-3">
+        <div className="flex gap-2 md:gap-3 px-2 md:px-3">
           {[0, 1, 2].map((col) => (
             <div key={col} className="flex-1 min-w-0 flex flex-col gap-2 md:gap-3">
               {photoGrid
@@ -140,7 +140,7 @@ export default function VisionContent() {
                 .map((photo, i) => (
                   <div
                     key={i}
-                    className={`relative overflow-hidden ${
+                    className={`relative overflow-hidden rounded-lg md:rounded-xl ${
                       photo.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[16/10]"
                     }`}
                   >

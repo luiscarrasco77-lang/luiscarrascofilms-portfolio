@@ -12,7 +12,7 @@ export default function NotFound() {
       <p className="text-sm text-muted max-w-md mb-10">{t.notFound.text}</p>
       <Link
         href={href("/")}
-        className="px-8 py-3 border border-white/25 text-[11px] uppercase tracking-[0.25em] text-white/80 hover:bg-white hover:text-black transition-all duration-300"
+        className="px-8 py-3 rounded-full border border-white/25 text-[11px] uppercase tracking-[0.25em] text-white/80 hover:bg-white hover:text-black transition-all duration-300"
       >
         {t.notFound.back}
       </Link>

@@ -187,6 +187,7 @@ const en = {
     "homeLink": "All services"
   },
   cursor: {"play": "Play", "view": "View"},
+  carousel: { watch: "Watch film", prev: "Previous film", next: "Next film" },
   a11y: { menu: "Menu", language: "Language", close: "Close", enlarge: "Enlarge photo" },
   modal: { copyLink: "Copy link", copied: "Link copied" },
   footer: {
@@ -453,6 +454,7 @@ const es: Dict = {
     "homeLink": "Todos los servicios"
   },
   cursor: {"play": "Play", "view": "Ver"},
+  carousel: { watch: "Ver film", prev: "Film anterior", next: "Film siguiente" },
   a11y: { menu: "Menú", language: "Idioma", close: "Cerrar", enlarge: "Ampliar foto" },
   modal: { copyLink: "Copiar enlace", copied: "Enlace copiado" },
   footer: {
@@ -728,6 +730,7 @@ const de: Dict = {
     "homeLink": "Alle Leistungen"
   },
   cursor: {"play": "Play", "view": "Ansehen"},
+  carousel: { watch: "Film ansehen", prev: "Vorheriger Film", next: "Nächster Film" },
   a11y: { menu: "Menü", language: "Sprache", close: "Schliessen", enlarge: "Foto vergrössern" },
   modal: { copyLink: "Link kopieren", copied: "Link kopiert" },
   footer: {

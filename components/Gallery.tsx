@@ -17,8 +17,9 @@ function useGrid() {
   const [grid, setGrid] = useState({ cols: 2, width: 0 });
   useEffect(() => {
     const update = () => {
-      const width = document.documentElement.clientWidth;
       const cols = window.innerWidth >= 768 ? 3 : 2;
+      // Grid content width: viewport minus the side padding (px-2 / md:px-3).
+      const width = document.documentElement.clientWidth - (cols === 3 ? 24 : 16);
       setGrid((g) => (g.cols === cols && g.width === width ? g : { cols, width }));
     };
     update();
@@ -119,7 +120,7 @@ function GalleryItem({
 
   return (
     <div
-      className={`group relative overflow-hidden cursor-pointer bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70 ${grow ? "flex flex-col grow" : ""}`}
+      className={`group relative overflow-hidden rounded-lg md:rounded-xl cursor-pointer bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70 ${grow ? "flex flex-col grow" : ""}`}
       // Tail items absorb the leftover column height (object-cover crops a touch),
       // capped relative to their natural size via the column's container width.
       style={grow ? { maxHeight: `calc(100cqw * ${isPortrait ? 4 / 3 : 3 / 4} * ${MAX_GROW})` } : undefined}
@@ -322,7 +323,7 @@ export default function Gallery() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className={`w-full gap-2 md:gap-3 ${uniform ? "flex flex-wrap justify-center" : "flex"}`}
+              className={`w-full gap-2 md:gap-3 px-2 md:px-3 ${uniform ? "flex flex-wrap justify-center" : "flex"}`}
             >
               {uniform
                 ? filtered.map((project) => (

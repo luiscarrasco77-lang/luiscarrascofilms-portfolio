@@ -246,7 +246,7 @@ export default function ContactForm() {
                   disabled={status === "loading"}
                   whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
                   whileTap={{ scale: status === "loading" ? 1 : 0.98 }}
-                  className="w-full py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-white/85 transition-colors duration-500 disabled:opacity-50"
+                  className="w-full py-4 rounded-full bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-white/85 transition-colors duration-500 disabled:opacity-50"
                 >
                   {status === "loading" ? t.contact.sending : t.contact.submit}
                 </motion.button>

@@ -156,12 +156,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="block text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-light tracking-[0.15em] text-white mb-6"
+            className="block font-hero font-semibold uppercase leading-[0.95] tracking-[0.02em] text-[2.9rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8rem] 2xl:text-[9rem] text-white"
           >
-            LUIS CARRASCO
-            <br />
-            <span className="text-white/60 text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.3em] font-extralight">
-              FILMS
+            Luis Carrasco
+            <span className="block mt-5 md:mt-6 pl-[0.6em] font-medium text-sm sm:text-lg md:text-2xl tracking-[0.6em] text-white/65">
+              Films
             </span>
           </motion.span>
 
@@ -171,7 +170,7 @@ export default function Hero() {
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 1.2, delay: 0.9, ease: "easeOut" }}
-            className="block h-px w-24 sm:w-40 bg-gradient-to-r from-transparent via-white/50 to-transparent mb-7 origin-center"
+            className="block h-px w-24 sm:w-40 bg-gradient-to-r from-transparent via-white/50 to-transparent mt-8 mb-7 origin-center"
           />
 
           {/* Location — clearly visible */}
@@ -206,7 +205,7 @@ export default function Hero() {
         >
           <Link
             href={href("/work")}
-            className="group relative inline-flex items-center gap-4 px-10 py-4 border border-white/35 overflow-hidden text-white text-[11px] uppercase font-normal tracking-[0.32em] transition-colors duration-500 hover:text-black before:absolute before:inset-0 before:bg-white before:origin-left before:scale-x-0 before:transition-transform before:duration-500 before:ease-[cubic-bezier(0.22,1,0.36,1)] hover:before:scale-x-100"
+            className="group relative inline-flex items-center gap-4 px-10 py-4 rounded-full border border-white/35 overflow-hidden text-white text-[11px] uppercase font-normal tracking-[0.32em] transition-colors duration-500 hover:text-black before:absolute before:inset-0 before:bg-white before:origin-left before:scale-x-0 before:transition-transform before:duration-500 before:ease-[cubic-bezier(0.22,1,0.36,1)] hover:before:scale-x-100"
           >
             <span className="relative">{t.hero.cta}</span>
             <svg

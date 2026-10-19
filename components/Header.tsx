@@ -131,7 +131,7 @@ export default function Header() {
             ))}
             <Link
               href={href("/contact")}
-              className="ml-1 px-5 py-2.5 border border-white/25 text-[10px] font-normal uppercase tracking-[0.28em] text-white/85 hover:bg-white hover:text-black hover:border-white transition-all duration-500 whitespace-nowrap"
+              className="ml-1 px-5 py-2.5 rounded-full border border-white/25 text-[10px] font-normal uppercase tracking-[0.28em] text-white/85 hover:bg-white hover:text-black hover:border-white transition-all duration-500 whitespace-nowrap"
             >
               {t.nav.letsWork}
             </Link>
@@ -196,7 +196,7 @@ export default function Header() {
             >
               <Link
                 href={href("/contact")}
-                className="mt-4 px-8 py-3 border border-white/25 text-[11px] uppercase tracking-[0.3em] text-white/80"
+                className="mt-4 px-8 py-3 rounded-full border border-white/25 text-[11px] uppercase tracking-[0.3em] text-white/80"
               >
                 {t.nav.letsWork}
               </Link>

@@ -168,7 +168,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link
             href={localizePath("/contact", lang)}
-            className="inline-flex items-center gap-4 px-11 py-4 bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-white/85 transition-colors duration-500"
+            className="inline-flex items-center gap-4 px-11 py-4 rounded-full bg-white text-black text-[11px] font-normal uppercase tracking-[0.32em] hover:bg-white/85 transition-colors duration-500"
           >
             {s.ctaButton}
           </Link>

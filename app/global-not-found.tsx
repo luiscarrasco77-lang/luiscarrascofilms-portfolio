@@ -26,7 +26,7 @@ export default function GlobalNotFound() {
           <p className="text-sm text-muted mb-10">Seite nicht gefunden · Página no encontrada</p>
           <Link
             href="/"
-            className="px-8 py-3 border border-white/25 text-[11px] uppercase tracking-[0.25em] text-white/80 hover:bg-white hover:text-black transition-all duration-300"
+            className="px-8 py-3 rounded-full border border-white/25 text-[11px] uppercase tracking-[0.25em] text-white/80 hover:bg-white hover:text-black transition-all duration-300"
           >
             Home
           </Link>

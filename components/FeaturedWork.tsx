@@ -7,6 +7,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import VideoModal from "@/components/VideoModal";
 import WatchLink from "@/components/WatchLink";
 import FadeImage from "@/components/FadeImage";
+import FilmCarousel from "@/components/FilmCarousel";
 import { useI18n } from "@/lib/i18n";
 import { previewSrc, useHdPreviews } from "@/lib/media";
 
@@ -83,7 +84,7 @@ function FeaturedCard({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: Math.min(index * 0.1, 0.4), ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true, margin: "-40px" }}
-      className="group relative overflow-hidden cursor-pointer bg-surface"
+      className="group relative overflow-hidden rounded-lg md:rounded-xl cursor-pointer bg-surface"
       data-cursor="play"
       onMouseEnter={enter}
       onMouseLeave={leave}
@@ -154,7 +155,7 @@ function RealEstateCard({ project, onVideoClick }: { project: ProjectMedia; onVi
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true, margin: "-40px" }}
-      className="group flex-1 min-w-0 relative overflow-hidden cursor-pointer bg-surface"
+      className="group flex-1 min-w-0 relative overflow-hidden rounded-lg md:rounded-xl cursor-pointer bg-surface"
       data-cursor="play"
       onMouseEnter={enter}
       onMouseLeave={leave}
@@ -196,7 +197,7 @@ function PhotoStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
-          className="relative overflow-hidden aspect-[3/4] bg-surface"
+          className="relative overflow-hidden rounded-lg md:rounded-xl aspect-[3/4] bg-surface"
         >
           <FadeImage
             src={photo.src}
@@ -220,13 +221,20 @@ export default function FeaturedWork() {
   return (
     <>
       {modal && (
-        <VideoModal shareId={modal.id} src={modal.src} title={modal.title} poster={modal.poster} onClose={closeModal} />
+        <VideoModal
+          shareId={modal.id}
+          src={modal.src}
+          title={modal.title}
+          poster={modal.poster}
+          embedUrl={modal.embedUrl}
+          onClose={closeModal}
+        />
       )}
 
       <section className="pt-12 md:pt-16 pb-20 md:pb-28 bg-background">
         <div className="w-full">
           {/* Header */}
-          <div className="flex items-end justify-between gap-6 mb-12 md:mb-16 px-5 md:px-10 max-w-[1400px] mx-auto">
+          <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between md:gap-6 mb-10 md:mb-16 px-5 md:px-10 max-w-[1400px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -266,9 +274,11 @@ export default function FeaturedWork() {
             The 4 remaining featured cards use two independent flex columns (masonry):
             each column grows to its own natural height, no black gaps possible.
           */}
-          <div className="flex flex-col gap-2 md:gap-3">
-            {/* Full-width hero video */}
-            <FeaturedCard project={featuredProjects[0]} isFullWidth index={0} onVideoClick={handleVideoClick} />
+          <div className="flex flex-col gap-2 md:gap-3 px-2 md:px-3">
+            {/* Lead films carousel (Pizol, HSG, Stetson, Toyota, Costa Rica) */}
+            <div className="-mx-2 md:-mx-3 mb-6 md:mb-9">
+              <FilmCarousel onOpen={handleVideoClick} />
+            </div>
 
             {/* Photo strip — all portrait, uniform height */}
             <PhotoStrip />
@@ -303,7 +313,7 @@ export default function FeaturedWork() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
                 viewport={{ once: true }}
-                className="relative flex-1 min-w-0 overflow-hidden aspect-[9/16] bg-surface"
+                className="relative flex-1 min-w-0 overflow-hidden rounded-lg md:rounded-xl aspect-[9/16] bg-surface"
               >
                 <FadeImage
                   src="/projects/fotosciudad/DSC00202.jpg"

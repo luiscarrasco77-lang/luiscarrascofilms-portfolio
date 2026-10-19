@@ -120,7 +120,7 @@ export default function VideoModal({ src, title, poster, shareId, embedUrl, onCl
           onClick={(e) => e.stopPropagation()}
         >
           {embedUrl ? (
-            <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black">
+            <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black rounded-xl overflow-hidden">
               <iframe
                 src={embedUrl}
                 title={title}
@@ -141,7 +141,7 @@ export default function VideoModal({ src, title, poster, shareId, embedUrl, onCl
                 poster={posterUrl}
                 onWaiting={() => setBuffering(true)}
                 onPlaying={() => setBuffering(false)}
-                className="w-full h-full max-h-[85vh] object-contain"
+                className="w-full h-full max-h-[85vh] object-contain rounded-xl"
                 style={{ background: "transparent" }}
               >
                 <source src={src} type="video/mp4" />
