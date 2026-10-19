@@ -7,7 +7,6 @@ export const videoDurations: Record<string, string> = {
   "/videos/costa-rica-recap-v2.mp4": "PT1M1S",
   "/videos/costarica-travel.mp4": "PT0M15S",
   "/videos/elizabeth-day.mp4": "PT3M5S",
-  "/videos/hero-loop.mp4": "PT0M20S",
   "/videos/hsg-entrepreneurship.mp4": "PT4M4S",
   "/videos/hsg-reel.mp4": "PT1M20S",
   "/videos/hugel-festival.mp4": "PT1M27S",

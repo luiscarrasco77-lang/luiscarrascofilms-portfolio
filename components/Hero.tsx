@@ -6,6 +6,19 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 
+// Background loop cut from the 4K master in two framings (portrait 720x1280 for
+// phones, 1920x1080 for wider screens) and three codecs. Each browser gets the
+// most efficient one it can play: AV1, then HEVC (Apple), then H.264.
+function heroSource(el: HTMLVideoElement) {
+  const framing = window.matchMedia("(max-width: 767px), (orientation: portrait)").matches ? "mobile" : "desktop";
+  const codec = el.canPlayType('video/mp4; codecs="av01.0.08M.08"')
+    ? "av1"
+    : el.canPlayType('video/mp4; codecs="hvc1.1.6.L120.90"')
+      ? "hevc"
+      : "h264";
+  return `/videos/hero/${framing}-${codec}.mp4`;
+}
+
 export default function Hero() {
   const { t, href } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -50,13 +63,10 @@ export default function Hero() {
     el.setAttribute("muted", "");
     el.setAttribute("playsinline", "");
     if (!el.getAttribute("src")) {
-      // Phones and data-saver / slow connections get the lighter 720p loop.
+      // Data-saver and 2G/3G visitors keep the photo; no video download at all.
       const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
-      const light =
-        window.matchMedia("(max-width: 767px)").matches ||
-        conn?.saveData === true ||
-        /(^|-)(2g|3g)$/.test(conn?.effectiveType ?? "");
-      el.setAttribute("src", light ? "/videos/hero-loop-720.mp4" : "/videos/hero-loop.mp4");
+      if (conn?.saveData === true || /(^|-)(2g|3g)$/.test(conn?.effectiveType ?? "")) return;
+      el.setAttribute("src", heroSource(el));
     }
     el.load();
     el.play().catch(() => {});
