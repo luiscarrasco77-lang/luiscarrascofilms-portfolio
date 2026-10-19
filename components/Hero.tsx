@@ -100,7 +100,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative h-svh sm:h-screen w-full overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         {/* Optimized poster — paints instantly (LCP), sits behind the video */}
@@ -151,7 +151,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-          className={`flex items-center gap-4 text-[10px] sm:text-[11px] uppercase font-normal text-white/60 mb-8 ${
+          className={`flex items-center gap-4 text-[10px] sm:text-[11px] uppercase font-normal text-white/60 mb-5 sm:mb-8 ${
             // long titles get tighter tracking on phones so they stay on one line
             t.hero.eyebrow.length > 28 ? "tracking-[0.3em] sm:tracking-[0.5em]" : "tracking-[0.5em]"
           }`}
@@ -167,10 +167,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="block font-hero font-medium uppercase leading-[0.95] tracking-[0.1em] text-[2.6rem] sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[7.25rem] 2xl:text-[8rem] text-white"
+            className="block font-hero font-medium uppercase leading-[0.95] tracking-[0.1em] whitespace-nowrap sm:whitespace-normal text-[9vw] sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[7.25rem] 2xl:text-[8rem] text-white"
           >
             Luis Carrasco
-            <span className="block mt-4 md:mt-5 pl-[0.35em] font-light text-lg sm:text-2xl md:text-[2.4rem] tracking-[0.35em] text-white/60">
+            <span className="block mt-3 sm:mt-4 md:mt-5 pl-[0.35em] font-light text-lg sm:text-2xl md:text-[2.4rem] tracking-[0.35em] text-white/60">
               Films
             </span>
           </motion.span>
@@ -181,7 +181,7 @@ export default function Hero() {
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 1.2, delay: 0.9, ease: "easeOut" }}
-            className="block h-px w-24 sm:w-40 bg-gradient-to-r from-transparent via-white/50 to-transparent mt-8 mb-7 origin-center"
+            className="block h-px w-24 sm:w-40 bg-gradient-to-r from-transparent via-white/50 to-transparent mt-5 mb-4 sm:mt-8 sm:mb-7 origin-center"
           />
 
           {/* Location — clearly visible */}
@@ -189,7 +189,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
-            className="inline-flex items-center gap-2.5 text-[10px] sm:text-xs font-normal uppercase tracking-[0.3em] sm:tracking-[0.35em] text-white/85 mb-7"
+            className="inline-flex items-center gap-2.5 text-[10px] sm:text-xs font-normal uppercase tracking-[0.25em] sm:tracking-[0.35em] text-white/85 mb-5 sm:mb-7"
           >
             <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -204,7 +204,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1, ease: "easeOut" }}
-          className="max-w-2xl text-base sm:text-lg text-white/60 font-light leading-relaxed tracking-wide mb-12"
+          className="max-w-[20rem] sm:max-w-2xl text-sm sm:text-lg text-white/60 font-light leading-relaxed tracking-wide mb-7 sm:mb-12"
         >
           {t.hero.subtitle}
         </motion.p>
@@ -216,7 +216,7 @@ export default function Hero() {
         >
           <Link
             href={href("/work")}
-            className="group relative inline-flex items-center gap-4 px-10 py-4 rounded-full border border-white/35 overflow-hidden text-white text-[11px] uppercase font-normal tracking-[0.32em] transition-colors duration-500 hover:text-black before:absolute before:inset-0 before:bg-white before:origin-left before:scale-x-0 before:transition-transform before:duration-500 before:ease-[cubic-bezier(0.22,1,0.36,1)] hover:before:scale-x-100"
+            className="group relative inline-flex items-center gap-4 px-8 py-3.5 sm:px-10 sm:py-4 rounded-full border border-white/35 overflow-hidden text-white text-[11px] uppercase font-normal tracking-[0.32em] transition-colors duration-500 hover:text-black before:absolute before:inset-0 before:bg-white before:origin-left before:scale-x-0 before:transition-transform before:duration-500 before:ease-[cubic-bezier(0.22,1,0.36,1)] hover:before:scale-x-100"
           >
             <span className="relative">{t.hero.cta}</span>
             <svg
