@@ -877,12 +877,12 @@ export const allProjects: ProjectMedia[] = [
   {
     id: "commercial-ormond",
     src: "/videos/ormond-v2.mp4",
-    poster: "/posters/ormond.jpg",
+    poster: "/posters/ormond-v2.jpg",
     type: "video",
     title: "Ormond",
     category: "commercial",
     aspect: "landscape",
-    description: "Commercial production",
+    description: "Surf lifestyle film",
   },
   {
     id: "travel-reel-apagon",

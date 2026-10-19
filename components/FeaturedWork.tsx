@@ -22,7 +22,7 @@ const pick = (ids: string[]) =>
 
 const FILM_ROWS = [
   { key: "commercial", films: pick(["feat-elizabeth", "feat-mestiza", "feat-realestate-h"]) },
-  { key: "travel", films: pick(["feat-nayarit", "feat-ski", "feat-sunset"]) },
+  { key: "travel", films: pick(["feat-nayarit", "feat-ski", "commercial-ormond"]) },
   {
     key: "festivals",
     films: pick(["feat-capriati", "fest-hugel-vid", "fest-blondish-vid", "fest-shimza-vid", "fest-serge-vid"]),
@@ -31,10 +31,20 @@ const FILM_ROWS = [
 
 const PHOTOS: Photo[] = [
   { src: "/projects/fotosnaturaleza/1 3.jpg", alt: "Desert Dunes" },
-  { src: "/projects/fotosnaturaleza/DJI_20260308151945_0076_D.jpg", alt: "Alpine Summit" },
+  { src: "/projects/fotosciudad/DSC07351-Enhanced-NR 2.jpg", alt: "Westminster" },
   { src: "/fotos1/DSC02353.jpg", alt: "Pizol, Alpine Lakes" },
-  { src: "/projects/fotosciudad/DSC07351-Enhanced-NR 2.jpg", alt: "Westminster Night" },
   { src: "/projects/fotosciudad/DSC00202.jpg", alt: "Madrid Nights" },
+  { src: "/projects/fotosnaturaleza/DSC08266.jpg", alt: "La Fortuna Falls" },
+  { src: "/projects/fotosnaturaleza/DSC09119-2 3.jpg", alt: "Deadvlei" },
+  { src: "/projects/fotosciudad/DSC07301.jpg", alt: "London Arches" },
+  { src: "/fotos1/DSC02703.jpg", alt: "Pizol, Trail Ride" },
+  { src: "/projects/fotosnaturaleza/DJI_20251018182042_0386_D-Enhanced-NR 2.jpg", alt: "Golden Hour" },
+  { src: "/projects/fotosciudad/DSC07385.jpg", alt: "Clock Tower" },
+  { src: "/projects/fotosnaturaleza/DJI_20260308151945_0076_D.jpg", alt: "Alpine Summit" },
+  { src: "/projects/fotosciudad/DSC07087 2.jpg", alt: "Red Bus" },
+  { src: "/projects/fotosnaturaleza/DSC07830-2edited.jpg", alt: "Chasing Falls" },
+  { src: "/projects/fotosnaturaleza/DSC05617 2.jpg", alt: "Atlantic Coast" },
+  { src: "/projects/fotosciudad/DSC06506.jpg", alt: "Colosseum, Rome" },
 ];
 
 // Card shapes: landscape films 16:10, vertical films and photos 4:5. In a row,
@@ -116,23 +126,24 @@ function FilmCard({ project, onOpen }: { project: ProjectMedia; onOpen: OpenVide
   );
 }
 
-function PhotoCard({ photo, onOpen }: { photo: Photo; onOpen: (photo: Photo) => void }) {
+function PhotoTile({ photo, onOpen, hidden }: { photo: Photo; onOpen: (photo: Photo) => void; hidden?: boolean }) {
   const { t } = useI18n();
   return (
     <button
       type="button"
       onClick={() => onOpen(photo)}
       aria-label={`${t.a11y.enlarge}: ${photo.alt}`}
+      aria-hidden={hidden || undefined}
+      tabIndex={hidden ? -1 : undefined}
       data-cursor="view"
-      className={`${cardClass} text-left`}
-      style={{ "--a": PORTRAIT } as CSSProperties}
+      className="group shrink-0 pr-3 md:pr-4 text-left"
     >
-      <span className="relative block overflow-hidden rounded-lg md:rounded-xl bg-surface" style={{ aspectRatio: PORTRAIT }}>
+      <span className="relative block h-60 md:h-[21rem] aspect-[4/5] overflow-hidden rounded-lg md:rounded-xl bg-surface">
         <FadeImage
           src={photo.src}
           alt={photo.alt}
           fill
-          sizes="(min-width: 768px) 20vw, 40vw"
+          sizes="(min-width: 768px) 270px, 192px"
           className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
         />
       </span>
@@ -143,7 +154,23 @@ function PhotoCard({ photo, onOpen }: { photo: Photo; onOpen: (photo: Photo) => 
   );
 }
 
-function Row({ label, children }: { label: string; children: ReactNode }) {
+// Photos glide by on their own (pauses under the pointer); full bleed, edges faded.
+function PhotoMarquee({ onOpen }: { onOpen: (photo: Photo) => void }) {
+  return (
+    <div className="relative w-screen ml-[calc(50%-50vw)] overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+      <div
+        className="flex w-max animate-marquee hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]"
+        style={{ animationDuration: `${PHOTOS.length * 5}s` }}
+      >
+        {[0, 1].map((copy) =>
+          PHOTOS.map((p) => <PhotoTile key={`${copy}-${p.src}`} photo={p} onOpen={onOpen} hidden={copy === 1} />)
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Row({ label, children, bare = false }: { label: string; children: ReactNode; bare?: boolean }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -155,9 +182,13 @@ function Row({ label, children }: { label: string; children: ReactNode }) {
         <h3 className="text-lg md:text-xl font-extralight tracking-tight whitespace-nowrap">{label}</h3>
         <span aria-hidden="true" className="h-px flex-1 bg-white/10" />
       </div>
-      <div className="flex gap-3 md:gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-5 px-5 scroll-px-5 md:mx-0 md:px-0 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {children}
-      </div>
+      {bare ? (
+        children
+      ) : (
+        <div className="flex gap-3 md:gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-5 px-5 scroll-px-5 md:mx-0 md:px-0 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {children}
+        </div>
+      )}
     </motion.div>
   );
 }
@@ -232,10 +263,8 @@ export default function FeaturedWork() {
               ))}
             </Row>
           ))}
-          <Row label={t.gallery.media.photo}>
-            {PHOTOS.map((p) => (
-              <PhotoCard key={p.src} photo={p} onOpen={setPhoto} />
-            ))}
+          <Row label={t.gallery.media.photo} bare>
+            <PhotoMarquee onOpen={setPhoto} />
           </Row>
         </div>
       </section>
