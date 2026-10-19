@@ -231,10 +231,10 @@ export default function FeaturedWork() {
         />
       )}
 
-      <section className="pt-12 md:pt-16 pb-20 md:pb-28 bg-background">
+      <section className="pt-10 md:pt-14 pb-20 md:pb-28 bg-background">
         <div className="w-full">
           {/* Header */}
-          <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between md:gap-6 mb-10 md:mb-16 px-5 md:px-10 max-w-[1400px] mx-auto">
+          <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between md:gap-6 mb-8 md:mb-12 px-5 md:px-10 max-w-[1400px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -291,7 +291,7 @@ export default function FeaturedWork() {
               <RealEstateCard project={featuredProjects[8]} onVideoClick={handleVideoClick} />
             </div>
 
-            {/* Two independent flex columns — Lifestyle + Nayarit + Ski + Airelles */}
+            {/* Two independent flex columns: Lifestyle + Nayarit + Ski + Sunset */}
             <div className="flex gap-2 md:gap-3">
               <div className="flex-1 flex flex-col gap-2 md:gap-3">
                 <FeaturedCard project={featuredProjects[1]} index={1} onVideoClick={handleVideoClick} />

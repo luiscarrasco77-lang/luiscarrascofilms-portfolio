@@ -95,7 +95,7 @@ export default function Hero() {
       <div className="absolute inset-0">
         {/* Optimized poster — paints instantly (LCP), sits behind the video */}
         <Image
-          src="/projects/fotosnaturaleza/DJI_20250507153645_0077_D 2.jpg"
+          src="/posters/hero-poster.jpg"
           alt=""
           aria-hidden="true"
           fill
@@ -156,10 +156,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="block font-hero font-semibold uppercase leading-[0.95] tracking-[0.02em] text-[2.9rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8rem] 2xl:text-[9rem] text-white"
+            className="block font-hero font-medium uppercase leading-[0.95] tracking-[0.1em] text-[2.6rem] sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[7.25rem] 2xl:text-[8rem] text-white"
           >
             Luis Carrasco
-            <span className="block mt-5 md:mt-6 pl-[0.6em] font-medium text-sm sm:text-lg md:text-2xl tracking-[0.6em] text-white/65">
+            <span className="block mt-4 md:mt-5 pl-[0.35em] font-light text-lg sm:text-2xl md:text-[2.4rem] tracking-[0.35em] text-white/60">
               Films
             </span>
           </motion.span>

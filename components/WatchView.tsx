@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import FadeImage from "@/components/FadeImage";
 import { useI18n } from "@/lib/i18n";
-import type { ProjectMedia } from "@/data/projects";
+import { canonicalVideoId, type ProjectMedia } from "@/data/projects";
 
-export default function WatchView({ v }: { v: ProjectMedia }) {
+export default function WatchView({ v, related = [] }: { v: ProjectMedia; related?: ProjectMedia[] }) {
   const { t, href } = useI18n();
   const isPortrait = v.aspect === "portrait";
 
@@ -76,6 +77,32 @@ export default function WatchView({ v }: { v: ProjectMedia }) {
             </Link>
           </div>
         </div>
+
+        {related.length > 0 && (
+          <div className="mt-20 md:mt-28">
+            <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-8">
+              <span aria-hidden="true" className="h-px w-8 bg-white/25" />
+              {t.watch.moreFilms}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
+              {related.map((r) => (
+                <Link key={r.id} href={href(`/watch/${canonicalVideoId(r)}`)} className="group block" data-cursor="play">
+                  <div className="relative aspect-video overflow-hidden rounded-lg md:rounded-xl bg-surface">
+                    <FadeImage
+                      src={r.poster}
+                      alt={r.title}
+                      fill
+                      sizes="(min-width: 640px) 33vw, 100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <p className="mt-3 text-sm font-light text-white/90 group-hover:text-white transition-colors">{r.title}</p>
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-white/40 mt-1">{t.gallery.categories[r.category]}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

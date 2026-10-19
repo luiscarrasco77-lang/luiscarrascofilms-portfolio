@@ -201,6 +201,7 @@ const en = {
   watch: {
     back: "Back to Work",
     exploreMore: "Explore more work",
+    moreFilms: "More films",
     kinds: {
       travel: "Travel film",
       festivals: "Festival aftermovie",
@@ -468,6 +469,7 @@ const es: Dict = {
   watch: {
     back: "Volver a proyectos",
     exploreMore: "Explora más proyectos",
+    moreFilms: "Más films",
     kinds: {
       travel: "Film de viaje",
       festivals: "Aftermovie de festival",
@@ -482,7 +484,7 @@ const es: Dict = {
     "Commercial production": "Producción publicitaria",
     "Travel film, Mexico": "Film de viaje, México",
     "Action sports, French Alps": "Deportes de acción, Alpes franceses",
-    "Luxury hotel campaign in Courchevel": "Campaña para un hotel de lujo en Courchevel",
+    "Travel film, golden hour": "Film de viaje, hora dorada",
     "Festival aftermovie": "Aftermovie de festival",
     "Vertical commercial": "Comercial en formato vertical",
     "Real estate production": "Producción inmobiliaria",
@@ -744,6 +746,7 @@ const de: Dict = {
   watch: {
     back: "Zurück zu den Projekten",
     exploreMore: "Weitere Projekte entdecken",
+    moreFilms: "Weitere Filme",
     kinds: {
       travel: "Reisefilm",
       festivals: "Festival-Aftermovie",
@@ -758,7 +761,7 @@ const de: Dict = {
     "Commercial production": "Werbeproduktion",
     "Travel film, Mexico": "Reisefilm, Mexiko",
     "Action sports, French Alps": "Actionsport, Französische Alpen",
-    "Luxury hotel campaign in Courchevel": "Kampagne für ein Luxushotel in Courchevel",
+    "Travel film, golden hour": "Reisefilm, goldene Stunde",
     "Festival aftermovie": "Festival-Aftermovie",
     "Vertical commercial": "Werbefilm im Hochformat",
     "Real estate production": "Immobilienfilm",

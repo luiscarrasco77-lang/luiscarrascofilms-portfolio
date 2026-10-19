@@ -60,15 +60,15 @@ export const featuredProjects: ProjectMedia[] = [
     description: "Action sports, French Alps",
   },
   {
-    id: "feat-airelles",
-    src: "/videos/airelles-dinner.mp4",
-    poster: "/posters/airelles-dinner.jpg",
+    id: "feat-sunset",
+    src: "/videos/sunset-travel.mp4",
+    poster: "/posters/sunset-travel.jpg",
     type: "video",
-    title: "Les Airelles",
-    category: "commercial",
+    title: "Sunset",
+    category: "travel",
     aspect: "landscape",
     featured: true,
-    description: "Luxury hotel campaign in Courchevel",
+    description: "Travel film, golden hour",
   },
   {
     id: "feat-capriati",
@@ -829,15 +829,6 @@ export const allProjects: ProjectMedia[] = [
   },
 
   // ── COMMERCIAL ──
-  {
-    id: "comm-airelles-vid",
-    src: "/videos/airelles-dinner.mp4",
-    poster: "/posters/airelles-dinner.jpg",
-    type: "video",
-    title: "Les Airelles",
-    category: "commercial",
-    aspect: "landscape",
-  },
   {
     id: "comm-mestiza-vid",
     src: "/videos/mestiza-vertical.mp4",

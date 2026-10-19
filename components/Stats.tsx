@@ -53,13 +53,13 @@ export default function Stats() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="pt-24 md:pt-32 pb-14 md:pb-20 bg-background flex flex-col items-center">
+    <section ref={ref} className="pt-14 md:pt-20 pb-8 md:pb-12 bg-background flex flex-col items-center">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-16 text-center"
+          className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-10 md:mb-12 text-center"
         >
           <span aria-hidden="true" className="h-px w-8 bg-white/25" />
           {t.stats.impact}

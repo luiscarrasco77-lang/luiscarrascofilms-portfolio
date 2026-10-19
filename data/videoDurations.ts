@@ -1,7 +1,6 @@
 // Running time of each self-hosted video (schema.org VideoObject `duration`).
 // Regenerate with ffprobe when adding a video.
 export const videoDurations: Record<string, string> = {
-  "/videos/airelles-dinner.mp4": "PT0M56S",
   "/videos/blondish-festival.mp4": "PT0M54S",
   "/videos/brand-swiss.mp4": "PT1M35S",
   "/videos/capriati-festival.mp4": "PT0M38S",

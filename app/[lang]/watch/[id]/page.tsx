@@ -1,12 +1,31 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { canonicalVideoId, videoPool, type ProjectMedia } from "@/data/projects";
+import { allProjects, canonicalVideoId, featuredProjects, videoPool, type ProjectMedia } from "@/data/projects";
 import { publishedDate } from "@/data/videoDates";
 import { videoDurations } from "@/data/videoDurations";
 import WatchView from "@/components/WatchView";
 import { getDictionary } from "@/lib/dictionaries";
 import { SITE_URL, hasLocale, languageAlternates, localizePath, type Lang } from "@/lib/locales";
 import { BRAND, OG_LOCALE, jsonLdScript } from "@/lib/seo";
+
+/** Three other films for "More films": same category first, following the /work
+ *  order (client work leads), one entry per film and per client name. */
+function relatedFilms(v: ProjectMedia): ProjectMedia[] {
+  const seen = new Set([canonicalVideoId(v)]);
+  const titles = new Set([v.title]);
+  const unique = [...allProjects, ...featuredProjects]
+    .filter((p) => p.type === "video" || p.type === "embed")
+    .filter((p) => {
+      const id = canonicalVideoId(p);
+      if (seen.has(id) || titles.has(p.title)) return false;
+      seen.add(id);
+      titles.add(p.title);
+      return true;
+    });
+  const same = unique.filter((p) => p.category === v.category);
+  const other = unique.filter((p) => p.category !== v.category);
+  return [...same, ...other].slice(0, 3);
+}
 
 function findVideo(id: string) {
   return videoPool.find((p) => p.id === id);
@@ -85,7 +104,7 @@ export default async function WatchPage({ params }: PageProps<"/[lang]/watch/[id
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(videoLd) }} />
-      <WatchView v={v} />
+      <WatchView v={v} related={relatedFilms(v)} />
     </>
   );
 }
