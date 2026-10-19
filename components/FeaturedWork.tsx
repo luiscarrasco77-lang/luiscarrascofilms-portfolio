@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { featuredProjects, photoHighlights, type ProjectMedia } from "@/data/projects";
-import { useRef, useState, useCallback, useEffect } from "react";
+import { allProjects, featuredProjects, type ProjectMedia } from "@/data/projects";
+import { useRef, useState, useCallback, type CSSProperties, type ReactNode } from "react";
 import VideoModal from "@/components/VideoModal";
+import ImageModal from "@/components/ImageModal";
 import WatchLink from "@/components/WatchLink";
 import FadeImage from "@/components/FadeImage";
 import FilmCarousel from "@/components/FilmCarousel";
@@ -12,39 +13,44 @@ import { useI18n } from "@/lib/i18n";
 import { previewSrc, useHdPreviews } from "@/lib/media";
 
 type OpenVideo = (project: ProjectMedia) => void;
+type Photo = { src: string; alt: string };
+
+// Rows shown under the lead-film carousel, one per kind of work.
+const pool = [...featuredProjects, ...allProjects];
+const pick = (ids: string[]) =>
+  ids.map((id) => pool.find((p) => p.id === id)).filter((p): p is ProjectMedia => Boolean(p));
+
+const FILM_ROWS = [
+  { key: "commercial", films: pick(["feat-elizabeth", "feat-mestiza", "feat-realestate-h"]) },
+  { key: "travel", films: pick(["feat-nayarit", "feat-ski", "feat-sunset"]) },
+  {
+    key: "festivals",
+    films: pick(["feat-capriati", "fest-hugel-vid", "fest-blondish-vid", "fest-shimza-vid", "fest-serge-vid"]),
+  },
+] as const;
+
+const PHOTOS: Photo[] = [
+  { src: "/projects/fotosnaturaleza/1 3.jpg", alt: "Desert Dunes" },
+  { src: "/projects/fotosnaturaleza/DJI_20260308151945_0076_D.jpg", alt: "Alpine Summit" },
+  { src: "/fotos1/DSC02353.jpg", alt: "Pizol, Alpine Lakes" },
+  { src: "/projects/fotosciudad/DSC07351-Enhanced-NR 2.jpg", alt: "Westminster Night" },
+  { src: "/projects/fotosciudad/DSC00202.jpg", alt: "Madrid Nights" },
+];
+
+// Card shapes: landscape films 16:10, vertical films and photos 4:5. In a row,
+// each card's flex-grow equals its aspect ratio, so every card in the row ends
+// up exactly the same height (a justified row) on desktop.
+const LANDSCAPE = 1.6;
+const PORTRAIT = 0.8;
 
 // Muted 5-second preview (HD on desktop) that plays on hover and stays
-// invisible otherwise, so the sharp poster is what people see until they
-// interact. With autoplay it instead plays whenever the card is on screen
-// (like the hero videos on dji.com).
-function useHoverPreview(src: string, autoplay = false) {
+// invisible otherwise, so the sharp poster is what people see until they interact.
+function useHoverPreview(src: string) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [hovered, setHovered] = useState(false);
   const [playing, setPlaying] = useState(false);
   const hd = useHdPreviews();
-
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!autoplay || !el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) el.play().catch(() => {});
-        else el.pause();
-      },
-      { threshold: 0.4 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [autoplay, hd]);
-
-  const enter = () => {
-    setHovered(true);
-    videoRef.current?.play().catch(() => {});
-  };
+  const enter = () => videoRef.current?.play().catch(() => {});
   const leave = () => {
-    setHovered(false);
-    if (autoplay) return;
     videoRef.current?.pause();
     if (videoRef.current) videoRef.current.currentTime = 0;
   };
@@ -58,165 +64,111 @@ function useHoverPreview(src: string, autoplay = false) {
     onPlaying: () => setPlaying(true),
     onPause: () => setPlaying(false),
   };
-  return { hovered, playing, enter, leave, videoProps };
+  return { playing, enter, leave, videoProps };
 }
 
-function FeaturedCard({
-  project,
-  isFullWidth,
-  index,
-  onVideoClick,
-}: {
-  project: ProjectMedia;
-  isFullWidth?: boolean;
-  index: number;
-  onVideoClick: OpenVideo;
-}) {
+// Mobile: fixed-height cards in a horizontal swipe row. Desktop: justified row.
+const cardClass =
+  "group shrink-0 snap-start w-[calc(13rem*var(--a))] md:w-auto md:min-w-0 md:basis-0 md:grow-[var(--a)]";
+
+function FilmCard({ project, onOpen }: { project: ProjectMedia; onOpen: OpenVideo }) {
   const { t } = useI18n();
-  // The full-width lead film plays on its own when on screen; the rest on hover.
-  const { hovered, playing, enter, leave, videoProps } = useHoverPreview(project.src, isFullWidth);
-  const isPortrait = project.aspect === "portrait";
+  const { playing, enter, leave, videoProps } = useHoverPreview(project.src);
+  const a = project.aspect === "portrait" ? PORTRAIT : LANDSCAPE;
   const description = project.description && (t.descriptions[project.description] ?? project.description);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: Math.min(index * 0.1, 0.4), ease: [0.22, 1, 0.36, 1] }}
-      viewport={{ once: true, margin: "-40px" }}
-      className="group relative overflow-hidden rounded-lg md:rounded-xl cursor-pointer bg-surface"
+    <div
+      className={cardClass}
+      style={{ "--a": a } as CSSProperties}
       data-cursor="play"
       onMouseEnter={enter}
       onMouseLeave={leave}
     >
-      <div
-        className={`relative w-full overflow-hidden ${
-          isPortrait ? "aspect-[9/16]" : isFullWidth ? "aspect-[21/9]" : "aspect-[16/10]"
-        }`}
-      >
+      <div className="relative overflow-hidden rounded-lg md:rounded-xl bg-surface" style={{ aspectRatio: a }}>
         <div className="absolute inset-0 transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
           <FadeImage
             src={project.poster}
             alt={project.title}
             fill
-            sizes={isFullWidth ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
+            sizes="(min-width: 768px) 30vw, 60vw"
             className="object-cover"
           />
-          <video
-            {...videoProps}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${playing ? "opacity-100" : "opacity-0"}`}
-          />
+          {project.type === "video" && (
+            <video
+              {...videoProps}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${playing ? "opacity-100" : "opacity-0"}`}
+            />
+          )}
         </div>
-
-        <div
-          // Touch screens never hover → keep the full gradient there for legibility.
-          className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-60"}`}
-          style={{ zIndex: 3 }}
-        />
-
-        <div
-          className={`absolute inset-0 flex flex-col justify-end ${isFullWidth ? "p-6 md:p-10" : "p-3 sm:p-5 md:p-7"}`}
-          style={{ zIndex: 4 }}
-        >
-          <motion.div
-            animate={hovered ? { y: 0, opacity: 1 } : { y: 4, opacity: 0.85 }}
-            transition={{ duration: 0.3 }}
-          >
-            <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/50 mb-1.5 truncate">
-              {t.gallery.categories[project.category]}
-            </p>
-            <h3
-              className={`font-light text-white tracking-tight leading-snug ${
-                isFullWidth ? "text-2xl md:text-3xl" : "text-sm sm:text-lg md:text-xl"
-              }`}
-            >
-              {project.title}
-            </h3>
-            {description && (
-              <p className={`text-xs text-white/55 mt-1.5 ${isFullWidth ? "" : "hidden sm:block"}`}>{description}</p>
-            )}
-          </motion.div>
+        <div className="absolute top-3 right-3 w-8 h-8 rounded-full border border-white/30 bg-black/25 backdrop-blur-sm flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-300">
+          <svg className="w-3 h-3 text-white ml-0.5 group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
         </div>
-
-        <WatchLink project={project} onOpen={() => onVideoClick(project)} />
+        <WatchLink project={project} onOpen={() => onOpen(project)} />
       </div>
-    </motion.div>
+      <p className="mt-3 text-sm font-light text-white/90 truncate group-hover:text-white transition-colors">
+        {project.title}
+      </p>
+      {description && <p className="mt-0.5 text-xs text-white/45 truncate">{description}</p>}
+    </div>
   );
 }
 
-function RealEstateCard({ project, onVideoClick }: { project: ProjectMedia; onVideoClick: OpenVideo }) {
+function PhotoCard({ photo, onOpen }: { photo: Photo; onOpen: (photo: Photo) => void }) {
   const { t } = useI18n();
-  const { hovered, playing, enter, leave, videoProps } = useHoverPreview(project.src);
-  const description = project.description && (t.descriptions[project.description] ?? project.description);
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(photo)}
+      aria-label={`${t.a11y.enlarge}: ${photo.alt}`}
+      data-cursor="view"
+      className={`${cardClass} text-left`}
+      style={{ "--a": PORTRAIT } as CSSProperties}
+    >
+      <span className="relative block overflow-hidden rounded-lg md:rounded-xl bg-surface" style={{ aspectRatio: PORTRAIT }}>
+        <FadeImage
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          sizes="(min-width: 768px) 20vw, 40vw"
+          className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+        />
+      </span>
+      <span className="mt-3 block text-sm font-light text-white/90 truncate group-hover:text-white transition-colors">
+        {photo.alt}
+      </span>
+    </button>
+  );
+}
 
+function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-      viewport={{ once: true, margin: "-40px" }}
-      className="group flex-1 min-w-0 relative overflow-hidden rounded-lg md:rounded-xl cursor-pointer bg-surface"
-      data-cursor="play"
-      onMouseEnter={enter}
-      onMouseLeave={leave}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "-60px" }}
     >
-      <div className="absolute inset-0 transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
-        <FadeImage
-          src={project.poster}
-          alt={project.title}
-          fill
-          sizes="(min-width: 768px) 68vw, 100vw"
-          className="object-cover"
-        />
-        <video
-          {...videoProps}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${playing ? "opacity-100" : "opacity-0"}`}
-        />
+      <div className="flex items-center gap-5 mb-4 md:mb-5">
+        <h3 className="text-lg md:text-xl font-extralight tracking-tight whitespace-nowrap">{label}</h3>
+        <span aria-hidden="true" className="h-px flex-1 bg-white/10" />
       </div>
-      <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-100 md:opacity-60"}`} />
-      <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-5 md:p-7">
-        <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/50 mb-1.5 truncate">
-          {t.gallery.categories[project.category]}
-        </p>
-        <h3 className="text-sm sm:text-lg md:text-xl font-light text-white tracking-tight leading-snug">{project.title}</h3>
-        {description && <p className="hidden sm:block text-xs text-white/55 mt-1.5">{description}</p>}
+      <div className="flex gap-3 md:gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-5 px-5 scroll-px-5 md:mx-0 md:px-0 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {children}
       </div>
-      <WatchLink project={project} onOpen={() => onVideoClick(project)} />
     </motion.div>
-  );
-}
-
-function PhotoStrip() {
-  return (
-    /* All 4 photos forced to portrait aspect — same height, zero black gaps */
-    <div className="grid grid-cols-4 gap-2 md:gap-3">
-      {photoHighlights.map((photo, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-          viewport={{ once: true }}
-          className="relative overflow-hidden rounded-lg md:rounded-xl aspect-[3/4] bg-surface"
-        >
-          <FadeImage
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            sizes="(min-width: 768px) 25vw, 50vw"
-            className="object-cover hover:scale-[1.04] transition-transform duration-[1.2s]"
-          />
-        </motion.div>
-      ))}
-    </div>
   );
 }
 
 export default function FeaturedWork() {
   const { t, href } = useI18n();
   const [modal, setModal] = useState<ProjectMedia | null>(null);
+  const [photo, setPhoto] = useState<Photo | null>(null);
   const handleVideoClick = useCallback((project: ProjectMedia) => setModal(project), []);
   const closeModal = useCallback(() => setModal(null), []);
+  const closePhoto = useCallback(() => setPhoto(null), []);
 
   return (
     <>
@@ -230,104 +182,61 @@ export default function FeaturedWork() {
           onClose={closeModal}
         />
       )}
+      {photo && <ImageModal src={photo.src} alt={photo.alt} onClose={closePhoto} />}
 
       <section className="pt-10 md:pt-14 pb-20 md:pb-28 bg-background">
-        <div className="w-full">
-          {/* Header */}
-          <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between md:gap-6 mb-8 md:mb-12 px-5 md:px-10 max-w-[1400px] mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              viewport={{ once: true }}
+        {/* Header */}
+        <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between md:gap-6 mb-8 md:mb-12 px-5 md:px-10 max-w-[1400px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+          >
+            <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-4">
+              <span aria-hidden="true" className="h-px w-8 bg-white/25" />
+              {t.featured.eyebrow}
+            </p>
+            <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">{t.featured.title}</h2>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            viewport={{ once: true }}
+            className="shrink-0"
+          >
+            <Link
+              href={href("/work")}
+              className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-white/50 hover:text-white transition-colors duration-300"
             >
-              <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.35em] text-muted mb-4">
-                <span aria-hidden="true" className="h-px w-8 bg-white/25" />
-                {t.featured.eyebrow}
-              </p>
-              <h2 className="text-3xl md:text-4xl font-extralight tracking-tight">{t.featured.title}</h2>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              viewport={{ once: true }}
-              className="shrink-0"
-            >
-              <Link
-                href={href("/work")}
-                className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-white/50 hover:text-white transition-colors duration-300"
-              >
-                <span className="relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-white/60 after:transition-transform after:duration-500 group-hover:after:scale-x-100">
-                  {t.featured.viewAll}
-                </span>
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.25} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </motion.div>
-          </div>
+              <span className="relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-white/60 after:transition-transform after:duration-500 group-hover:after:scale-x-100">
+                {t.featured.viewAll}
+              </span>
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.25} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </motion.div>
+        </div>
 
-          {/*
-            Layout strategy: flex-col stack, no CSS grid rows.
-            Each section stacks independently — zero row-height mismatch.
-            The 4 remaining featured cards use two independent flex columns (masonry):
-            each column grows to its own natural height, no black gaps possible.
-          */}
-          <div className="flex flex-col gap-2 md:gap-3 px-2 md:px-3">
-            {/* Lead films carousel (Pizol, HSG, Stetson, Toyota, Costa Rica) */}
-            <div className="-mx-2 md:-mx-3 mb-6 md:mb-9">
-              <FilmCarousel onOpen={handleVideoClick} />
-            </div>
+        {/* Lead films carousel (Pizol, HSG, Stetson, Toyota, Costa Rica), full bleed */}
+        <FilmCarousel onOpen={handleVideoClick} />
 
-            {/* Photo strip — all portrait, uniform height */}
-            <PhotoStrip />
-
-            {/* Real Estate portrait + Real Estate Horizontal (fills height) */}
-            <div className="flex gap-2 md:gap-3 items-stretch">
-              <div className="w-[32%] min-w-0 flex-shrink-0">
-                <FeaturedCard project={featuredProjects[7]} index={7} onVideoClick={handleVideoClick} />
-              </div>
-              <RealEstateCard project={featuredProjects[8]} onVideoClick={handleVideoClick} />
-            </div>
-
-            {/* Two independent flex columns: Lifestyle + Nayarit + Ski + Sunset */}
-            <div className="flex gap-2 md:gap-3">
-              <div className="flex-1 flex flex-col gap-2 md:gap-3">
-                <FeaturedCard project={featuredProjects[1]} index={1} onVideoClick={handleVideoClick} />
-                <FeaturedCard project={featuredProjects[3]} index={3} onVideoClick={handleVideoClick} />
-              </div>
-              <div className="flex-1 flex flex-col gap-2 md:gap-3">
-                <FeaturedCard project={featuredProjects[2]} index={2} onVideoClick={handleVideoClick} />
-                <FeaturedCard project={featuredProjects[4]} index={4} onVideoClick={handleVideoClick} />
-              </div>
-            </div>
-
-            {/* Capriati | Madrid photo | Mestiza */}
-            <div className="flex gap-2 md:gap-3">
-              <div className="flex-1 min-w-0">
-                <FeaturedCard project={featuredProjects[5]} index={5} onVideoClick={handleVideoClick} />
-              </div>
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="relative flex-1 min-w-0 overflow-hidden rounded-lg md:rounded-xl aspect-[9/16] bg-surface"
-              >
-                <FadeImage
-                  src="/projects/fotosciudad/DSC00202.jpg"
-                  alt="Madrid nights"
-                  fill
-                  sizes="(min-width: 768px) 33vw, 50vw"
-                  className="object-cover hover:scale-[1.04] transition-transform duration-[1.2s]"
-                />
-              </motion.div>
-              <div className="flex-1 min-w-0">
-                <FeaturedCard project={featuredProjects[6]} index={6} onVideoClick={handleVideoClick} />
-              </div>
-            </div>
-          </div>
+        {/* The rest of the work, organised by kind */}
+        <div className="max-w-[1400px] mx-auto px-5 md:px-10 mt-16 md:mt-24 space-y-14 md:space-y-20">
+          {FILM_ROWS.map((row) => (
+            <Row key={row.key} label={t.gallery.categories[row.key]}>
+              {row.films.map((p) => (
+                <FilmCard key={p.id} project={p} onOpen={handleVideoClick} />
+              ))}
+            </Row>
+          ))}
+          <Row label={t.gallery.media.photo}>
+            {PHOTOS.map((p) => (
+              <PhotoCard key={p.src} photo={p} onOpen={setPhoto} />
+            ))}
+          </Row>
         </div>
       </section>
     </>
