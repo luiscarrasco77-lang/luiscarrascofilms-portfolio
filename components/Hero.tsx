@@ -95,14 +95,15 @@ export default function Hero() {
       <div className="absolute inset-0">
         {/* Optimized poster — paints instantly (LCP), sits behind the video */}
         <Image
-          src="/posters/hero-poster.jpg"
+          src="/posters/hero-puerto-rico.jpg"
           alt=""
           aria-hidden="true"
           fill
           preload
           fetchPriority="high"
           sizes="100vw"
-          className="object-cover"
+          // Phones crop to the palm and the sun; desktop shows the full frame.
+          className="object-cover object-[35%_center] md:object-center"
         />
         <video
           ref={videoRef}
